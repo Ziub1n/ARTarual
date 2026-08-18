@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>pierścionek — ARTarual</title>
+<meta name="description" content="Wybierz materiał, kamień, kolor kamienia i rozmiar — cena i czas realizacji przeliczają się na bieżąco.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@600;700;800&family=Work+Sans:wght@400;500;600&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a href="index.html" class="logo" aria-label="ARTarual — strona główna"><img src="logo.png" alt="ARTarual"></a>
+      <nav class="main-nav" id="main-nav">
+        <ul>
+          <li><a href="o-nas.html">o mnie</a></li>
+          <li class="has-sub">
+            <button type="button" class="sub-toggle" aria-expanded="false">sklep <span class="caret">▼</span></button>
+            <ul class="subnav">
+              <li><a href="drop-1.html">drop 1</a></li>
+              <li><a href="drop-2.html">drop 2</a></li>
+              <li><a href="kolekcja.html">wszystko naraz</a></li>
+            </ul>
+          </li>
+          <li><a href="customs.html">customs</a></li>
+          <li><a href="rozmiary.html">rozmiarówka</a></li>
+          <li><a href="kontakt.html">kontakt</a></li>
+        </ul>
+        <a href="kontakt.html" class="nav-cta">napisz do mnie</a>
+      </nav>
+      <button class="nav-toggle" aria-label="Otwórz menu" aria-expanded="false" aria-controls="main-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="section" style="padding:3rem 0 4rem">
+      <div class="wrap section__inner">
+        <p style="margin-bottom:2rem"><a href="kolekcja.html" class="note">← wróć do wszystkich prac</a></p>
+
+        <!-- cała zawartość poniżej rysuje się z pliku products.js -->
+        <div id="produkt"></div>
+
+        <noscript>
+          <div class="form-card" style="max-width:640px">
+            <h2>Konfigurator potrzebuje JavaScriptu</h2>
+            <p>Żeby wybrać materiał, kamień i rozmiar, włącz obsługę JavaScriptu — albo po prostu
+              <a href="kontakt.html" class="text-link">napisz do mnie</a>, dogadamy wszystko mailem.</p>
+          </div>
+        </noscript>
+      </div>
+    </section>
+
+    <section class="section section--paper2">
+      <div class="wrap section__inner">
+        <div class="sec-head"><span class="note">dobre do wiedzenia</span><h2>zanim zamówisz</h2></div>
+        <div class="qa">
+          <details open>
+            <summary>Skąd wiadomo, jaki mam rozmiar?</summary>
+            <div class="a">Najprościej zmierzyć obwód palca paskiem papieru — opisałam to krok po kroku w <a href="rozmiary.html" class="text-link">rozmiarówce</a>. Jak się wahasz między dwoma rozmiarami, weź większy: szerokie obrączki siedzą ciaśniej.</div>
+          </details>
+          <details>
+            <summary>Dlaczego cena rośnie przy większym rozmiarze?</summary>
+            <div class="a">Bo większy pierścionek to po prostu więcej metalu — przy srebrze i złocie widać to od razu na wadze. Dopłatę pokazuję wprost na każdym kafelku z rozmiarem, żeby nie było niespodzianek na końcu.</div>
+          </details>
+          <details>
+            <summary>Mogę dostać kamień w innym kolorze niż na liście?</summary>
+            <div class="a">Zwykle tak — wypisałam te warianty, które mam pod ręką albo dostaję bez problemu. Jak marzy Ci się coś spoza listy, <a href="kontakt.html" class="text-link">napisz</a>, sprawdzę u swojego dostawcy.</div>
+          </details>
+          <details>
+            <summary>Co, jeśli nie będzie pasował?</summary>
+            <div class="a">Raz poprawiam rozmiar za darmo — płacisz tylko za przesyłkę w jedną stronę. Przy pierścionkach z grawerem albo z kamieniem na całym obwodzie nie zawsze da się to zrobić, więc wtedy tym uważniej mierzymy przed startem.</div>
+          </details>
+          <details>
+            <summary>Jak dbać o srebro, żeby ładnie się starzało?</summary>
+            <div class="a">Nosić. Naprawdę — srebro noszone codziennie ciemnieje wolniej niż leżące w pudełku. Zdejmuj przy chlorze i kosmetykach, a raz na jakiś czas przetrzyj ściereczką do srebra. Oksydowanych i złoconych nie poleruj mocno, bo zdejmiesz warstwę.</div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap section__inner">
+        <div class="sec-head"><span class="note">a może to ↓</span><h2>zobacz też</h2></div>
+        <div class="gallery gallery--loose" id="podobne"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-top">
+        <div>
+          <div class="footer-logo"><img src="logo-white.png" alt="ARTarual"></div>
+          <p>Pracownia jednej osoby. Projektuję i wykuwam pierścionki ręcznie, w Warszawie. Krótkie serie, czasem jeden egzemplarz.</p>
+        </div>
+        <div class="footer-col">
+          <h4>sklep</h4>
+          <ul>
+            <li><a href="drop-1.html">drop 1</a></li>
+            <li><a href="drop-2.html">drop 2</a></li>
+            <li><a href="kolekcja.html">wszystkie prace</a></li>
+            <li><a href="customs.html">customs</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>pomoc</h4>
+          <ul>
+            <li><a href="rozmiary.html">rozmiarówka</a></li>
+            <li><a href="o-nas.html">o mnie</a></li>
+            <li><a href="kontakt.html">kontakt</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>odezwij się</h4>
+          <ul>
+            <li><a href="mailto:hej@artarual.pl">hej@artarual.pl</a></li>
+            <li><a href="tel:+48123456789">+48 123 456 789</a></li>
+            <li><a href="#">Instagram</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 ARTarual · robione ręcznie</span>
+        <span>zaprojektowane z nadmiarem koloru</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script src="products.js"></script>
+</body>
+</html>
