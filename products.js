@@ -248,26 +248,47 @@ function policzCzas(p, materialId, kamienId) {
 /* -----------------------------------------------------------------------------
    Listing pierścionków (strona główna, dropy)
    ----------------------------------------------------------------------------- */
-const TLA_KAFELKOW = ['#F0F0F2', '#EDEDF0', '#F2F2F4', '#EAEAEE', '#F0F0F2', '#EDEDF0'];
+/** Podpis pod nazwą: materiał domyślny + kamień — jak "925 Sterling Silver / Swarovski". */
+function podpisMaterialu(p) {
+  const m = znajdzMaterial(p.domyslny.material);
+  const k = znajdzKamien(p.domyslny.kamien);
+  return k.id === 'brak' ? m.nazwa : `${m.nazwa} / ${k.nazwa}`;
+}
 
-function kafelek(p, i) {
+function kafelek(p) {
   const alt = `${p.nazwa} — ${p.krotki}`;
-  const sizes = '(max-width:720px) 92vw, (max-width:960px) 44vw, 30vw';
+  const sizes = '(max-width:720px) 46vw, (max-width:1024px) 30vw, 23vw';
+  const drugie = p.zdjecia[1];
   return `
-    <article class="piece">
+    <article class="piece" data-category="drop-${p.drop}">
       <a href="produkt.html?id=${p.id}" aria-label="${p.nazwa} — zobacz i skonfiguruj">
-        <div class="piece__frame" style="background:${TLA_KAFELKOW[i % TLA_KAFELKOW.length]}">
+        <div class="piece__frame">
           ${fotoTag(p.zdjecia[0], alt, sizes)}
-          <span class="tag">rozmiar na miarę</span>
+          ${drugie ? fotoTag(drugie, '', sizes, 'piece__img--alt') : ''}
         </div>
         <div class="piece__meta">
-          <span class="piece__no">№ ${p.nr}</span>
           <span class="piece__name">${p.nazwa}</span>
           <span class="piece__price">od ${zl(cenaOd(p))}</span>
         </div>
-        <p class="piece__desc">${p.krotki}</p>
+        <p class="piece__desc">${podpisMaterialu(p)}</p>
       </a>
     </article>`;
+}
+
+/** Filtry nad siatką (kolekcja.html). Podpinane po renderze, bo kafelki
+    powstają dopiero tutaj — script.js odpaliłby się na pustej liście. */
+function wireFiltry() {
+  const btns = document.querySelectorAll('.filter-btn');
+  if (!btns.length) return;
+  btns.forEach(btn => btn.addEventListener('click', () => {
+    btns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
+    btn.classList.add('active');
+    btn.setAttribute('aria-pressed', 'true');
+    const cat = btn.dataset.filter;
+    document.querySelectorAll('.gallery [data-category]').forEach(card => {
+      card.style.display = (cat === 'all' || card.dataset.category === cat) ? '' : 'none';
+    });
+  }));
 }
 
 /** Wypełnia każdy [data-lista] pierścionkami: "all" | "drop:1" | "n:6" */
@@ -282,6 +303,7 @@ function renderListy() {
     }
     el.innerHTML = lista.map(kafelek).join('');
   });
+  wireFiltry();
 }
 
 

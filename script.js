@@ -40,23 +40,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Collection filters (kolekcja.html)
-  const filterBtns = document.querySelectorAll('.filter-btn');
-  const cards = document.querySelectorAll('[data-category]');
-  if (filterBtns.length && cards.length) {
-    filterBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        filterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const cat = btn.dataset.filter;
-        cards.forEach(card => {
-          const match = cat === 'all' || card.dataset.category === cat;
-          card.style.display = match ? '' : 'none';
-        });
-      });
-    });
-  }
-
   // Contact form (front-end only — no backend wired up yet)
   const form = document.querySelector('#contact-form');
   const success = document.querySelector('#form-success');
