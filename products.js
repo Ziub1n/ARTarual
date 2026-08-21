@@ -248,7 +248,7 @@ function policzCzas(p, materialId, kamienId) {
 /* -----------------------------------------------------------------------------
    Listing pierścionków (strona główna, dropy)
    ----------------------------------------------------------------------------- */
-const TLA_KAFELKOW = ['var(--lavender)', 'var(--lime)', 'var(--magenta)', 'var(--pink)', 'var(--orange)', 'var(--navy)'];
+const TLA_KAFELKOW = ['#F0F0F2', '#EDEDF0', '#F2F2F4', '#EAEAEE', '#F0F0F2', '#EDEDF0'];
 
 function kafelek(p, i) {
   const alt = `${p.nazwa} — ${p.krotki}`;
