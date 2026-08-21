@@ -213,6 +213,8 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
    Siatka produktów
    ========================================================= */
 .gallery{ display:grid; grid-template-columns:repeat(4,1fr); gap:2.8rem 14px; }
+/* wariant na stronę główną: kwadratowe, mniejsze kafle w węższej kolumnie */
+.gallery--compact .piece__frame{ aspect-ratio:1/1; }
 .gallery--loose .piece{ transform:none; }
 
 .piece{ position:relative; }
@@ -366,21 +368,14 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 /* =========================================================
    Trzy kolumny (z czego / jak to działa)
    ========================================================= */
-.stuff, .howto{ display:grid; grid-template-columns:repeat(3,1fr); gap:3.4rem; }
-.howto{ counter-reset:step; }
-.stuff__item, .howto__item{ position:relative; padding:1.2rem 0 0; border-top:1px solid var(--line); }
+.stuff{ display:grid; grid-template-columns:repeat(3,1fr); gap:3.4rem; }
+.stuff__item{ position:relative; padding:1.2rem 0 0; border-top:1px solid var(--line); }
 .stuff__item::before{ display:none; }
-.howto__item::before{
-  counter-increment:step; content:counter(step,decimal-leading-zero);
-  position:static; display:block; width:auto; height:auto; border:0; border-radius:0;
-  background:none; color:var(--grey-2); margin-bottom:.7rem;
-  font-family:var(--font-serif); font-size:11.5px; letter-spacing:.08em;
-}
-.stuff__item h3, .howto__item h3{
+.stuff__item h3{
   font-family:var(--font-sans); font-weight:700; font-size:12px;
   text-transform:uppercase; letter-spacing:.08em; color:var(--ink); margin-bottom:.6rem;
 }
-.stuff__item p, .howto__item p{ color:var(--grey); margin:0; font-size:13px; }
+.stuff__item p{ color:var(--grey); margin:0; font-size:13px; }
 
 /* =========================================================
    Split (o mnie)
@@ -648,7 +643,7 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 }
 @media (max-width:900px){
   .split, .contact-grid{ grid-template-columns:1fr; gap:2.4rem; }
-  .stuff, .howto{ grid-template-columns:1fr; gap:1.8rem; }
+  .stuff{ grid-template-columns:1fr; gap:1.8rem; }
   .hero-band{ grid-template-columns:1fr; height:min(58vh,460px); }
   .hero-band figure:nth-child(2){ display:none; }
   .hero-band__overlay{ max-width:none; right:var(--edge); }
@@ -670,6 +665,128 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
   .filter-row{ gap:1.4rem; }
   .topbar span{ gap:.8rem; font-size:10px; }
   .topbar span::before, .topbar span::after{ display:none; }
+}
+
+/* =========================================================
+   Kroki z ilustracją (jak to działa / customs / rozmiarówka)
+   Rysunki to inline SVG w kolorze tekstu, na tym samym szarym
+   kaflu co zdjęcia produktów — żeby siatka trzymała się kupy.
+   ========================================================= */
+.steps{ display:grid; grid-template-columns:repeat(3,1fr); gap:2.6rem 14px; }
+.step__art{
+  background:var(--tile); border-radius:var(--radius); aspect-ratio:3/2;
+  display:flex; align-items:center; justify-content:center;
+  margin-bottom:1.3rem; color:var(--ink);
+}
+.step__art svg{ width:52%; max-width:190px; height:auto; }
+.step__no{
+  display:block; font-family:var(--font-serif); font-size:11.5px;
+  letter-spacing:.08em; color:var(--grey-2); margin-bottom:.5rem;
+}
+.step h3{
+  font-family:var(--font-sans); font-weight:700; font-size:12px;
+  text-transform:uppercase; letter-spacing:.08em; color:var(--ink); margin-bottom:.55rem;
+}
+.step p{ color:var(--grey); font-size:13px; margin:0; }
+
+/* =========================================================
+   Listy rozwijane (materiał / kamień / kolor)
+   ========================================================= */
+.opt__label{
+  display:block; font-family:var(--font-sans); font-weight:500; font-size:10.5px;
+  text-transform:uppercase; letter-spacing:.09em; color:var(--grey); margin-bottom:.6rem;
+}
+.select-wrap{ position:relative; }
+.select-wrap::after{
+  content:""; position:absolute; right:15px; top:50%; width:7px; height:7px;
+  border-right:1px solid var(--ink); border-bottom:1px solid var(--ink);
+  transform:translateY(-70%) rotate(45deg); pointer-events:none;
+}
+.select-wrap select{
+  -webkit-appearance:none; -moz-appearance:none; appearance:none;
+  width:100%; font-family:var(--font-sans); font-weight:400; font-size:13px; color:var(--ink);
+  background:transparent; border:1px solid var(--line); border-radius:0;
+  padding:.85rem 2.6rem .85rem 1rem; line-height:1.3; cursor:pointer;
+  transition:border-color .2s ease;
+}
+.select-wrap select:hover{ border-color:var(--grey-2); }
+.select-wrap select:focus{ border-color:var(--ink); outline:0; }
+
+/* =========================================================
+   Koszyk — szuflada z prawej. Bez płatności: całość idzie
+   jednym mailem, stan trzymany w localStorage.
+   ========================================================= */
+.bag{ position:fixed; inset:0; z-index:300; display:none; }
+.bag.open{ display:block; }
+.bag__backdrop{ position:absolute; inset:0; background:rgba(0,0,0,.32); }
+.bag__panel{
+  position:absolute; top:0; right:0; height:100%; width:min(420px,100%);
+  background:var(--paper); display:flex; flex-direction:column;
+  box-shadow:-24px 0 60px -34px rgba(0,0,0,.45);
+}
+.bag__head{
+  display:flex; justify-content:space-between; align-items:center;
+  padding:1.3rem 1.6rem; border-bottom:1px solid var(--line);
+  font-size:11.5px; text-transform:uppercase; letter-spacing:.09em; font-weight:500;
+}
+.bag__close{ background:none; border:0; padding:0; cursor:pointer; font-size:13px; color:var(--ink); }
+.bag__body{ flex:1; overflow-y:auto; padding:0 1.6rem; }
+.bag__empty{ color:var(--grey); font-size:13px; padding:2.4rem 0; }
+.bag__item{
+  display:grid; grid-template-columns:58px 1fr auto; gap:1rem;
+  padding:1.2rem 0; border-bottom:1px solid var(--line);
+}
+.bag__thumb{ background:var(--tile); border-radius:8px; overflow:hidden; aspect-ratio:4/5; }
+.bag__thumb img{ width:100%; height:100%; object-fit:cover; }
+.bag__name{
+  font-family:var(--font-serif); font-size:11.5px;
+  text-transform:uppercase; letter-spacing:.015em; color:var(--ink);
+}
+.bag__spec{ font-size:11.5px; color:var(--grey); margin:.35rem 0 0; line-height:1.5; }
+.bag__side{ display:flex; flex-direction:column; align-items:flex-end; justify-content:space-between; gap:.6rem; }
+.bag__price{ font-family:var(--font-serif); font-size:11.5px; white-space:nowrap; }
+.bag__remove{
+  background:none; border:0; padding:0 0 1px; cursor:pointer;
+  font-family:var(--font-sans); font-size:10.5px; text-transform:uppercase;
+  letter-spacing:.08em; color:var(--grey-2); border-bottom:1px solid var(--line);
+  transition:color .2s ease, border-color .2s ease;
+}
+.bag__remove:hover{ color:var(--ink); border-bottom-color:var(--ink); }
+.bag__foot{ border-top:1px solid var(--line); padding:1.4rem 1.6rem 1.8rem; }
+.bag__total{
+  display:flex; justify-content:space-between; margin-bottom:1.2rem;
+  font-family:var(--font-serif); font-size:12.5px; text-transform:uppercase; letter-spacing:.06em;
+}
+.bag__send{ width:100%; }
+.bag__note{ font-size:11px; color:var(--grey-2); margin:1rem 0 0; line-height:1.55; }
+
+/* =========================================================
+   Blok „napisz do mnie" na stronie customów
+   ========================================================= */
+.cta-split{
+  display:grid; grid-template-columns:1fr auto; gap:2.4rem; align-items:center;
+  padding:2rem 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+}
+.cta-split__text p{ margin:0; max-width:54ch; font-size:13px; }
+.cta-split__actions{ display:flex; gap:.7rem; flex-wrap:wrap; }
+
+/* =========================================================
+   Drobiazgi
+   ========================================================= */
+.table-note{ margin-top:1.4rem; font-size:12px; color:var(--grey); max-width:74ch; }
+.contact-lines a{ border-bottom:1px solid var(--line); transition:border-color .2s ease; }
+.contact-lines a:hover{ border-bottom-color:var(--ink); }
+
+/* miejsce czekające na treść od klientki — ma rzucać się w oczy */
+.todo{ background:var(--paper-2); border-bottom:1px dashed var(--grey-2); padding:.05em .4em; }
+
+@media (max-width:900px){
+  .steps{ grid-template-columns:1fr; gap:2rem; }
+  .cta-split{ grid-template-columns:1fr; gap:1.4rem; align-items:start; }
+}
+@media (max-width:720px){
+  .steps{ gap:1.8rem; }
+  .step__art{ aspect-ratio:2/1; }
 }
 
 /* =========================================================

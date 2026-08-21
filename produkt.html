@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>pierścionek — ARTarual</title>
-<meta name="description" content="Wybierz materiał, kamień, kolor kamienia i rozmiar — cena i czas realizacji przeliczają się na bieżąco.">
+<title>Ring — ARTarual</title>
+<meta name="description" content="Build your ARTarual ring: pick the metal, the stone, its colour and your size.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800&family=Tinos:wght@400;700&display=swap" rel="stylesheet">
@@ -13,78 +13,74 @@
 <body>
 
   <div class="topbar">
-    <span>robione ręcznie w Warszawie &nbsp;·&nbsp; krótkie serie &nbsp;·&nbsp; każdy pierścionek w Twoim rozmiarze</span>
+    <span>jewellery for modern princesses</span>
   </div>
 
   <header class="site-header">
     <div class="wrap">
-      <button class="nav-toggle" aria-label="Otwórz menu" aria-expanded="false" aria-controls="main-nav">
+      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="main-nav">
         <span></span><span></span><span></span>
       </button>
       <nav class="main-nav" id="main-nav">
         <ul>
-          <li><a href="o-nas.html">o mnie</a></li>
+          <li><a href="o-nas.html">About me</a></li>
           <li class="has-sub">
-            <button type="button" class="sub-toggle" aria-expanded="false">sklep <span class="caret">&#9660;</span></button>
+            <button type="button" class="sub-toggle" aria-expanded="false">Shop <span class="caret">&#9660;</span></button>
             <ul class="subnav">
-              <li><a href="drop-1.html">drop 1</a></li>
-              <li><a href="drop-2.html">drop 2</a></li>
-              <li><a href="kolekcja.html">wszystko naraz</a></li>
+              <li><a href="drop-1.html">Drop 1</a></li>
+              <li><a href="drop-2.html">Drop 2</a></li>
+              <li><a href="kolekcja.html">Everything</a></li>
             </ul>
           </li>
-          <li><a href="customs.html">customs</a></li>
-          <li><a href="rozmiary.html">rozmiarówka</a></li>
+          <li><a href="customs.html">Customs</a></li>
+          <li><a href="rozmiary.html">Size guide</a></li>
         </ul>
       </nav>
-      <a href="index.html" class="logo" aria-label="ARTarual — strona główna"><img src="logo.png" alt="ARTarual"></a>
+      <a href="index.html" class="logo" aria-label="ARTarual — home"><img src="logo.png" alt="ARTarual"></a>
       <div class="nav-actions">
-        <a href="kontakt.html">kontakt</a>
-        <a href="#" rel="noopener">Instagram</a>
+        <a href="kontakt.html">Contact</a>
+        <a href="https://www.instagram.com/artarual.jewellery/" target="_blank" rel="noopener">Instagram</a>
+        <a href="#" data-bag-open>Bag (<span data-bag-count>0</span>)</a>
       </div>
     </div>
   </header>
 
   <main>
-    <section class="section" style="padding:3rem 0 4rem">
+    <section class="section" style="padding-top:2rem">
       <div class="wrap section__inner">
-        <p style="margin-bottom:2rem"><a href="kolekcja.html" class="note">← wróć do wszystkich prac</a></p>
-
-        <!-- cała zawartość poniżej rysuje się z pliku products.js -->
-        <div id="produkt"></div>
-
-        <noscript>
-          <div class="form-card" style="max-width:640px">
-            <h2>Konfigurator potrzebuje JavaScriptu</h2>
-            <p>Żeby wybrać materiał, kamień i rozmiar, włącz obsługę JavaScriptu — albo po prostu
-              <a href="kontakt.html" class="text-link">napisz do mnie</a>, dogadamy wszystko mailem.</p>
-          </div>
-        </noscript>
+        <p style="margin-bottom:2rem"><a href="kolekcja.html" class="note">&larr; back to everything</a></p>
+        <div id="produkt">
+          <noscript>
+            <h2>The configurator needs JavaScript</h2>
+            <p>Turn it on, or just write to me at <a href="mailto:artarual1@gmail.com" class="text-link">artarual1@gmail.com</a> and we will sort the ring out over email.</p>
+          </noscript>
+        </div>
       </div>
     </section>
 
     <section class="section section--paper2">
       <div class="wrap section__inner">
-        <div class="sec-head"><span class="note">dobre do wiedzenia</span><h2>zanim zamówisz</h2></div>
+        <div class="sec-head"><h2>before you order</h2></div>
         <div class="qa">
           <details open>
-            <summary>Skąd wiadomo, jaki mam rozmiar?</summary>
-            <div class="a">Najprościej zmierzyć obwód palca paskiem papieru — opisałam to krok po kroku w <a href="rozmiary.html" class="text-link">rozmiarówce</a>. Jak się wahasz między dwoma rozmiarami, weź większy: szerokie obrączki siedzą ciaśniej.</div>
+            <summary>How do I know my size?</summary>
+            <div class="a">The easiest way is to measure the circumference of your finger with a strip of paper &mdash; I wrote it up step by step in the <a href="rozmiary.html" class="text-link">size guide</a>. If you are between two sizes, take the larger one: wide bands sit tighter.</div>
           </details>
           <details>
-            <summary>Dlaczego cena rośnie przy większym rozmiarze?</summary>
-            <div class="a">Bo większy pierścionek to po prostu więcej metalu — przy srebrze i złocie widać to od razu na wadze. Dopłatę pokazuję wprost na każdym kafelku z rozmiarem, żeby nie było niespodzianek na końcu.</div>
+            <summary>Why does the price go up with a bigger size?</summary>
+            <div class="a">A bigger ring is simply more silver or gold. The surcharge is shown on every size tile, so nothing surprises you at the end.</div>
           </details>
           <details>
-            <summary>Mogę dostać kamień w innym kolorze niż na liście?</summary>
-            <div class="a">Zwykle tak — wypisałam te warianty, które mam pod ręką albo dostaję bez problemu. Jak marzy Ci się coś spoza listy, <a href="kontakt.html" class="text-link">napisz</a>, sprawdzę u swojego dostawcy.</div>
+            <summary>Can I get a stone colour that is not on the list?</summary>
+            <div class="a">Often yes &mdash; write to me and I will check what I can get. Stones ordered in specially add about a week to the lead time.</div>
           </details>
           <details>
-            <summary>Co, jeśli nie będzie pasował?</summary>
-            <div class="a">Raz poprawiam rozmiar za darmo — płacisz tylko za przesyłkę w jedną stronę. Przy pierścionkach z grawerem albo z kamieniem na całym obwodzie nie zawsze da się to zrobić, więc wtedy tym uważniej mierzymy przed startem.</div>
+            <summary>What if it does not fit?</summary>
+            <div class="a">I resize once free of charge, you only pay postage one way. Details on the <a href="dostawa-zwroty.html#returns" class="text-link">shipping and returns</a> page.</div>
           </details>
           <details>
-            <summary>Jak dbać o srebro, żeby ładnie się starzało?</summary>
-            <div class="a">Nosić. Naprawdę — srebro noszone codziennie ciemnieje wolniej niż leżące w pudełku. Zdejmuj przy chlorze i kosmetykach, a raz na jakiś czas przetrzyj ściereczką do srebra. Oksydowanych i złoconych nie poleruj mocno, bo zdejmiesz warstwę.</div>
+            <summary>How do I look after the silver?</summary>
+            <div class="a">Wear it. Silver darkens with time and that is the point &mdash; if you want the shine back, a soft cloth is enough. Oxidised pieces will wear back to silver on the raised parts, which is how they are meant to age.</div>
           </details>
         </div>
       </div>
@@ -92,8 +88,8 @@
 
     <section class="section">
       <div class="wrap section__inner">
-        <div class="sec-head"><span class="note">a może to</span><h2>zobacz też</h2></div>
-        <div class="gallery gallery--loose" id="podobne"></div>
+        <div class="sec-head"><h2>you may also like</h2></div>
+        <div class="gallery gallery--compact" id="podobne"></div>
       </div>
     </section>
   </main>
@@ -102,31 +98,37 @@
     <div class="wrap">
       <div class="footer-top">
         <div class="footer-col">
-          <h4>sklep</h4>
+          <h4>shop</h4>
           <ul>
-            <li><a href="drop-1.html">drop 1</a></li>
-            <li><a href="drop-2.html">drop 2</a></li>
-            <li><a href="kolekcja.html">wszystkie prace</a></li>
-            <li><a href="customs.html">customs</a></li>
-            <li><a href="rozmiary.html">rozmiarówka</a></li>
-            <li><a href="o-nas.html">o mnie</a></li>
-            <li><a href="kontakt.html">kontakt</a></li>
+            <li><a href="drop-1.html">Drop 1</a></li>
+            <li><a href="drop-2.html">Drop 2</a></li>
+            <li><a href="kolekcja.html">Everything</a></li>
+            <li><a href="customs.html">Customs</a></li>
+            <li><a href="rozmiary.html">Size guide</a></li>
           </ul>
         </div>
         <div class="footer-col">
-          <h4>odezwij się</h4>
+          <h4>help</h4>
           <ul>
-            <li><a href="mailto:hej@artarual.pl">hej@artarual.pl</a></li>
-            <li><a href="tel:+48123456789">+48 123 456 789</a></li>
-            <li><a href="#" rel="noopener">Instagram</a></li>
+            <li><a href="dostawa-zwroty.html#shipping">Shipping</a></li>
+            <li><a href="dostawa-zwroty.html#returns">Returns</a></li>
+            <li><a href="o-nas.html">About me</a></li>
+            <li><a href="kontakt.html">Contact</a></li>
           </ul>
-          <p>Pracownia jednej osoby w Warszawie. Projektuję i wykuwam każdą rzecz sama, w krótkich seriach.</p>
+        </div>
+        <div class="footer-col">
+          <h4>write to me</h4>
+          <ul>
+            <li><a href="mailto:artarual1@gmail.com">artarual1@gmail.com</a></li>
+            <li><a href="https://www.instagram.com/artarual.jewellery/" target="_blank" rel="noopener">@artarual.jewellery</a></li>
+          </ul>
+          <p>A one-person studio in Warsaw. I design and forge every piece myself, in short runs.</p>
         </div>
       </div>
       <div class="footer-wordmark" aria-hidden="true">ARTarual</div>
       <div class="footer-bottom">
         <span>&copy; 2026 ARTarual</span>
-        <span>srebro 925 &middot; warszawa</span>
+        <span>silver 925 &middot; warsaw</span>
       </div>
     </div>
   </footer>

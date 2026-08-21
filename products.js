@@ -1,283 +1,293 @@
 /* =============================================================================
-   ARTarual — dane sklepu i konfigurator pierścionka
+   ARTarual — shop data, ring configurator and bag
 
-   ⚠️  WSZYSTKO, CO SIĘ ZMIENIA NA CO DZIEŃ (ceny, kamienie, materiały,
-       czas realizacji, zdjęcia), jest w sekcji "DANE" poniżej.
-       Reszta pliku to logika — normalnie nie trzeba jej ruszać.
+   ⚠️  EVERYTHING THAT CHANGES DAY TO DAY (prices, stones, materials,
+       lead times, photos) lives in the "DATA" section below.
+       The rest of the file is logic — normally you don't need to touch it.
 
-   Ceny są PRZYKŁADOWE — trzeba je podmienić na prawdziwe.
+   PRICES ARE PLACEHOLDERS — swap them for the real ones.
    ============================================================================= */
 
 /* =============================================================================
-   DANE — 1. MATERIAŁY
-   dop  = dopłata do ceny bazowej (zł, może być ujemna)
-   tyg  = ile tygodni dokłada do czasu realizacji
+   DATA — 1. MATERIALS
+   add  = surcharge on the base price (zł, can be negative)
+   wks  = how many weeks it adds to the lead time
    ============================================================================= */
-const MATERIALY = [
-  { id: 'srebro925',  nazwa: 'srebro 925',         opis: 'polerowane, klasyczne',          dop: 0,    tyg: 0, kolor: '#D9D9DE' },
-  { id: 'oksydowane', nazwa: 'srebro oksydowane',  opis: 'przyciemniane, matowe',          dop: 40,   tyg: 0, kolor: '#66666E' },
-  { id: 'zlocone',    nazwa: 'srebro złocone 24k', opis: 'gruba powłoka złota na srebrze', dop: 180,  tyg: 1, kolor: '#E0B143' },
-  { id: 'mosiadz',    nazwa: 'mosiądz',            opis: 'ciepły, żółty, ładnie patynuje', dop: -70,  tyg: 0, kolor: '#C0873C' },
-  { id: 'zloto585',   nazwa: 'złoto 585',          opis: 'pełne złoto, robione od zera',   dop: 1450, tyg: 3, kolor: '#F0C75E' },
+const MATERIALS = [
+  { id: 'silver925', name: 'sterling silver 925',   note: 'polished, classic',              add: 0,    wks: 0, colour: '#D9D9DE' },
+  { id: 'oxidised',  name: 'oxidised silver',       note: 'darkened, matte',                add: 40,   wks: 0, colour: '#66666E' },
+  { id: 'gilded',    name: '24k gold-plated silver',note: 'thick gold layer over silver',   add: 180,  wks: 1, colour: '#E0B143' },
+  { id: 'brass',     name: 'brass',                 note: 'warm, yellow, patinates nicely', add: -70,  wks: 0, colour: '#C0873C' },
+  { id: 'gold585',   name: '14k gold',              note: 'solid gold, made from scratch',  add: 1450, wks: 3, colour: '#F0C75E' },
 ];
 
 /* =============================================================================
-   DANE — 2. KAMIENIE
-   kolory = warianty kolorystyczne danego kamienia (nazwa + próbka koloru)
-   zam    = true → kamień sprowadzany na zamówienie (dokłada tydzień)
+   DATA — 2. STONES
+   colours = colour variants of a given stone (name + swatch)
+   order   = true → stone is ordered in specially (adds a week)
    ============================================================================= */
-const KAMIENIE = [
-  { id: 'brak', nazwa: 'bez kamienia', dop: 0, zam: false, kolory: [] },
+const STONES = [
+  { id: 'none', name: 'no stone', add: 0, order: false, colours: [] },
 
-  { id: 'ksiezycowy', nazwa: 'kamień księżycowy', dop: 120, zam: false, kolory: [
-    { nazwa: 'mleczny biały',     hex: '#EDEAF2' },
-    { nazwa: 'błękitna poświata', hex: '#B6C8E8' },
-    { nazwa: 'brzoskwiniowy',     hex: '#F0C6A4' },
+  { id: 'moonstone', name: 'moonstone', add: 120, order: false, colours: [
+    { name: 'milky white',  hex: '#EDEAF2' },
+    { name: 'blue glow',    hex: '#B6C8E8' },
+    { name: 'peach',        hex: '#F0C6A4' },
   ]},
-  { id: 'ametyst', nazwa: 'ametyst', dop: 140, zam: false, kolory: [
-    { nazwa: 'głęboki fiolet', hex: '#6E3F9E' },
-    { nazwa: 'lawendowy',      hex: '#B49BD8' },
-    { nazwa: 'dymny',          hex: '#7A6A88' },
+  { id: 'amethyst', name: 'amethyst', add: 140, order: false, colours: [
+    { name: 'deep violet',  hex: '#6E3F9E' },
+    { name: 'lavender',     hex: '#B49BD8' },
+    { name: 'smoky',        hex: '#7A6A88' },
   ]},
-  { id: 'labradoryt', nazwa: 'labradoryt', dop: 150, zam: false, kolory: [
-    { nazwa: 'stalowy z błyskiem', hex: '#59697A' },
-    { nazwa: 'zielony połysk',     hex: '#557A66' },
-    { nazwa: 'złocisty',           hex: '#8C7A52' },
+  { id: 'labradorite', name: 'labradorite', add: 150, order: false, colours: [
+    { name: 'steel flash',  hex: '#59697A' },
+    { name: 'green sheen',  hex: '#557A66' },
+    { name: 'golden',       hex: '#8C7A52' },
   ]},
-  { id: 'cytryn', nazwa: 'cytryn', dop: 130, zam: false, kolory: [
-    { nazwa: 'miodowy',   hex: '#DFA236' },
-    { nazwa: 'słomkowy',  hex: '#EFD07A' },
+  { id: 'citrine', name: 'citrine', add: 130, order: false, colours: [
+    { name: 'honey',        hex: '#DFA236' },
+    { name: 'straw',        hex: '#EFD07A' },
   ]},
-  { id: 'granat', nazwa: 'granat', dop: 135, zam: true, kolory: [
-    { nazwa: 'ciemna wiśnia', hex: '#76202D' },
-    { nazwa: 'ceglasty',      hex: '#B0402F' },
+  { id: 'garnet', name: 'garnet', add: 135, order: true, colours: [
+    { name: 'dark cherry',  hex: '#76202D' },
+    { name: 'brick',        hex: '#B0402F' },
   ]},
-  { id: 'turkus', nazwa: 'turkus', dop: 110, zam: false, kolory: [
-    { nazwa: 'jasny błękit',  hex: '#5BB8C2' },
-    { nazwa: 'zielonkawy',    hex: '#3E9080' },
-    { nazwa: 'z matrycą',     hex: '#4E8E92' },
+  { id: 'turquoise', name: 'turquoise', add: 110, order: false, colours: [
+    { name: 'pale blue',    hex: '#5BB8C2' },
+    { name: 'greenish',     hex: '#3E9080' },
+    { name: 'with matrix',  hex: '#4E8E92' },
   ]},
-  { id: 'onyks', nazwa: 'onyks', dop: 100, zam: false, kolory: [
-    { nazwa: 'czarny mat',        hex: '#2C2C31' },
-    { nazwa: 'czarny polerowany', hex: '#141416' },
+  { id: 'onyx', name: 'onyx', add: 100, order: false, colours: [
+    { name: 'matte black',    hex: '#2C2C31' },
+    { name: 'polished black', hex: '#141416' },
   ]},
-  { id: 'perla', nazwa: 'perła słodkowodna', dop: 95, zam: false, kolory: [
-    { nazwa: 'kremowa',       hex: '#F2E8DA' },
-    { nazwa: 'grafitowa',     hex: '#8A8891' },
-    { nazwa: 'różany połysk', hex: '#E8C7CD' },
+  { id: 'pearl', name: 'freshwater pearl', add: 95, order: false, colours: [
+    { name: 'cream',        hex: '#F2E8DA' },
+    { name: 'graphite',     hex: '#8A8891' },
+    { name: 'rose sheen',   hex: '#E8C7CD' },
   ]},
-  { id: 'szafir', nazwa: 'szafir', dop: 620, zam: true, kolory: [
-    { nazwa: 'chabrowy',  hex: '#2B4C8C' },
-    { nazwa: 'stalowy',   hex: '#4A6480' },
+  { id: 'sapphire', name: 'sapphire', add: 620, order: true, colours: [
+    { name: 'cornflower',   hex: '#2B4C8C' },
+    { name: 'steel',        hex: '#4A6480' },
   ]},
 ];
 
 /* =============================================================================
-   DANE — 3. ROZMIARY I CENA WZGLĘDEM ROZMIARU
-   Rozmiar podajemy w skali PL (obwód palca w mm = rozmiar + 40).
-   Im większy pierścionek, tym więcej metalu — stąd dopłata.
+   DATA — 3. SIZES AND SIZE-BASED PRICING
+   Size is given on the PL scale (inner circumference in mm = size + 40).
+   The bigger the ring, the more metal — hence the surcharge.
    ============================================================================= */
-const ROZMIAR_MIN = 8;
-const ROZMIAR_MAX = 24;
+const SIZE_MIN = 8;
+const SIZE_MAX = 24;
 
-const PROGI_ROZMIAROW = [
-  { od: 8,  do: 11, dop: -25, opis: 'drobne'      },
-  { od: 12, do: 15, dop: 0,   opis: 'standardowe' },
-  { od: 16, do: 19, dop: 35,  opis: 'większe'     },
-  { od: 20, do: 24, dop: 75,  opis: 'najszersze'  },
+const SIZE_BANDS = [
+  { from: 8,  to: 11, add: -25, note: 'petite'   },
+  { from: 12, to: 15, add: 0,   note: 'standard' },
+  { from: 16, to: 19, add: 35,  note: 'larger'   },
+  { from: 20, to: 24, add: 75,  note: 'widest'   },
 ];
 
 /* =============================================================================
-   DANE — 4. PIERŚCIONKI
-   cena    = cena bazowa: srebro 925, bez kamienia, rozmiar standardowy (12–15)
-   zdjecia = nazwy plików z folderu zdj/web/ (bez -640.jpg / -1280.jpg)
-   tygMin / tygMax = bazowy czas realizacji w tygodniach
-   domyslny = co ma być wybrane po wejściu na stronę pierścionka
+   DATA — 4. RINGS
+   price  = base price: silver 925, no stone, standard size (12–15)
+   photos = file names from zdj/web/ (without -640.jpg / -1280.jpg)
+   wksMin / wksMax = base lead time in weeks
+   preset = what is selected when you land on the ring page
    ============================================================================= */
-const PIERSCIONKI = [
+const RINGS = [
   {
-    id: 'lawenda', nr: '01', nazwa: 'Lawenda', drop: 1,
-    krotki: 'szeroka, ciężka obrączka z jednym kamieniem',
-    opis: 'Najszersza rzecz, jaką robię — kuta młotkiem, więc każdy egzemplarz łapie światło trochę inaczej. Siedzi na palcu jak coś, co nosisz od lat, nawet pierwszego dnia.',
-    cena: 340, szerokosc: '8 mm', waga: '~9 g', tygMin: 2, tygMax: 3,
-    zdjecia: ['IMG_2841', 'IMG_2869', 'IMG_2165'],
-    domyslny: { material: 'oksydowane', kamien: 'labradoryt', kolor: 0, rozmiar: 14 },
+    id: 'lavender', nr: '01', name: 'Lavender', drop: 1,
+    short: 'wide, heavy ring with a single stone',
+    text: 'The widest thing I make — hammered by hand, so every piece catches the light a little differently. It sits on the finger like something you have worn for years, even on day one.',
+    price: 340, width: '8 mm', weight: '~9 g', wksMin: 2, wksMax: 3,
+    photos: ['IMG_2841', 'IMG_2869', 'IMG_2165'],
+    preset: { material: 'oxidised', stone: 'labradorite', colour: 0, size: 14 },
   },
   {
-    id: 'cytrynowa-trawa', nr: '02', nazwa: 'Cytrynowa Trawa', drop: 1,
-    krotki: 'wąska obrączka, ręcznie polerowana',
-    opis: 'Cienka, gładka, do noszenia po kilka naraz. Robiłam ją jako obrączkę ślubną i została w kolekcji na stałe, bo pasuje właściwie do wszystkiego.',
-    cena: 260, szerokosc: '3 mm', waga: '~4 g', tygMin: 2, tygMax: 3,
-    zdjecia: ['IMG_2231', 'IMG_2233'],
-    domyslny: { material: 'srebro925', kamien: 'cytryn', kolor: 0, rozmiar: 13 },
+    id: 'lemongrass', nr: '02', name: 'Lemongrass', drop: 1,
+    short: 'narrow ring, hand-polished',
+    text: 'Thin, smooth, made for wearing several at once. I made the first one for myself and it never left the collection, because it goes with basically everything.',
+    price: 260, width: '3 mm', weight: '~4 g', wksMin: 2, wksMax: 3,
+    photos: ['IMG_2231', 'IMG_2233'],
+    preset: { material: 'silver925', stone: 'citrine', colour: 0, size: 13 },
   },
   {
-    id: 'malina', nr: '03', nazwa: 'Malina', drop: 1,
-    krotki: 'kamień osadzony w srebrnej koronce',
-    opis: 'Koronka lutowana z cienkiego drutu, kamień siedzi w niej wysoko i mocno rzuca się w oczy. Najbardziej „na wyjście" z całej kolekcji — ale i tak noszę ją do sklepu.',
-    cena: 395, szerokosc: '5 mm', waga: '~6 g', tygMin: 3, tygMax: 4,
-    zdjecia: ['IMG_2845', 'IMG_2858'],
-    domyslny: { material: 'srebro925', kamien: 'granat', kolor: 0, rozmiar: 13 },
+    id: 'raspberry', nr: '03', name: 'Raspberry', drop: 1,
+    short: 'stone set in a silver lattice',
+    text: 'The lattice is soldered from thin wire and the stone sits high in it, so it really catches the eye. The most "going out" piece in the collection — and I still wear it to the corner shop.',
+    price: 395, width: '5 mm', weight: '~6 g', wksMin: 3, wksMax: 4,
+    photos: ['IMG_2845', 'IMG_2858'],
+    preset: { material: 'silver925', stone: 'garnet', colour: 0, size: 13 },
   },
   {
-    id: 'pudrowy-sen', nr: '04', nazwa: 'Pudrowy Sen', drop: 1,
-    krotki: 'cienka, robiona do warstwowania',
-    opis: 'Najlżejsza rzecz, jaką mam. Zaprojektowana tak, żeby nosić ją po trzy, cztery na jednym palcu i żeby nic się nie zaczepiało.',
-    cena: 215, szerokosc: '2 mm', waga: '~3 g', tygMin: 2, tygMax: 2,
-    zdjecia: ['IMG_2870', 'IMG_2836'],
-    domyslny: { material: 'srebro925', kamien: 'brak', kolor: 0, rozmiar: 13 },
+    id: 'powder', nr: '04', name: 'Powder', drop: 1,
+    short: 'thin, made for stacking',
+    text: 'The lightest thing I have. Designed so you can wear three or four on one finger and nothing catches on anything.',
+    price: 215, width: '2 mm', weight: '~3 g', wksMin: 2, wksMax: 2,
+    photos: ['IMG_2870', 'IMG_2836'],
+    preset: { material: 'silver925', stone: 'none', colour: 0, size: 13 },
   },
   {
-    id: 'zachod-slonca', nr: '05', nazwa: 'Zachód Słońca', drop: 1,
-    krotki: 'grawer, złocenie 24k',
-    opis: 'Powierzchnia rytowana ręcznie — kreski nigdy nie wychodzą dwa razy tak samo. Złocenie wchodzi w rowki i po kilku miesiącach robi się z tego naprawdę ładna mapa.',
-    cena: 310, szerokosc: '6 mm', waga: '~7 g', tygMin: 3, tygMax: 4,
-    zdjecia: ['IMG_2850', 'IMG_2849'],
-    domyslny: { material: 'zlocone', kamien: 'brak', kolor: 0, rozmiar: 14 },
+    id: 'sunset', nr: '05', name: 'Sunset', drop: 1,
+    short: 'engraved, 24k gilding',
+    text: 'The surface is engraved by hand — the lines never come out the same way twice. The gilding settles into the grooves and after a few months it turns into a genuinely beautiful map.',
+    price: 310, width: '6 mm', weight: '~7 g', wksMin: 3, wksMax: 4,
+    photos: ['IMG_2850', 'IMG_2849'],
+    preset: { material: 'gilded', stone: 'none', colour: 0, size: 14 },
   },
   {
-    id: 'gleboka-noc', nr: '06', nazwa: 'Głęboka Noc', drop: 2,
-    krotki: 'mocno przyciemniana, z drobnym kamieniem',
-    opis: 'Oksyda wchodzi tu bardzo głęboko, prawie do czerni, a kamień zostaje jedynym jasnym punktem. Z czasem wypukłości się przecierają i wraca z nich srebro.',
-    cena: 355, szerokosc: '6 mm', waga: '~7 g', tygMin: 3, tygMax: 4,
-    zdjecia: ['IMG_2863', 'IMG_2847'],
-    domyslny: { material: 'oksydowane', kamien: 'ksiezycowy', kolor: 1, rozmiar: 14 },
+    id: 'midnight', nr: '06', name: 'Midnight', drop: 2,
+    short: 'deeply darkened, with a small stone',
+    text: 'The oxidisation goes very deep here, almost to black, and the stone stays the only bright point. Over time the raised parts wear back to silver.',
+    price: 355, width: '6 mm', weight: '~7 g', wksMin: 3, wksMax: 4,
+    photos: ['IMG_2863', 'IMG_2847'],
+    preset: { material: 'oxidised', stone: 'moonstone', colour: 1, size: 14 },
   },
   {
-    id: 'poranna-mgla', nr: '07', nazwa: 'Poranna Mgła', drop: 2,
-    krotki: 'matowe srebro z fakturą lnu',
-    opis: 'Fakturę odbijam z prawdziwego kawałka lnu, więc splot jest nierówny tam, gdzie tkanina była nierówna. Matowa, nie błyszczy się na zdjęciach i o to chodziło.',
-    cena: 285, szerokosc: '5 mm', waga: '~6 g', tygMin: 2, tygMax: 3,
-    zdjecia: ['IMG_2262', 'IMG_2842'],
-    domyslny: { material: 'srebro925', kamien: 'perla', kolor: 0, rozmiar: 13 },
+    id: 'morning-mist', nr: '07', name: 'Morning Mist', drop: 2,
+    short: 'matte silver with a linen texture',
+    text: 'I press the texture from a real piece of linen, so the weave is uneven exactly where the fabric was uneven. Matte — it does not flash in photos, and that was the point.',
+    price: 285, width: '5 mm', weight: '~6 g', wksMin: 2, wksMax: 3,
+    photos: ['IMG_2262', 'IMG_2842'],
+    preset: { material: 'silver925', stone: 'pearl', colour: 0, size: 13 },
   },
   {
-    id: 'limonkowy-chwast', nr: '08', nazwa: 'Limonkowy Chwast', drop: 2,
-    krotki: 'nieregularny kształt, jakby wyrósł',
-    opis: 'Zaczęła się od wosku, który zgniotłam ze złości, i wyszła z tego moja ulubiona forma. Żaden egzemplarz nie jest taki sam — nie da się tego powtórzyć.',
-    cena: 330, szerokosc: '4–9 mm', waga: '~8 g', tygMin: 3, tygMax: 4,
-    zdjecia: ['IMG_2866', 'IMG_2861'],
-    domyslny: { material: 'srebro925', kamien: 'turkus', kolor: 0, rozmiar: 14 },
+    id: 'wild-lime', nr: '08', name: 'Wild Lime', drop: 2,
+    short: 'irregular shape, like it grew there',
+    text: 'It started as a piece of wax I crushed out of frustration, and it turned into my favourite form. No two pieces are the same — it cannot be repeated.',
+    price: 330, width: '4–9 mm', weight: '~8 g', wksMin: 3, wksMax: 4,
+    photos: ['IMG_2866', 'IMG_2861'],
+    preset: { material: 'silver925', stone: 'turquoise', colour: 0, size: 14 },
   },
   {
-    id: 'wieczorny-amarant', nr: '09', nazwa: 'Wieczorny Amarant', drop: 2,
-    krotki: 'rzeźbiona, z inicjałem na zamówienie',
-    opis: 'Sygnet z płaską główką, na której mogę wyryć inicjał, datę albo cokolwiek, co da się zmieścić na dziesięciu milimetrach. Napisz w zamówieniu, co ma tam być.',
-    cena: 420, szerokosc: '10 mm główka', waga: '~11 g', tygMin: 3, tygMax: 5,
-    zdjecia: ['IMG_2862', 'IMG_2843'],
-    domyslny: { material: 'srebro925', kamien: 'onyks', kolor: 0, rozmiar: 15 },
+    id: 'amaranth', nr: '09', name: 'Amaranth', drop: 2,
+    short: 'carved signet, initial to order',
+    text: 'A signet with a flat face where I can engrave an initial, a date, or anything that fits into ten millimetres. Tell me in the order what it should say.',
+    price: 420, width: '10 mm face', weight: '~11 g', wksMin: 3, wksMax: 5,
+    photos: ['IMG_2862', 'IMG_2843'],
+    preset: { material: 'silver925', stone: 'onyx', colour: 0, size: 15 },
   },
 ];
 
 /* =============================================================================
-   DANE — 5. DROPY (kolekcje w menu "sklep")
+   DATA — 5. DROPS (collections under the "shop" menu)
    ============================================================================= */
-const DROPY = {
-  1: { nazwa: 'drop 1', podtytul: 'lato / codzienne', opis: 'Pięć rzeczy, które robię najczęściej i które najczęściej wracają do mnie na zdjęciach od Was. Wszystkie do zrobienia w Twoim rozmiarze i materiale.' },
-  2: { nazwa: 'drop 2', podtytul: 'jesień / cięższe formy', opis: 'Nowsza, trochę mroczniejsza czwórka — więcej oksydy, więcej faktury i pierwszy sygnet z grawerem.' },
+const DROPS = {
+  1: { name: 'drop 1', subtitle: 'summer / everyday', text: 'The five pieces I make most often, and the ones that most often come back to me in your photos. All of them can be made in your size and material.' },
+  2: { name: 'drop 2', subtitle: 'autumn / heavier forms', text: 'A newer, slightly darker four — more oxidisation, more texture, and the first engraved signet.' },
 };
 
 /* =============================================================================
-   MAIL, POD KTÓRY IDĄ ZAMÓWIENIA
+   CONTACT — orders land here
    ============================================================================= */
-const MAIL_ZAMOWIENIA = 'hej@artarual.pl';
+const ORDER_EMAIL = 'artarual1@gmail.com';
+const INSTAGRAM   = 'artarual.jewellery';
+const INSTAGRAM_URL = 'https://www.instagram.com/artarual.jewellery/';
 
 
 /* =============================================================================
-   =============  LOGIKA — poniżej normalnie nie trzeba nic zmieniać  ==========
+   =============  LOGIC — normally nothing below needs changing  ==============
    ============================================================================= */
 
-const ZDJ = 'zdj/web/';
+const PHOTO_DIR = 'zdj/web/';
 
-function fotoSrc(nazwa, w) { return `${ZDJ}${nazwa}-${w}.jpg`; }
+function photoSrc(name, w) { return `${PHOTO_DIR}${name}-${w}.jpg`; }
 
-/** <img> z srcset — przeglądarka sama dobiera 400 / 640 / 1280 px. */
-function fotoTag(nazwa, alt, sizes, klasa) {
-  return `<img src="${fotoSrc(nazwa, 640)}"
-    srcset="${fotoSrc(nazwa, 400)} 400w, ${fotoSrc(nazwa, 640)} 640w, ${fotoSrc(nazwa, 1280)} 1280w"
-    sizes="${sizes}" alt="${alt}" loading="lazy" decoding="async"${klasa ? ` class="${klasa}"` : ''}>`;
+/** <img> with srcset — the browser picks 400 / 640 / 1280 px itself. */
+function photoTag(name, alt, sizes, cls) {
+  return `<img src="${photoSrc(name, 640)}"
+    srcset="${photoSrc(name, 400)} 400w, ${photoSrc(name, 640)} 640w, ${photoSrc(name, 1280)} 1280w"
+    sizes="${sizes}" alt="${alt}" loading="lazy" decoding="async"${cls ? ` class="${cls}"` : ''}>`;
 }
 
 function zl(n) { return `${Math.round(n).toLocaleString('pl-PL')} zł`; }
 
-function tygodnie(n) {
-  if (n === 1) return 'tydzień';
-  const j = n % 10, d = n % 100;
-  if (j >= 2 && j <= 4 && !(d >= 12 && d <= 14)) return 'tygodnie';
-  return 'tygodni';
+function weeks(n) { return n === 1 ? '1 week' : `${n} weeks`; }
+
+function weekRange(min, max) {
+  return min === max ? weeks(min) : `${min}–${max} weeks`;
 }
 
-function zakresTygodni(min, max) {
-  return min === max ? `${min} ${tygodnie(min)}` : `${min}–${max} ${tygodnie(max)}`;
+const findMaterial = id => MATERIALS.find(m => m.id === id) || MATERIALS[0];
+const findStone    = id => STONES.find(s => s.id === id)    || STONES[0];
+const findRing     = id => RINGS.find(r => r.id === id);
+
+function sizeBand(size) {
+  return SIZE_BANDS.find(b => size >= b.from && size <= b.to) || SIZE_BANDS[1];
 }
 
-const znajdzMaterial = id => MATERIALY.find(m => m.id === id) || MATERIALY[0];
-const znajdzKamien  = id => KAMIENIE.find(k => k.id === id)  || KAMIENIE[0];
-const znajdzPierscionek = id => PIERSCIONKI.find(p => p.id === id);
-
-function progRozmiaru(rozmiar) {
-  return PROGI_ROZMIAROW.find(p => rozmiar >= p.od && rozmiar <= p.do) || PROGI_ROZMIAROW[1];
+function calcPrice(ring, materialId, stoneId, size) {
+  return ring.price
+    + findMaterial(materialId).add
+    + findStone(stoneId).add
+    + sizeBand(size).add;
 }
 
-/** Pełna cena dla konkretnej konfiguracji. */
-function policzCene(p, materialId, kamienId, rozmiar) {
-  return p.cena
-    + znajdzMaterial(materialId).dop
-    + znajdzKamien(kamienId).dop
-    + progRozmiaru(rozmiar).dop;
+function priceFrom(ring) {
+  // cheapest sensible combination: no stone, smallest band, cheapest material
+  const cheapest = MATERIALS.reduce((a, b) => (a.add <= b.add ? a : b));
+  return ring.price + cheapest.add + SIZE_BANDS[0].add;
 }
 
-/** Najniższa możliwa cena — do etykiety „od …” na listingu. */
-function cenaOd(p) {
-  const najtanszyMaterial = Math.min(...MATERIALY.map(m => m.dop));
-  const najtanszyProg = Math.min(...PROGI_ROZMIAROW.map(s => s.dop));
-  return p.cena + najtanszyMaterial + najtanszyProg;
-}
-
-/** Czas realizacji dla konfiguracji, jako gotowy tekst. */
-function policzCzas(p, materialId, kamienId) {
-  const m = znajdzMaterial(materialId);
-  const k = znajdzKamien(kamienId);
-  let min = p.tygMin + m.tyg;
-  let max = p.tygMax + m.tyg;
-  if (k.zam) { min += 1; max += 2; }
-  return zakresTygodni(min, max);
+function calcLeadTime(ring, materialId, stoneId) {
+  const m = findMaterial(materialId);
+  const s = findStone(stoneId);
+  let min = ring.wksMin + m.wks;
+  let max = ring.wksMax + m.wks;
+  if (s.order) { min += 1; max += 2; }
+  return weekRange(min, max);
 }
 
 
 /* -----------------------------------------------------------------------------
-   Listing pierścionków (strona główna, dropy)
+   Ring listing (home page, drops, collection)
    ----------------------------------------------------------------------------- */
-/** Podpis pod nazwą: materiał domyślny + kamień — jak "925 Sterling Silver / Swarovski". */
-function podpisMaterialu(p) {
-  const m = znajdzMaterial(p.domyslny.material);
-  const k = znajdzKamien(p.domyslny.kamien);
-  return k.id === 'brak' ? m.nazwa : `${m.nazwa} / ${k.nazwa}`;
+
+/** Caption under the name: preset material + stone — like "925 Sterling Silver / Swarovski". */
+function materialCaption(r) {
+  const m = findMaterial(r.preset.material);
+  const s = findStone(r.preset.stone);
+  return s.id === 'none' ? m.name : `${m.name} / ${s.name}`;
 }
 
-function kafelek(p) {
-  const alt = `${p.nazwa} — ${p.krotki}`;
+function tile(r) {
+  const alt = `${r.name} — ${r.short}`;
   const sizes = '(max-width:720px) 46vw, (max-width:1024px) 30vw, 23vw';
-  const drugie = p.zdjecia[1];
+  const second = r.photos[1];
   return `
-    <article class="piece" data-category="drop-${p.drop}">
-      <a href="produkt.html?id=${p.id}" aria-label="${p.nazwa} — zobacz i skonfiguruj">
+    <article class="piece" data-category="drop-${r.drop}">
+      <a href="produkt.html?id=${r.id}" aria-label="${r.name} — view and configure">
         <div class="piece__frame">
-          ${fotoTag(p.zdjecia[0], alt, sizes)}
-          ${drugie ? fotoTag(drugie, '', sizes, 'piece__img--alt') : ''}
+          ${photoTag(r.photos[0], alt, sizes)}
+          ${second ? photoTag(second, '', sizes, 'piece__img--alt') : ''}
         </div>
         <div class="piece__meta">
-          <span class="piece__name">${p.nazwa}</span>
-          <span class="piece__price">od ${zl(cenaOd(p))}</span>
+          <span class="piece__name">${r.name}</span>
+          <span class="piece__price">from ${zl(priceFrom(r))}</span>
         </div>
-        <p class="piece__desc">${podpisMaterialu(p)}</p>
+        <p class="piece__desc">${materialCaption(r)}</p>
       </a>
     </article>`;
 }
 
-/** Filtry nad siatką (kolekcja.html). Podpinane po renderze, bo kafelki
-    powstają dopiero tutaj — script.js odpaliłby się na pustej liście. */
-function wireFiltry() {
+/** Fills every [data-lista] with rings: "all" | "drop:1" | "n:6" */
+function renderLists() {
+  document.querySelectorAll('[data-lista]').forEach(el => {
+    const filter = el.dataset.lista;
+    let list = RINGS;
+    if (filter.startsWith('drop:')) {
+      list = RINGS.filter(r => String(r.drop) === filter.slice(5));
+    } else if (filter.startsWith('n:')) {
+      list = RINGS.slice(0, Number(filter.slice(2)));
+    }
+    el.innerHTML = list.map(tile).join('');
+  });
+  wireFilters();
+}
+
+/** Filters above the grid (kolekcja.html). Wired after render, because the
+    tiles only exist at this point — script.js would run on an empty list. */
+function wireFilters() {
   const btns = document.querySelectorAll('.filter-btn');
   if (!btns.length) return;
   btns.forEach(btn => btn.addEventListener('click', () => {
@@ -291,264 +301,355 @@ function wireFiltry() {
   }));
 }
 
-/** Wypełnia każdy [data-lista] pierścionkami: "all" | "drop:1" | "n:6" */
-function renderListy() {
-  document.querySelectorAll('[data-lista]').forEach(el => {
-    const filtr = el.dataset.lista;
-    let lista = PIERSCIONKI;
-    if (filtr.startsWith('drop:')) {
-      lista = PIERSCIONKI.filter(p => String(p.drop) === filtr.slice(5));
-    } else if (filtr.startsWith('n:')) {
-      lista = PIERSCIONKI.slice(0, Number(filtr.slice(2)));
-    }
-    el.innerHTML = lista.map(kafelek).join('');
+
+/* -----------------------------------------------------------------------------
+   Bag — kept in localStorage. No payments: the whole bag is sent as one email.
+   ----------------------------------------------------------------------------- */
+const BAG_KEY = 'artarual-bag';
+
+function bagRead() {
+  try { return JSON.parse(localStorage.getItem(BAG_KEY)) || []; }
+  catch { return []; }
+}
+function bagWrite(items) {
+  try { localStorage.setItem(BAG_KEY, JSON.stringify(items)); } catch {}
+  bagRefresh();
+}
+function bagAdd(item) { const b = bagRead(); b.push(item); bagWrite(b); }
+function bagRemove(i) { const b = bagRead(); b.splice(i, 1); bagWrite(b); }
+function bagTotal() { return bagRead().reduce((sum, it) => sum + it.price, 0); }
+
+/** Updates the counter in the header and redraws the drawer if it is open. */
+function bagRefresh() {
+  const n = bagRead().length;
+  document.querySelectorAll('[data-bag-count]').forEach(el => { el.textContent = n; });
+  const panel = document.querySelector('#bag-body');
+  if (panel) bagDraw();
+}
+
+function bagMailto() {
+  const items = bagRead();
+  if (!items.length) return '#';
+  const lines = items.map((it, i) => (
+`${i + 1}. ${it.name} (no ${it.nr})
+   material:  ${it.material}
+   stone:     ${it.stone}
+   size:      ${it.size} (${it.size + 40} mm)
+   price:     ${zl(it.price)}
+   lead time: ${it.lead}`
+  )).join('\n\n');
+
+  const body =
+`Hi Laura!
+
+I would like to order:
+
+${lines}
+
+Total: ${zl(bagTotal())}
+
+My details / notes:
+`;
+  return `mailto:${ORDER_EMAIL}?subject=${encodeURIComponent(`Order — ${items.length} ${items.length === 1 ? 'ring' : 'rings'}`)}&body=${encodeURIComponent(body)}`;
+}
+
+function bagDraw() {
+  const body = document.querySelector('#bag-body');
+  const foot = document.querySelector('#bag-foot');
+  if (!body) return;
+  const items = bagRead();
+
+  if (!items.length) {
+    body.innerHTML = '<p class="bag__empty">Your bag is empty. Pick a ring, set it up, and it will land here.</p>';
+    foot.innerHTML = '';
+    return;
+  }
+
+  body.innerHTML = items.map((it, i) => `
+    <div class="bag__item">
+      <div class="bag__thumb">${it.photo ? `<img src="${photoSrc(it.photo, 400)}" alt="">` : ''}</div>
+      <div class="bag__info">
+        <span class="bag__name">${it.name}</span>
+        <p class="bag__spec">${it.material}<br>${it.stone}<br>size ${it.size} · ${it.lead}</p>
+      </div>
+      <div class="bag__side">
+        <span class="bag__price">${zl(it.price)}</span>
+        <button type="button" class="bag__remove" data-remove="${i}">remove</button>
+      </div>
+    </div>`).join('');
+
+  foot.innerHTML = `
+    <div class="bag__total"><span>total</span><span>${zl(bagTotal())}</span></div>
+    <a href="${bagMailto()}" class="btn btn-primary bag__send">send order by email</a>
+    <p class="bag__note">No payment here — I confirm every order personally by email, so we can agree the size and details before I start.</p>`;
+
+  body.querySelectorAll('[data-remove]').forEach(b => {
+    b.addEventListener('click', () => bagRemove(Number(b.dataset.remove)));
   });
-  wireFiltry();
+}
+
+function bagOpen()  { document.querySelector('#bag')?.classList.add('open'); bagDraw(); }
+function bagClose() { document.querySelector('#bag')?.classList.remove('open'); }
+
+/** Builds the drawer once and wires the header trigger. */
+function initBag() {
+  if (!document.querySelector('#bag')) {
+    const el = document.createElement('div');
+    el.id = 'bag';
+    el.className = 'bag';
+    el.innerHTML = `
+      <div class="bag__backdrop" data-bag-close></div>
+      <aside class="bag__panel" role="dialog" aria-modal="true" aria-label="Bag">
+        <header class="bag__head">
+          <span>bag (<span data-bag-count>0</span>)</span>
+          <button type="button" class="bag__close" data-bag-close aria-label="Close bag">✕</button>
+        </header>
+        <div class="bag__body" id="bag-body"></div>
+        <footer class="bag__foot" id="bag-foot"></footer>
+      </aside>`;
+    document.body.appendChild(el);
+    el.querySelectorAll('[data-bag-close]').forEach(b => b.addEventListener('click', bagClose));
+  }
+
+  document.querySelectorAll('[data-bag-open]').forEach(b => {
+    b.addEventListener('click', e => { e.preventDefault(); bagOpen(); });
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') bagClose(); });
+  bagRefresh();
 }
 
 
 /* -----------------------------------------------------------------------------
-   Strona pierścionka — konfigurator
+   Ring page — configurator
    ----------------------------------------------------------------------------- */
-function renderProdukt() {
+function renderRing() {
   const root = document.querySelector('#produkt');
   if (!root) return;
 
   const id = new URLSearchParams(location.search).get('id');
-  const p = znajdzPierscionek(id) || PIERSCIONKI[0];
+  const r = findRing(id) || RINGS[0];
 
-  document.title = `${p.nazwa} — ARTarual`;
+  document.title = `${r.name} — ARTarual`;
 
-  // stan konfiguratora
-  const d = p.domyslny || {};
-  const stan = {
-    material: znajdzMaterial(d.material).id,
-    kamien:   znajdzKamien(d.kamien).id,
-    kolor:    d.kolor || 0,
-    rozmiar:  d.rozmiar || 13,
-    foto:     0,
+  const preset = r.preset;
+  const state = {
+    material: findMaterial(preset.material).id,
+    stone:    findStone(preset.stone).id,
+    colour:   preset.colour || 0,
+    size:     preset.size || 13,
+    photo:    0,
   };
 
   root.innerHTML = `
     <div class="product">
       <div class="pgal">
         <div class="pgal__main" id="pgal-main"></div>
-        ${p.zdjecia.length > 1 ? '<div class="pgal__thumbs" id="pgal-thumbs" role="tablist" aria-label="Zdjęcia pierścionka"></div>' : ''}
+        ${r.photos.length > 1 ? '<div class="pgal__thumbs" id="pgal-thumbs" role="tablist" aria-label="Ring photos"></div>' : ''}
       </div>
 
       <div class="product__cfg">
         <div class="product__head">
-          <span class="product__no">№ ${p.nr} · ${DROPY[p.drop] ? DROPY[p.drop].nazwa : ''}</span>
-          <h1>${p.nazwa}</h1>
-          <p class="product__lede">${p.opis}</p>
+          <span class="product__no">no ${r.nr} · ${DROPS[r.drop] ? DROPS[r.drop].name : ''}</span>
+          <h1>${r.name}</h1>
+          <p class="product__lede">${r.text}</p>
           <div class="product-facts">
-            <div><strong>szerokość</strong>${p.szerokosc}</div>
-            <div><strong>waga</strong>${p.waga}</div>
-            <div><strong>robione</strong>ręcznie, w Warszawie</div>
+            <div><strong>width</strong>${r.width}</div>
+            <div><strong>weight</strong>${r.weight}</div>
+            <div><strong>made</strong>by hand, in Warsaw</div>
           </div>
         </div>
 
         <div class="opt">
-          <div class="opt__head"><h3>materiał</h3><span class="opt__pick" id="pick-material"></span></div>
-          <div class="chips" id="chips-material"></div>
+          <label class="opt__label" for="sel-material">material</label>
+          <div class="select-wrap"><select id="sel-material"></select></div>
         </div>
 
         <div class="opt">
-          <div class="opt__head"><h3>kamień</h3><span class="opt__pick" id="pick-kamien"></span></div>
-          <div class="chips" id="chips-kamien"></div>
+          <label class="opt__label" for="sel-stone">stone</label>
+          <div class="select-wrap"><select id="sel-stone"></select></div>
         </div>
 
-        <div class="opt" id="opt-kolor">
-          <div class="opt__head"><h3>kolor kamienia</h3><span class="opt__pick" id="pick-kolor"></span></div>
-          <div class="chips" id="chips-kolor"></div>
+        <div class="opt" id="opt-colour">
+          <label class="opt__label" for="sel-colour">stone colour</label>
+          <div class="select-wrap"><select id="sel-colour"></select></div>
         </div>
 
         <div class="opt">
-          <div class="opt__head"><h3>rozmiar</h3><span class="opt__pick" id="pick-rozmiar"></span></div>
+          <div class="opt__head"><h3>size</h3><span class="opt__pick" id="pick-size"></span></div>
           <div class="sizes" id="sizes"></div>
-          <p class="size-help">Nie znasz swojego rozmiaru? <a href="rozmiary.html" class="text-link">zmierz go w 2 minuty →</a></p>
+          <p class="size-help">Not sure of your size? <a href="rozmiary.html" class="text-link">measure it in 2 minutes</a></p>
         </div>
 
         <div class="summary">
           <div class="summary__price">
-            <span class="val" id="cena">—</span>
-            <span class="from">za sztukę</span>
+            <span class="val" id="price">—</span>
+            <span class="from">per piece</span>
           </div>
-          <ul class="summary__rows" id="rozpiska"></ul>
-          <span class="lead-badge">⏳ czas realizacji: <span id="czas">—</span></span>
+          <ul class="summary__rows" id="breakdown"></ul>
+          <span class="lead-badge">lead time: <span id="lead">—</span></span>
           <div class="btn-row">
-            <a href="#" class="btn btn-primary" id="zamow">zamów mailem →</a>
-            <button type="button" class="btn btn-ghost" id="kopiuj">skopiuj konfigurację</button>
-            <span class="copied" id="skopiowano">skopiowane!</span>
+            <button type="button" class="btn btn-primary" id="add-to-bag">add to bag</button>
+            <button type="button" class="btn btn-ghost" id="copy">copy configuration</button>
+            <span class="copied" id="copied">copied</span>
           </div>
-          <p class="summary__note">Nie ma tu koszyka — zamówienie potwierdzam osobiście mailem, żebyśmy zdążyły dogadać rozmiar i detale, zanim cokolwiek zacznę robić.</p>
+          <p class="summary__note">There is no payment here — everything in the bag goes to me as one email, and I confirm it personally before I start making anything.</p>
         </div>
       </div>
     </div>`;
 
-  /* --- zdjęcia --- */
+  /* --- photos --- */
   const elMain = root.querySelector('#pgal-main');
   const elThumbs = root.querySelector('#pgal-thumbs');
 
-  function rysujZdjecia() {
-    elMain.innerHTML = fotoTag(p.zdjecia[stan.foto], `${p.nazwa} — zdjęcie ${stan.foto + 1}`, '(max-width:1080px) 92vw, 46vw');
+  function drawPhotos() {
+    elMain.innerHTML = photoTag(r.photos[state.photo], `${r.name} — photo ${state.photo + 1}`, '(max-width:1080px) 92vw, 46vw');
     if (!elThumbs) return;
-    elThumbs.innerHTML = p.zdjecia.map((z, i) => `
-      <button type="button" role="tab" aria-selected="${i === stan.foto}" aria-label="Zdjęcie ${i + 1}">
-        <img src="${fotoSrc(z, 400)}" alt="" loading="lazy">
+    elThumbs.innerHTML = r.photos.map((p, i) => `
+      <button type="button" role="tab" aria-selected="${i === state.photo}" aria-label="Photo ${i + 1}">
+        <img src="${photoSrc(p, 400)}" alt="" loading="lazy">
       </button>`).join('');
     elThumbs.querySelectorAll('button').forEach((b, i) => {
-      b.addEventListener('click', () => { stan.foto = i; rysujZdjecia(); });
+      b.addEventListener('click', () => { state.photo = i; drawPhotos(); });
     });
   }
 
-  elMain.addEventListener('click', () => otworzLightbox(fotoSrc(p.zdjecia[stan.foto], 1280), p.nazwa));
+  elMain.addEventListener('click', () => openLightbox(photoSrc(r.photos[state.photo], 1280), r.name));
 
-  /* --- opcje --- */
-  const elMat = root.querySelector('#chips-material');
-  const elKam = root.querySelector('#chips-kamien');
-  const elKol = root.querySelector('#chips-kolor');
-  const elOptKol = root.querySelector('#opt-kolor');
-  const elSizes = root.querySelector('#sizes');
+  /* --- options --- */
+  const selMat    = root.querySelector('#sel-material');
+  const selStone  = root.querySelector('#sel-stone');
+  const selColour = root.querySelector('#sel-colour');
+  const optColour = root.querySelector('#opt-colour');
+  const elSizes   = root.querySelector('#sizes');
 
-  function rysujMaterialy() {
-    elMat.innerHTML = MATERIALY.map(m => `
-      <button type="button" class="chip" data-id="${m.id}" aria-pressed="${m.id === stan.material}" title="${m.opis}">
-        <span class="dot" style="background:${m.kolor}"></span>${m.nazwa}
-        ${m.dop ? `<span class="delta">${m.dop > 0 ? '+' : '−'}${zl(Math.abs(m.dop))}</span>` : ''}
-      </button>`).join('');
-    elMat.querySelectorAll('.chip').forEach(b => b.addEventListener('click', () => {
-      stan.material = b.dataset.id; przelicz();
-    }));
+  function delta(add) {
+    if (!add) return '';
+    return ` (${add > 0 ? '+' : '−'}${zl(Math.abs(add))})`;
   }
 
-  function rysujKamienie() {
-    elKam.innerHTML = KAMIENIE.map(k => `
-      <button type="button" class="chip" data-id="${k.id}" aria-pressed="${k.id === stan.kamien}">
-        ${k.kolory.length ? `<span class="dot" style="background:${k.kolory[0].hex}"></span>` : ''}${k.nazwa}
-        ${k.dop ? `<span class="delta">+${zl(k.dop)}</span>` : ''}
-      </button>`).join('');
-    elKam.querySelectorAll('.chip').forEach(b => b.addEventListener('click', () => {
-      if (stan.kamien !== b.dataset.id) stan.kolor = 0;
-      stan.kamien = b.dataset.id; przelicz();
-    }));
+  function drawMaterials() {
+    selMat.innerHTML = MATERIALS.map(m =>
+      `<option value="${m.id}"${m.id === state.material ? ' selected' : ''}>${m.name}${delta(m.add)}</option>`
+    ).join('');
   }
 
-  function rysujKolory() {
-    const k = znajdzKamien(stan.kamien);
-    if (!k.kolory.length) { elOptKol.style.display = 'none'; return; }
-    elOptKol.style.display = '';
-    if (stan.kolor >= k.kolory.length) stan.kolor = 0;
-    elKol.innerHTML = k.kolory.map((c, i) => `
-      <button type="button" class="chip" data-i="${i}" aria-pressed="${i === stan.kolor}">
-        <span class="dot" style="background:${c.hex}"></span>${c.nazwa}
-      </button>`).join('');
-    elKol.querySelectorAll('.chip').forEach(b => b.addEventListener('click', () => {
-      stan.kolor = Number(b.dataset.i); przelicz();
-    }));
+  function drawStones() {
+    selStone.innerHTML = STONES.map(s =>
+      `<option value="${s.id}"${s.id === state.stone ? ' selected' : ''}>${s.name}${delta(s.add)}</option>`
+    ).join('');
   }
 
-  function rysujRozmiary() {
+  function drawColours() {
+    const s = findStone(state.stone);
+    if (!s.colours.length) { optColour.style.display = 'none'; return; }
+    optColour.style.display = '';
+    if (state.colour >= s.colours.length) state.colour = 0;
+    selColour.innerHTML = s.colours.map((c, i) =>
+      `<option value="${i}"${i === state.colour ? ' selected' : ''}>${c.name}</option>`
+    ).join('');
+  }
+
+  function drawSizes() {
     let html = '';
-    for (let r = ROZMIAR_MIN; r <= ROZMIAR_MAX; r++) {
-      const dop = progRozmiaru(r).dop;
+    for (let s = SIZE_MIN; s <= SIZE_MAX; s++) {
+      const add = sizeBand(s).add;
       html += `
-        <button type="button" class="size-btn" data-r="${r}" aria-pressed="${r === stan.rozmiar}">
-          <span class="n">${r}</span>
-          <span class="mm">${r + 40} mm</span>
-          <span class="d">${dop ? (dop > 0 ? '+' : '−') + Math.abs(dop) + ' zł' : ''}</span>
+        <button type="button" class="size-btn" data-s="${s}" aria-pressed="${s === state.size}">
+          <span class="n">${s}</span>
+          <span class="mm">${s + 40} mm</span>
+          <span class="d">${add ? (add > 0 ? '+' : '−') + Math.abs(add) + ' zł' : ''}</span>
         </button>`;
     }
     elSizes.innerHTML = html;
     elSizes.querySelectorAll('.size-btn').forEach(b => b.addEventListener('click', () => {
-      stan.rozmiar = Number(b.dataset.r); przelicz();
+      state.size = Number(b.dataset.s); recalc();
     }));
   }
 
-  /* --- podsumowanie --- */
-  function opisKonfiguracji() {
-    const m = znajdzMaterial(stan.material);
-    const k = znajdzKamien(stan.kamien);
-    const kolor = k.kolory.length ? k.kolory[stan.kolor] : null;
+  selMat.addEventListener('change', () => { state.material = selMat.value; recalc(); });
+  selStone.addEventListener('change', () => { state.stone = selStone.value; state.colour = 0; recalc(); });
+  selColour.addEventListener('change', () => { state.colour = Number(selColour.value); recalc(); });
+
+  /* --- summary --- */
+  function config() {
+    const m = findMaterial(state.material);
+    const s = findStone(state.stone);
+    const colour = s.colours.length ? s.colours[state.colour] : null;
     return {
-      m, k, kolor,
-      cena: policzCene(p, stan.material, stan.kamien, stan.rozmiar),
-      czas: policzCzas(p, stan.material, stan.kamien),
-      kamienTekst: k.id === 'brak' ? 'bez kamienia' : `${k.nazwa}${kolor ? ` (${kolor.nazwa})` : ''}`,
+      m, s, colour,
+      price: calcPrice(r, state.material, state.stone, state.size),
+      lead: calcLeadTime(r, state.material, state.stone),
+      stoneText: s.id === 'none' ? 'no stone' : `${s.name}${colour ? ` (${colour.name})` : ''}`,
     };
   }
 
-  function przelicz() {
-    rysujMaterialy(); rysujKamienie(); rysujKolory(); rysujRozmiary(); rysujZdjecia();
+  function recalc() {
+    drawMaterials(); drawStones(); drawColours(); drawSizes(); drawPhotos();
 
-    const c = opisKonfiguracji();
+    const c = config();
+    root.querySelector('#pick-size').textContent = `${state.size} · ${state.size + 40} mm`;
+    root.querySelector('#price').textContent = zl(c.price);
+    root.querySelector('#lead').textContent = c.lead;
 
-    root.querySelector('#pick-material').textContent = c.m.nazwa;
-    root.querySelector('#pick-kamien').textContent = c.k.nazwa;
-    const pickKolor = root.querySelector('#pick-kolor');
-    if (pickKolor) pickKolor.textContent = c.kolor ? c.kolor.nazwa : '';
-    root.querySelector('#pick-rozmiar').textContent = `${stan.rozmiar} · obwód ${stan.rozmiar + 40} mm`;
+    root.querySelector('#breakdown').innerHTML = `
+      <li><span class="k">material</span><span class="v">${c.m.name}</span></li>
+      <li><span class="k">stone</span><span class="v">${c.stoneText}</span></li>
+      <li><span class="k">size</span><span class="v">${state.size} (${state.size + 40} mm) · ${sizeBand(state.size).note}</span></li>
+      <li><span class="k">width</span><span class="v">${r.width}</span></li>`;
 
-    root.querySelector('#cena').textContent = zl(c.cena);
-    root.querySelector('#czas').textContent = c.czas;
-
-    root.querySelector('#rozpiska').innerHTML = `
-      <li><span class="k">materiał</span><span class="v">${c.m.nazwa}</span></li>
-      <li><span class="k">kamień</span><span class="v">${c.kamienTekst}</span></li>
-      <li><span class="k">rozmiar</span><span class="v">${stan.rozmiar} (${stan.rozmiar + 40} mm) · ${progRozmiaru(stan.rozmiar).opis}</span></li>
-      <li><span class="k">szerokość</span><span class="v">${p.szerokosc}</span></li>`;
-
-    const tresc =
-`Cześć Lauro!
-
-Chciał(a)bym zamówić:
-
-  pierścionek:  ${p.nazwa} (№ ${p.nr})
-  materiał:     ${c.m.nazwa}
-  kamień:       ${c.kamienTekst}
-  rozmiar:      ${stan.rozmiar} (obwód ${stan.rozmiar + 40} mm)
-
-  cena:         ${zl(c.cena)}
-  czas realiz.: ${c.czas}
-
-Moje dane / uwagi:
-`;
-    root.querySelector('#zamow').href =
-      `mailto:${MAIL_ZAMOWIENIA}?subject=${encodeURIComponent(`Zamówienie: ${p.nazwa} (№ ${p.nr})`)}&body=${encodeURIComponent(tresc)}`;
-    root.querySelector('#kopiuj').dataset.tresc = tresc;
+    const text =
+`Ring:      ${r.name} (no ${r.nr})
+Material:  ${c.m.name}
+Stone:     ${c.stoneText}
+Size:      ${state.size} (${state.size + 40} mm)
+Price:     ${zl(c.price)}
+Lead time: ${c.lead}`;
+    root.querySelector('#copy').dataset.text = text;
   }
 
-  root.querySelector('#kopiuj').addEventListener('click', e => {
-    const txt = e.currentTarget.dataset.tresc || '';
-    const ok = root.querySelector('#skopiowano');
+  root.querySelector('#copy').addEventListener('click', e => {
+    const txt = e.currentTarget.dataset.text || '';
+    const ok = root.querySelector('#copied');
     navigator.clipboard?.writeText(txt).then(() => {
       ok.classList.add('show');
       setTimeout(() => ok.classList.remove('show'), 1800);
     }).catch(() => {});
   });
 
-  przelicz();
-  renderPodobne(p);
+  root.querySelector('#add-to-bag').addEventListener('click', e => {
+    const c = config();
+    bagAdd({
+      id: r.id, name: r.name, nr: r.nr, photo: r.photos[0],
+      material: c.m.name, stone: c.stoneText, size: state.size,
+      price: c.price, lead: c.lead,
+    });
+    const btn = e.currentTarget;
+    btn.textContent = 'added';
+    setTimeout(() => { btn.textContent = 'add to bag'; }, 1400);
+    bagOpen();
+  });
+
+  recalc();
+  renderRelated(r);
 }
 
-/** „Zobacz też" — trzy inne pierścionki pod konfiguratorem. */
-function renderPodobne(p) {
+/** "You may also like" — three other rings under the configurator. */
+function renderRelated(r) {
   const el = document.querySelector('#podobne');
   if (!el) return;
-  const inne = PIERSCIONKI.filter(x => x.id !== p.id).slice(0, 3);
-  el.innerHTML = inne.map(kafelek).join('');
+  el.innerHTML = RINGS.filter(x => x.id !== r.id).slice(0, 3).map(tile).join('');
 }
 
 
 /* -----------------------------------------------------------------------------
-   Lightbox (zdjęcia na pełny ekran)
+   Lightbox
    ----------------------------------------------------------------------------- */
-function otworzLightbox(src, alt) {
+function openLightbox(src, alt) {
   let lb = document.querySelector('.lightbox');
   if (!lb) {
     lb = document.createElement('div');
     lb.className = 'lightbox';
-    lb.innerHTML = `<button class="lightbox__close" aria-label="Zamknij">✕</button><img alt="">`;
+    lb.innerHTML = `<button class="lightbox__close" aria-label="Close">✕</button><img alt="">`;
     document.body.appendChild(lb);
     lb.addEventListener('click', e => {
       if (e.target === lb || e.target.closest('.lightbox__close')) lb.classList.remove('open');
@@ -563,12 +664,13 @@ function otworzLightbox(src, alt) {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  renderListy();
-  renderProdukt();
+  renderLists();
+  renderRing();
+  initBag();
 
-  // zdjęcia oznaczone [data-zoom] też otwierają się na pełny ekran
+  // photos marked [data-zoom] also open full screen
   document.querySelectorAll('[data-zoom]').forEach(el => {
     el.style.cursor = 'zoom-in';
-    el.addEventListener('click', () => otworzLightbox(el.dataset.zoom, el.querySelector('img')?.alt));
+    el.addEventListener('click', () => openLightbox(el.dataset.zoom, el.querySelector('img')?.alt));
   });
 });

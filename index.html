@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ARTarual — pierścionki robione ręcznie</title>
-<meta name="description" content="ARTarual to portfolio Laury — pierścionki i obrączki projektowane i wykuwane ręcznie, w krótkich seriach, w Warszawie.">
+<title>ARTarual — handmade rings and signets</title>
+<meta name="description" content="ARTarual — silver rings and signets designed and forged by hand in Warsaw, in short runs. You pick the metal, the stone and the size.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800&family=Tinos:wght@400;700&display=swap" rel="stylesheet">
@@ -13,33 +13,34 @@
 <body>
 
   <div class="topbar">
-    <span>robione ręcznie w Warszawie &nbsp;·&nbsp; krótkie serie &nbsp;·&nbsp; każdy pierścionek w Twoim rozmiarze</span>
+    <span>jewellery for modern princesses</span>
   </div>
 
   <header class="site-header">
     <div class="wrap">
-      <button class="nav-toggle" aria-label="Otwórz menu" aria-expanded="false" aria-controls="main-nav">
+      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="main-nav">
         <span></span><span></span><span></span>
       </button>
       <nav class="main-nav" id="main-nav">
         <ul>
-          <li><a href="o-nas.html">o mnie</a></li>
+          <li><a href="o-nas.html">About me</a></li>
           <li class="has-sub">
-            <button type="button" class="sub-toggle" aria-expanded="false">sklep <span class="caret">&#9660;</span></button>
+            <button type="button" class="sub-toggle" aria-expanded="false">Shop <span class="caret">&#9660;</span></button>
             <ul class="subnav">
-              <li><a href="drop-1.html">drop 1</a></li>
-              <li><a href="drop-2.html">drop 2</a></li>
-              <li><a href="kolekcja.html">wszystko naraz</a></li>
+              <li><a href="drop-1.html">Drop 1</a></li>
+              <li><a href="drop-2.html">Drop 2</a></li>
+              <li><a href="kolekcja.html">Everything</a></li>
             </ul>
           </li>
-          <li><a href="customs.html">customs</a></li>
-          <li><a href="rozmiary.html">rozmiarówka</a></li>
+          <li><a href="customs.html">Customs</a></li>
+          <li><a href="rozmiary.html">Size guide</a></li>
         </ul>
       </nav>
-      <a href="index.html" class="logo" aria-label="ARTarual — strona główna"><img src="logo.png" alt="ARTarual"></a>
+      <a href="index.html" class="logo" aria-label="ARTarual — home"><img src="logo.png" alt="ARTarual"></a>
       <div class="nav-actions">
-        <a href="kontakt.html">kontakt</a>
-        <a href="#" rel="noopener">Instagram</a>
+        <a href="kontakt.html">Contact</a>
+        <a href="https://www.instagram.com/artarual.jewellery/" target="_blank" rel="noopener">Instagram</a>
+        <a href="#" data-bag-open>Bag (<span data-bag-count>0</span>)</a>
       </div>
     </div>
   </header>
@@ -47,76 +48,90 @@
 
   <main>
 
-    <!-- baner otwierający: dwa zdjęcia na całą szerokość, tekst na wierzchu -->
+    <!-- opening banner: two full-bleed photos with the text on top -->
     <section class="hero-band">
-      <figure><img src="zdj/web/IMG_2165-1280.jpg" alt="Dłoń z pierścionkami ARTarual przy twarzy" fetchpriority="high"></figure>
-      <figure><img src="zdj/web/IMG_2841-1280.jpg" alt="Szeroka, kuta obrączka ze srebra i pierścionek z kamieniem" fetchpriority="high"></figure>
+      <figure><img src="zdj/web/IMG_2165-1280.jpg" alt="A hand wearing ARTarual rings" fetchpriority="high"></figure>
+      <figure><img src="zdj/web/IMG_2841-1280.jpg" alt="A wide, hammered silver ring with a stone" fetchpriority="high"></figure>
       <div class="hero-band__overlay">
-        <h1 class="hero-band__title">robione ręcznie</h1>
-        <p class="hero-band__sub">Pierścionki z jednej pracowni w Warszawie. Materiał, kamień i rozmiar składasz sama.</p>
-        <a href="kolekcja.html" class="btn-pill">zobacz kolekcję</a>
+        <h1 class="hero-band__title">made by hand</h1>
+        <p class="hero-band__sub">Rings and signets from a one-person studio in Warsaw. You pick the metal, the stone and the size.</p>
+        <a href="kolekcja.html" class="btn-pill">see the collection</a>
       </div>
     </section>
 
+    <!-- deliberately smaller tiles: this is a taster, the catalogue lives on kolekcja.html -->
     <section class="section">
-      <div class="wrap section__inner">
-        <div class="sec-head"><h2>nowe</h2></div>
-        <div class="gallery gallery--loose" data-lista="n:8"></div>
-        <div class="gallery-more"><a href="kolekcja.html" class="text-link">zobacz wszystkie</a></div>
+      <div class="wrap wrap--narrow section__inner">
+        <div class="sec-head"><h2>new</h2></div>
+        <div class="gallery gallery--compact" data-lista="n:8"></div>
+        <div class="gallery-more"><a href="kolekcja.html" class="text-link">see everything</a></div>
       </div>
     </section>
 
-    <!-- kolaż: statyczny, nic się nie przewija -->
     <section class="section" style="padding-top:0">
       <div class="wrap">
         <div class="collage">
-          <figure class="tall"><img src="zdj/web/IMG_2862-640.jpg" srcset="zdj/web/IMG_2862-400.jpg 400w, zdj/web/IMG_2862-640.jpg 640w, zdj/web/IMG_2862-1280.jpg 1280w" sizes="(max-width:720px) 46vw, 25vw" alt="Sygnet z onyksem noszony na co dzień" loading="lazy" decoding="async"></figure>
-          <figure><img src="zdj/web/IMG_2849-640.jpg" srcset="zdj/web/IMG_2849-400.jpg 400w, zdj/web/IMG_2849-640.jpg 640w, zdj/web/IMG_2849-1280.jpg 1280w" sizes="(max-width:720px) 46vw, 25vw" alt="Pierścionki ARTarual w codziennej sytuacji" loading="lazy" decoding="async"></figure>
-          <figure><img src="zdj/web/IMG_2860-640.jpg" srcset="zdj/web/IMG_2860-400.jpg 400w, zdj/web/IMG_2860-640.jpg 640w, zdj/web/IMG_2860-1280.jpg 1280w" sizes="(max-width:720px) 46vw, 25vw" alt="Srebrne pierścionki na dłoni" loading="lazy" decoding="async"></figure>
-          <figure class="tall"><img src="zdj/web/IMG_2868-640.jpg" srcset="zdj/web/IMG_2868-400.jpg 400w, zdj/web/IMG_2868-640.jpg 640w, zdj/web/IMG_2868-1280.jpg 1280w" sizes="(max-width:720px) 46vw, 25vw" alt="Kilka pierścionków noszonych razem" loading="lazy" decoding="async"></figure>
-          <figure class="wide"><img src="zdj/web/IMG_2851-640.jpg" srcset="zdj/web/IMG_2851-400.jpg 400w, zdj/web/IMG_2851-640.jpg 640w, zdj/web/IMG_2851-1280.jpg 1280w" sizes="(max-width:720px) 92vw, 50vw" alt="Pierścionki ARTarual w ruchu" loading="lazy" decoding="async"></figure>
+          <figure class="tall"><img src="zdj/web/IMG_2862-640.jpg" srcset="zdj/web/IMG_2862-400.jpg 400w, zdj/web/IMG_2862-640.jpg 640w, zdj/web/IMG_2862-1280.jpg 1280w" sizes="(max-width:720px) 46vw, 25vw" alt="Signet with onyx worn every day" loading="lazy" decoding="async"></figure>
+          <figure><img src="zdj/web/IMG_2849-640.jpg" srcset="zdj/web/IMG_2849-400.jpg 400w, zdj/web/IMG_2849-640.jpg 640w, zdj/web/IMG_2849-1280.jpg 1280w" sizes="(max-width:720px) 46vw, 25vw" alt="ARTarual rings in an everyday moment" loading="lazy" decoding="async"></figure>
+          <figure><img src="zdj/web/IMG_2860-640.jpg" srcset="zdj/web/IMG_2860-400.jpg 400w, zdj/web/IMG_2860-640.jpg 640w, zdj/web/IMG_2860-1280.jpg 1280w" sizes="(max-width:720px) 46vw, 25vw" alt="Silver rings on a hand" loading="lazy" decoding="async"></figure>
+          <figure class="tall"><img src="zdj/web/IMG_2868-640.jpg" srcset="zdj/web/IMG_2868-400.jpg 400w, zdj/web/IMG_2868-640.jpg 640w, zdj/web/IMG_2868-1280.jpg 1280w" sizes="(max-width:720px) 46vw, 25vw" alt="Several rings worn together" loading="lazy" decoding="async"></figure>
+          <figure class="wide"><img src="zdj/web/IMG_2851-640.jpg" srcset="zdj/web/IMG_2851-400.jpg 400w, zdj/web/IMG_2851-640.jpg 640w, zdj/web/IMG_2851-1280.jpg 1280w" sizes="(max-width:720px) 92vw, 50vw" alt="ARTarual rings in motion" loading="lazy" decoding="async"></figure>
         </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="wrap section__inner statement">
-        <p>nie robię biżuterii do szuflady na wielkie okazje. robię rzeczy, które nosi się codziennie</p>
-        <span class="sign">— Laura, ARTarual</span>
       </div>
     </section>
 
     <section class="section section--paper2">
       <div class="wrap section__inner">
-        <div class="sec-head"><h2>jak to działa</h2></div>
-        <div class="howto">
-          <div class="howto__item">
-            <h3>wybierasz materiał</h3>
-            <p>Srebro 925, oksydowane, złocone 24k, mosiądz albo pełne złoto 585. Cenę widać od razu przy każdej opcji.</p>
+        <div class="sec-head"><h2>how it works</h2></div>
+        <div class="steps">
+          <div class="step">
+            <div class="step__art"><svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+              <circle cx="38" cy="50" r="21"/><circle cx="60" cy="50" r="21" opacity=".55"/><circle cx="82" cy="50" r="21" opacity=".3"/>
+              <circle cx="38" cy="92" r="4.5" fill="currentColor" stroke="none"/>
+              <circle cx="60" cy="92" r="4.5" fill="currentColor" stroke="none" opacity=".55"/>
+              <circle cx="82" cy="92" r="4.5" fill="currentColor" stroke="none" opacity=".3"/>
+            </svg></div>
+            <span class="step__no">01</span>
+            <h3>pick the metal</h3>
+            <p>Sterling silver 925, oxidised, 24k gold-plated, brass or solid 14k gold. The price updates the moment you choose.</p>
           </div>
-          <div class="howto__item">
-            <h3>dobierasz kamień i kolor</h3>
-            <p>Księżycowy, labradoryt, ametyst, turkus, onyks… a przy każdym kilka wariantów koloru do kliknięcia.</p>
+          <div class="step">
+            <div class="step__art"><svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+              <circle cx="60" cy="72" r="24"/>
+              <path d="M46 36 L60 24 L74 36 L60 48 Z"/><path d="M46 36 H74" opacity=".5"/><path d="M60 24 V48" opacity=".5"/>
+              <circle cx="26" cy="104" r="4" fill="currentColor" stroke="none" opacity=".7"/>
+              <circle cx="41" cy="104" r="4" fill="currentColor" stroke="none" opacity=".45"/>
+              <circle cx="56" cy="104" r="4" fill="currentColor" stroke="none" opacity=".25"/>
+            </svg></div>
+            <span class="step__no">02</span>
+            <h3>pick the stone and its colour</h3>
+            <p>Moonstone, labradorite, amethyst, turquoise, onyx &mdash; and a few colour variants under each one.</p>
           </div>
-          <div class="howto__item">
-            <h3>podajesz rozmiar</h3>
-            <p>Od 8 do 24. Przy większych rozmiarach dochodzi trochę metalu, więc cena delikatnie rośnie — widać to na kafelku.</p>
+          <div class="step">
+            <div class="step__art"><svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+              <circle cx="60" cy="44" r="23"/><circle cx="60" cy="44" r="15" opacity=".4"/>
+              <path d="M20 88 H100"/>
+              <path d="M28 88 v-8 M42 88 v-12 M56 88 v-8 M70 88 v-12 M84 88 v-8 M98 88 v-12" opacity=".6"/>
+            </svg></div>
+            <span class="step__no">03</span>
+            <h3>give me your size</h3>
+            <p>From 8 to 24. Larger sizes take a little more metal, so the price moves slightly &mdash; you can see it on every tile.</p>
           </div>
         </div>
         <div class="btn-row">
-          <a href="drop-1.html" class="btn btn-primary">poskładaj swój pierścionek</a>
-          <a href="rozmiary.html" class="btn btn-ghost">nie znam rozmiaru</a>
+          <a href="drop-1.html" class="btn btn-primary">build your ring</a>
+          <a href="rozmiary.html" class="btn btn-ghost">I do not know my size</a>
         </div>
       </div>
     </section>
 
     <section class="section">
       <div class="wrap section__inner">
-        <div class="sec-head"><h2>z czego i jak</h2></div>
+        <div class="sec-head"><h2>what it is made of</h2></div>
         <div class="stuff">
-          <div class="stuff__item"><h3>metale z odzysku</h3><p>Srebro i złoto najczęściej z przetopu — nowy kształt, stary materiał.</p></div>
-          <div class="stuff__item"><h3>ręcznie, od początku do końca</h3><p>Odlew, piłowanie, polerowanie — wszystko dzieje się na jednym stole.</p></div>
-          <div class="stuff__item"><h3>krótkie serie</h3><p>Nie produkuję na magazyn. Robię, kiedy coś mnie złapie, albo kiedy poprosisz.</p></div>
+          <div class="stuff__item"><h3>reclaimed metals</h3><p>Silver and gold most often come from melt &mdash; a new shape out of old material.</p></div>
+          <div class="stuff__item"><h3>by hand, start to finish</h3><p>Casting, filing, polishing &mdash; all of it happens at one bench.</p></div>
+          <div class="stuff__item"><h3>short runs</h3><p>I do not make for stock. I make when something grabs me, or when you ask.</p></div>
         </div>
       </div>
     </section>
@@ -124,8 +139,8 @@
     <section class="section section--navy">
       <div class="wrap section__inner">
         <div class="sec-head"><h2>customs</h2></div>
-        <div class="statement"><p>masz swój pomysł? zróbmy coś tylko twojego</p></div>
-        <div class="btn-row"><a href="customs.html" class="text-link">zobacz, jak robię customy</a></div>
+        <div class="statement"><p>got your own idea? let us make something that is only yours</p></div>
+        <div class="btn-row"><a href="customs.html" class="text-link">see how customs work</a></div>
       </div>
     </section>
 
@@ -135,31 +150,37 @@
     <div class="wrap">
       <div class="footer-top">
         <div class="footer-col">
-          <h4>sklep</h4>
+          <h4>shop</h4>
           <ul>
-            <li><a href="drop-1.html">drop 1</a></li>
-            <li><a href="drop-2.html">drop 2</a></li>
-            <li><a href="kolekcja.html">wszystkie prace</a></li>
-            <li><a href="customs.html">customs</a></li>
-            <li><a href="rozmiary.html">rozmiarówka</a></li>
-            <li><a href="o-nas.html">o mnie</a></li>
-            <li><a href="kontakt.html">kontakt</a></li>
+            <li><a href="drop-1.html">Drop 1</a></li>
+            <li><a href="drop-2.html">Drop 2</a></li>
+            <li><a href="kolekcja.html">Everything</a></li>
+            <li><a href="customs.html">Customs</a></li>
+            <li><a href="rozmiary.html">Size guide</a></li>
           </ul>
         </div>
         <div class="footer-col">
-          <h4>odezwij się</h4>
+          <h4>help</h4>
           <ul>
-            <li><a href="mailto:hej@artarual.pl">hej@artarual.pl</a></li>
-            <li><a href="tel:+48123456789">+48 123 456 789</a></li>
-            <li><a href="#" rel="noopener">Instagram</a></li>
+            <li><a href="dostawa-zwroty.html#shipping">Shipping</a></li>
+            <li><a href="dostawa-zwroty.html#returns">Returns</a></li>
+            <li><a href="o-nas.html">About me</a></li>
+            <li><a href="kontakt.html">Contact</a></li>
           </ul>
-          <p>Pracownia jednej osoby w Warszawie. Projektuję i wykuwam każdą rzecz sama, w krótkich seriach.</p>
+        </div>
+        <div class="footer-col">
+          <h4>write to me</h4>
+          <ul>
+            <li><a href="mailto:artarual1@gmail.com">artarual1@gmail.com</a></li>
+            <li><a href="https://www.instagram.com/artarual.jewellery/" target="_blank" rel="noopener">@artarual.jewellery</a></li>
+          </ul>
+          <p>A one-person studio in Warsaw. I design and forge every piece myself, in short runs.</p>
         </div>
       </div>
       <div class="footer-wordmark" aria-hidden="true">ARTarual</div>
       <div class="footer-bottom">
         <span>&copy; 2026 ARTarual</span>
-        <span>srebro 925 &middot; warszawa</span>
+        <span>silver 925 &middot; warsaw</span>
       </div>
     </div>
   </footer>
