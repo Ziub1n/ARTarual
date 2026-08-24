@@ -113,7 +113,7 @@ const RINGS = [
     text: 'The wide, chunky one — hand-textured all the way round, with a large square-cut zircon set high on the face.',
     textPl: 'Ten szeroki, masywny — ręcznie teksturowany dookoła, z dużą cyrkonią o kwadratowym szlifie osadzoną wysoko na powierzchni.',
     price: 550, weight: '~5 g', wksMin: 3, wksMax: 4,
-    photos: ['courtney-1', 'courtney-2', 'courtney-3', 'courtney-4'],
+    photos: ['courtney-1b', 'courtney-2b', 'courtney-3', 'courtney-4'],
     materials: ['silver930'],
     preset: { material: 'silver930', stone: 'cyrkonia', colour: 0, size: 14 },
   },
@@ -124,7 +124,7 @@ const RINGS = [
     text: 'A signet-shaped face holding one rectangular zircon, textured band underneath. Reads a little like a worn family ring.',
     textPl: 'Sygnetowa powierzchnia z jedną prostokątną cyrkonią, teksturowana obrączka pod spodem. Wygląda trochę jak noszony rodzinny pierścionek.',
     price: 550, weight: '~5 g', wksMin: 2, wksMax: 3,
-    photos: ['delia-1', 'delia-2'],
+    photos: ['delia-1b', 'delia-2'],
     materials: ['silver930'],
     preset: { material: 'silver930', stone: 'cyrkonia', colour: 0, size: 13 },
   },
@@ -135,7 +135,7 @@ const RINGS = [
     text: 'A rectangular signet face set with two zircons side by side — shown in green and pink, so it reads as one deliberate pair rather than a mismatch.',
     textPl: 'Prostokątna powierzchnia sygnetu z dwiema cyrkoniami obok siebie — pokazana w zieleni i różu, więc czyta się to jako świadomą parę, nie przypadkowe zestawienie.',
     price: 820, weight: '~5 g', wksMin: 3, wksMax: 4,
-    photos: ['genevieve-1', 'genevieve-2', 'genevieve-3', 'genevieve-4', 'genevieve-5'],
+    photos: ['genevieve-1', 'genevieve-2b', 'genevieve-3', 'genevieve-4', 'genevieve-5'],
     materials: ['silver930'],
     preset: { material: 'silver930', stone: 'cyrkonia', colour: 0, size: 14 },
   },
@@ -157,7 +157,7 @@ const RINGS = [
     text: 'An open band that wraps almost all the way round, a navy zircon set at one end and a brown one at the other. Sits slightly loose by design — that is the point.',
     textPl: 'Otwarta obrączka, która owija się niemal dookoła — granatowa cyrkonia na jednym końcu, brązowa na drugim. Celowo siedzi trochę luźno — o to właśnie chodzi.',
     price: 740, weight: '~5 g', wksMin: 3, wksMax: 4,
-    photos: ['odette-1', 'odette-2'],
+    photos: ['odette-1b', 'odette-2'],
     materials: ['silver930'],
     preset: { material: 'silver930', stone: 'cyrkonia', colour: 0, size: 14 },
   },
@@ -277,7 +277,10 @@ function materialCaption(r) {
 
 function tile(r) {
   const alt = `${r.name} — ${ringShort(r)}`;
-  const sizes = '(max-width:720px) 46vw, (max-width:1024px) 30vw, 23vw';
+  // must match .gallery's real column widths at each breakpoint in styles.css —
+  // a stale value here makes the browser under-fetch resolution and the grid
+  // looks softer than the (correctly-sized) product page
+  const sizes = '(max-width:560px) 92vw, (max-width:720px) 46vw, (max-width:1024px) 30vw, 23vw';
   const second = r.photos[1];
   const from = getLang() === 'pl' ? 'od' : 'from';
   const viewLabel = getLang() === 'pl' ? 'zobacz i skonfiguruj' : 'view and configure';
@@ -545,7 +548,7 @@ function renderRing() {
   const elThumbs = root.querySelector('#pgal-thumbs');
 
   function drawPhotos() {
-    elMain.innerHTML = photoTag(r.photos[state.photo], `${r.name} — ${t('cfg.photo')} ${state.photo + 1}`, '(max-width:1080px) 92vw, 46vw');
+    elMain.innerHTML = photoTag(r.photos[state.photo], `${r.name} — ${t('cfg.photo')} ${state.photo + 1}`, '(max-width:1080px) 92vw, 460px');
     if (!elThumbs) return;
     elThumbs.innerHTML = r.photos.map((p, i) => `
       <button type="button" role="tab" aria-selected="${i === state.photo}" aria-label="${t('cfg.photo')} ${i + 1}">
