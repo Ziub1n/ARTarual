@@ -135,6 +135,13 @@ const RINGS = [
     photos: ['IMG_2850', 'IMG_2849'],
     preset: { material: 'gilded', stone: 'none', colour: 0, size: 14 },
   },
+];
+
+/* -----------------------------------------------------------------------------
+   A second drop does not exist yet — nothing here should look purchasable
+   until it does. Keep the four designs below on ice; move them back into
+   RINGS (with drop: 2, and a DROPS[2] entry restored above) when it launches.
+
   {
     id: 'midnight', nr: '06', name: 'Midnight', drop: 2,
     short: 'deeply darkened, with a small stone',
@@ -167,14 +174,13 @@ const RINGS = [
     photos: ['IMG_2862', 'IMG_2843'],
     preset: { material: 'silver925', stone: 'onyx', colour: 0, size: 15 },
   },
-];
+----------------------------------------------------------------------------- */
 
 /* =============================================================================
    DATA — 5. DROPS (collections under the "shop" menu)
    ============================================================================= */
 const DROPS = {
-  1: { name: 'drop 1', subtitle: 'summer / everyday', text: 'The five pieces I make most often, and the ones that most often come back to me in your photos. All of them can be made in your size and material.' },
-  2: { name: 'drop 2', subtitle: 'autumn / heavier forms', text: 'A newer, slightly darker four — more oxidisation, more texture, and the first engraved signet.' },
+  1: { name: 'drop', subtitle: 'summer / everyday', text: 'The five pieces I make most often, and the ones that most often come back to me in your photos. All of them can be made in your size and material.' },
 };
 
 /* =============================================================================
@@ -642,6 +648,45 @@ function renderRelated(r) {
 
 
 /* -----------------------------------------------------------------------------
+   Photo wall (photoshoot.html) — a rotating slice of the shoot.
+   Seeded by the date, so it looks the same all day and different tomorrow
+   — no build step, no images that never get seen.
+   ----------------------------------------------------------------------------- */
+const SESJA = [
+  'IMG_2165', 'IMG_2231', 'IMG_2233', 'IMG_2238', 'IMG_2239', 'IMG_2262',
+  'IMG_2836', 'IMG_2840', 'IMG_2841', 'IMG_2842', 'IMG_2843', 'IMG_2845',
+  'IMG_2847', 'IMG_2849', 'IMG_2850', 'IMG_2851', 'IMG_2858', 'IMG_2860',
+  'IMG_2861', 'IMG_2862', 'IMG_2863', 'IMG_2866', 'IMG_2868', 'IMG_2869', 'IMG_2870',
+];
+const PHOTO_WALL_COUNT = 14;
+
+function mulberry32(seed) {
+  return function () {
+    seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+function daySeed() {
+  const d = new Date();
+  return d.getFullYear() * 1000 + Math.floor((d - new Date(d.getFullYear(), 0, 0)) / 86400000);
+}
+
+function renderPhotoWall() {
+  const el = document.querySelector('[data-photowall]');
+  if (!el) return;
+  const rnd = mulberry32(daySeed());
+  const order = SESJA.map(name => ({ name, k: rnd() })).sort((a, b) => a.k - b.k);
+  const picks = order.slice(0, PHOTO_WALL_COUNT);
+  el.innerHTML = picks.map(({ name }) =>
+    `<figure>${photoTag(name, 'From the ARTarual photoshoot', '(max-width:560px) 92vw, (max-width:1024px) 46vw, 31vw')}</figure>`
+  ).join('');
+}
+
+
+/* -----------------------------------------------------------------------------
    Lightbox
    ----------------------------------------------------------------------------- */
 function openLightbox(src, alt) {
@@ -666,6 +711,7 @@ function openLightbox(src, alt) {
 document.addEventListener('DOMContentLoaded', () => {
   renderLists();
   renderRing();
+  renderPhotoWall();
   initBag();
 
   // photos marked [data-zoom] also open full screen

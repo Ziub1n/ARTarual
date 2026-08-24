@@ -270,8 +270,46 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 .section--navy .btn-row .text-link:hover{ background:#fff; color:var(--ink); }
 
 /* =========================================================
+   Photo wall (photoshoot.html) — kolumnowy kolaż, sam się
+   zwija do jednej kolumny na telefonie, bez dodatkowego JS-a
+   ========================================================= */
+.photo-wall{ column-count:3; column-gap:14px; }
+.photo-wall figure{
+  margin:0 0 14px; break-inside:avoid; overflow:hidden;
+  border-radius:var(--radius); background:var(--tile);
+}
+.photo-wall img{ display:block; width:100%; height:auto; }
+@media (max-width:1024px){ .photo-wall{ column-count:2; } }
+@media (max-width:560px){ .photo-wall{ column-count:1; } }
+
+/* =========================================================
    Filtry kolekcji — środek, drobny tekst, bez ramek
    ========================================================= */
+/* =========================================================
+   Galeria realizacji custom — bez ceny, bez linku do konfiguratora,
+   klik otwiera zdjęcie na cały ekran (patrz [data-zoom] w products.js)
+   ========================================================= */
+.customs-gallery{ display:grid; grid-template-columns:repeat(3,1fr); gap:2.8rem 20px; }
+.custom-piece__frame{
+  display:block; width:100%; position:relative; aspect-ratio:4/5; overflow:hidden;
+  background:var(--tile); border:0; border-radius:var(--radius); box-shadow:none; padding:0;
+  cursor:zoom-in; appearance:none; -webkit-appearance:none; font:inherit;
+}
+.custom-piece__frame img{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  transition:transform .7s cubic-bezier(.2,.6,.2,1);
+}
+.custom-piece__frame:hover img{ transform:scale(1.03); }
+.custom-piece__meta{ margin-top:.85rem; }
+.custom-piece__name{
+  display:block; font-family:var(--font-serif); font-weight:400; font-size:11.5px;
+  text-transform:uppercase; letter-spacing:.015em; color:var(--ink); line-height:1.4;
+}
+.custom-piece__desc{
+  font-family:var(--font-sans); font-size:12px; color:var(--grey);
+  margin:.35rem 0 0; line-height:1.5;
+}
+
 .filter-row{
   display:flex; justify-content:center; flex-wrap:wrap; gap:2.4rem;
   margin:0 0 3.2rem;
@@ -638,7 +676,7 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 @media (max-width:1024px){
   .product{ grid-template-columns:1fr; gap:2.4rem; }
   .pgal{ position:static; max-width:560px; }
-  .gallery{ grid-template-columns:repeat(3,1fr); }
+  .gallery, .customs-gallery{ grid-template-columns:repeat(3,1fr); }
   .collage, .wall, .strip__track{ grid-template-columns:repeat(3,1fr); }
 }
 @media (max-width:900px){
@@ -652,7 +690,7 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 }
 @media (max-width:720px){
   :root{ --edge:18px; }
-  .gallery{ grid-template-columns:repeat(2,1fr); gap:2rem 12px; }
+  .gallery, .customs-gallery{ grid-template-columns:repeat(2,1fr); gap:2rem 12px; }
   .collage, .wall, .strip__track{ grid-template-columns:repeat(2,1fr); gap:12px; }
   .collage{ grid-auto-rows:150px; }
   .section{ padding:3.2rem 0; }
@@ -665,6 +703,12 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
   .filter-row{ gap:1.4rem; }
   .topbar span{ gap:.8rem; font-size:10px; }
   .topbar span::before, .topbar span::after{ display:none; }
+}
+/* telefony: jedno duże zdjęcie produktowe pod drugim, nie dwie wąskie kolumny
+   (laptopy/tablety zostają przy siatce z zapytania wyżej) */
+@media (max-width:560px){
+  .gallery{ grid-template-columns:1fr; gap:2.6rem; }
+  .customs-gallery{ grid-template-columns:1fr; gap:2.6rem; }
 }
 
 /* =========================================================
