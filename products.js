@@ -321,7 +321,7 @@ function bagMailto() {
   const items = bagRead();
   if (!items.length) return '#';
   const lines = items.map((it, i) => (
-`${i + 1}. ${it.name} (no ${it.nr})
+`${i + 1}. ${it.name} (drop ${it.nr})
    material:  ${it.material}
    stone:     ${it.stone}
    size:      ${it.size} (${it.size + 40} mm)
@@ -444,7 +444,7 @@ function renderRing() {
 
       <div class="product__cfg">
         <div class="product__head">
-          <span class="product__no">no ${r.nr} · ${DROPS[r.drop] ? DROPS[r.drop].name : ''}</span>
+          <span class="product__no">${DROPS[r.drop] ? DROPS[r.drop].name : 'drop'} ${r.nr}</span>
           <h1>${r.name}</h1>
           <p class="product__lede">${r.text}</p>
           <div class="product-facts">
@@ -653,7 +653,7 @@ function renderRing() {
       <li><span class="k">width</span><span class="v">${r.width}</span></li>`;
 
     const text =
-`Ring:      ${r.name} (no ${r.nr})
+`Ring:      ${r.name} (drop ${r.nr})
 Material:  ${c.m.name}${c.quote ? ' (quoted individually)' : ''}
 Stone:     ${c.stoneText}
 Size:      ${state.size} (${state.size + 40} mm)
