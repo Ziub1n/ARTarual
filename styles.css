@@ -799,9 +799,6 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 .contact-lines a{ border-bottom:1px solid var(--line); transition:border-color .2s ease; }
 .contact-lines a:hover{ border-bottom-color:var(--ink); }
 
-/* miejsce czekające na treść od klientki — ma rzucać się w oczy */
-.todo{ background:var(--paper-2); border-bottom:1px dashed var(--grey-2); padding:.05em .4em; }
-
 @media (max-width:900px){
   .steps{ grid-template-columns:1fr; gap:2rem; }
   .cta-split{ grid-template-columns:1fr; gap:1.4rem; align-items:start; }

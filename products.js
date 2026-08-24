@@ -43,6 +43,17 @@ const STONES = [
 ];
 
 /* =============================================================================
+   DATA — 2b. STONE SHAPES (cut of the zircon — separate from its colour)
+   ============================================================================= */
+const STONE_SHAPES = [
+  { id: 'circle',    name: 'circle' },
+  { id: 'square',    name: 'square' },
+  { id: 'rectangle', name: 'rectangle' },
+  { id: 'teardrop',  name: 'teardrop' },
+  { id: 'heart',     name: 'heart' },
+];
+
+/* =============================================================================
    DATA — 3. SIZES AND SIZE-BASED PRICING
    Size is given on the PL scale (inner circumference in mm = size + 40).
    The bigger the ring, the more metal — hence the surcharge.
@@ -69,6 +80,8 @@ const SIZE_BANDS = [
    stoneColours = which of the cubic zirconia colour names (from STONES
                  above) this exact piece actually comes in — taken from
                  Laura's own notes on the ring photos
+   stoneShapes  = which STONE_SHAPES ids this exact piece actually comes in
+                 (the cut visible in its own photos — omit to allow all of them)
    ============================================================================= */
 const RINGS = [
   {
@@ -79,6 +92,7 @@ const RINGS = [
     photos: ['ashleen-1', 'ashleen-2', 'ashleen-3'],
     materials: ['silver930'],
     stoneColours: ['sky blue', 'burgundy', 'blue'],
+    stoneShapes: ['circle'],
     preset: { material: 'silver930', stone: 'cyrkonia', colour: 0, size: 13 },
   },
   {
@@ -89,6 +103,7 @@ const RINGS = [
     photos: ['courtney-1', 'courtney-2', 'courtney-3', 'courtney-4'],
     materials: ['silver930'],
     stoneColours: ['sky blue'],
+    stoneShapes: ['square'],
     preset: { material: 'silver930', stone: 'cyrkonia', colour: 0, size: 14 },
   },
   {
@@ -99,6 +114,7 @@ const RINGS = [
     photos: ['delia-1', 'delia-2'],
     materials: ['silver930'],
     stoneColours: ['yellow'],
+    stoneShapes: ['rectangle'],
     preset: { material: 'silver930', stone: 'cyrkonia', colour: 0, size: 13 },
   },
   {
@@ -109,6 +125,7 @@ const RINGS = [
     photos: ['genevieve-1', 'genevieve-2', 'genevieve-3', 'genevieve-4', 'genevieve-5'],
     materials: ['silver930'],
     stoneColours: ['green', 'pink'],
+    stoneShapes: ['circle'],
     preset: { material: 'silver930', stone: 'cyrkonia', colour: 0, size: 14 },
   },
   {
@@ -119,6 +136,7 @@ const RINGS = [
     photos: ['kathleen-1', 'kathleen-2', 'kathleen-3'],
     materials: ['silver930'],
     stoneColours: ['pink'],
+    stoneShapes: ['circle'],
     preset: { material: 'silver930', stone: 'cyrkonia', colour: 0, size: 13 },
   },
   {
@@ -129,6 +147,7 @@ const RINGS = [
     photos: ['odette-1', 'odette-2'],
     materials: ['silver930'],
     stoneColours: ['navy', 'tea'],
+    stoneShapes: ['circle'],
     preset: { material: 'silver930', stone: 'cyrkonia', colour: 0, size: 14 },
   },
 ];
@@ -411,6 +430,7 @@ function renderRing() {
     material: findMaterial(preset.material).id,
     stone:    findStone(preset.stone).id,
     colour:   preset.colour || 0,
+    shape:    null,
     size:     preset.size || 13,
     photo:    0,
   };
@@ -447,6 +467,11 @@ function renderRing() {
         <div class="opt" id="opt-colour">
           <label class="opt__label" for="sel-colour">stone colour</label>
           <div class="select-wrap"><select id="sel-colour"></select></div>
+        </div>
+
+        <div class="opt" id="opt-shape">
+          <label class="opt__label" for="sel-shape">stone shape</label>
+          <div class="select-wrap"><select id="sel-shape"></select></div>
         </div>
 
         <div class="opt">
@@ -491,15 +516,17 @@ function renderRing() {
   elMain.addEventListener('click', () => openLightbox(photoSrc(r.photos[state.photo], 1280), r.name));
 
   /* --- options ---
-     r.materials / r.stoneColours (both optional, set per ring below in
-     the DATA section) narrow the pickers down to what that specific
-     piece actually comes in — most of these only exist in silver, and
-     in one or two of the eight zircon colours, not all of them. */
+     r.materials / r.stoneColours / r.stoneShapes (all optional, set per
+     ring in the DATA section) narrow the pickers down to what that
+     specific piece actually comes in — most of these only exist in
+     silver, in one or two of the eight zircon colours, and in one cut. */
   const selMat     = root.querySelector('#sel-material');
   const optMaterial = root.querySelector('#opt-material');
   const selStone   = root.querySelector('#sel-stone');
   const selColour  = root.querySelector('#sel-colour');
   const optColour  = root.querySelector('#opt-colour');
+  const selShape   = root.querySelector('#sel-shape');
+  const optShape   = root.querySelector('#opt-shape');
   const elSizes    = root.querySelector('#sizes');
 
   function delta(add) {
@@ -516,6 +543,11 @@ function renderRing() {
   function activeColours(stone) {
     if (!stone.colours.length) return [];
     return r.stoneColours ? stone.colours.filter(c => r.stoneColours.includes(c.name)) : stone.colours;
+  }
+
+  /** Stone shapes/cuts this specific ring actually comes in (defaults to all). */
+  function activeShapes() {
+    return r.stoneShapes ? STONE_SHAPES.filter(sh => r.stoneShapes.includes(sh.id)) : STONE_SHAPES;
   }
 
   function drawMaterials() {
@@ -550,6 +582,22 @@ function renderRing() {
     ).join('');
   }
 
+  function drawShapes() {
+    const s = findStone(state.stone);
+    if (s.id === 'none') { optShape.style.display = 'none'; return; }
+    const shapes = activeShapes();
+    if (!shapes.some(sh => sh.id === state.shape)) state.shape = shapes[0].id;
+    if (shapes.length <= 1) {
+      optShape.style.display = 'none';
+      selShape.innerHTML = shapes.map(sh => `<option value="${sh.id}" selected>${sh.name}</option>`).join('');
+      return;
+    }
+    optShape.style.display = '';
+    selShape.innerHTML = shapes.map(sh =>
+      `<option value="${sh.id}"${sh.id === state.shape ? ' selected' : ''}>${sh.name}</option>`
+    ).join('');
+  }
+
   function drawSizes() {
     let html = '';
     for (let s = SIZE_MIN; s <= SIZE_MAX; s++) {
@@ -568,8 +616,9 @@ function renderRing() {
   }
 
   selMat.addEventListener('change', () => { state.material = selMat.value; recalc(); });
-  selStone.addEventListener('change', () => { state.stone = selStone.value; state.colour = 0; recalc(); });
+  selStone.addEventListener('change', () => { state.stone = selStone.value; state.colour = 0; state.shape = null; recalc(); });
   selColour.addEventListener('change', () => { state.colour = Number(selColour.value); recalc(); });
+  selShape.addEventListener('change', () => { state.shape = selShape.value; recalc(); });
 
   /* --- summary --- */
   function config() {
@@ -577,18 +626,20 @@ function renderRing() {
     const s = findStone(state.stone);
     const colours = activeColours(s);
     const colour = colours.length ? colours[state.colour] : null;
+    const shape = s.id !== 'none' ? STONE_SHAPES.find(sh => sh.id === state.shape) : null;
     const quote = !!m.quote;
     const price = calcPrice(r, state.material, state.stone, state.size);
+    const stoneBits = [colour?.name, shape?.name].filter(Boolean).join(', ');
     return {
-      m, s, colour, quote, price,
+      m, s, colour, shape, quote, price,
       priceText: quote ? 'on request' : zl(price),
       lead: calcLeadTime(r, state.material, state.stone),
-      stoneText: s.id === 'none' ? 'no stone' : `${s.name}${colour ? ` (${colour.name})` : ''}`,
+      stoneText: s.id === 'none' ? 'no stone' : `${s.name}${stoneBits ? ` (${stoneBits})` : ''}`,
     };
   }
 
   function recalc() {
-    drawMaterials(); drawStones(); drawColours(); drawSizes(); drawPhotos();
+    drawMaterials(); drawStones(); drawColours(); drawShapes(); drawSizes(); drawPhotos();
 
     const c = config();
     root.querySelector('#pick-size').textContent = `${state.size} · ${state.size + 40} mm`;
