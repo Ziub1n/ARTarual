@@ -5,70 +5,40 @@
        lead times, photos) lives in the "DATA" section below.
        The rest of the file is logic — normally you don't need to touch it.
 
-   PRICES ARE PLACEHOLDERS — swap them for the real ones.
+   PRICES, WIDTHS, WEIGHTS AND LEAD TIMES ARE PLACEHOLDERS — swap them for
+   the real ones. Everything else (names, material, stone colours) is taken
+   from Laura's own notes on the ring photos.
    ============================================================================= */
 
 /* =============================================================================
    DATA — 1. MATERIALS
+   Only two options for this collection: silver at a fixed price, or gold
+   quoted individually (quote: true → no surcharge is added automatically,
+   the UI shows "quoted individually" instead of a number).
    add  = surcharge on the base price (zł, can be negative)
    wks  = how many weeks it adds to the lead time
    ============================================================================= */
 const MATERIALS = [
-  { id: 'silver925', name: 'sterling silver 925',   note: 'polished, classic',              add: 0,    wks: 0, colour: '#D9D9DE' },
-  { id: 'oxidised',  name: 'oxidised silver',       note: 'darkened, matte',                add: 40,   wks: 0, colour: '#66666E' },
-  { id: 'gilded',    name: '24k gold-plated silver',note: 'thick gold layer over silver',   add: 180,  wks: 1, colour: '#E0B143' },
-  { id: 'brass',     name: 'brass',                 note: 'warm, yellow, patinates nicely', add: -70,  wks: 0, colour: '#C0873C' },
-  { id: 'gold585',   name: '14k gold',              note: 'solid gold, made from scratch',  add: 1450, wks: 3, colour: '#F0C75E' },
+  { id: 'silver930', name: 'sterling silver 930', note: 'standard for this collection', add: 0, wks: 0, colour: '#D9D9DE' },
+  { id: 'gold',       name: '14k gold',           note: 'quoted individually — message me before ordering', add: 0, wks: 2, colour: '#F0C75E', quote: true },
 ];
 
 /* =============================================================================
    DATA — 2. STONES
-   colours = colour variants of a given stone (name + swatch)
-   order   = true → stone is ordered in specially (adds a week)
+   This collection only comes with cubic zirconia — but in a lot of colours.
+   colours = colour variants (name + swatch)
    ============================================================================= */
 const STONES = [
   { id: 'none', name: 'no stone', add: 0, order: false, colours: [] },
-
-  { id: 'moonstone', name: 'moonstone', add: 120, order: false, colours: [
-    { name: 'milky white',  hex: '#EDEAF2' },
-    { name: 'blue glow',    hex: '#B6C8E8' },
-    { name: 'peach',        hex: '#F0C6A4' },
-  ]},
-  { id: 'amethyst', name: 'amethyst', add: 140, order: false, colours: [
-    { name: 'deep violet',  hex: '#6E3F9E' },
-    { name: 'lavender',     hex: '#B49BD8' },
-    { name: 'smoky',        hex: '#7A6A88' },
-  ]},
-  { id: 'labradorite', name: 'labradorite', add: 150, order: false, colours: [
-    { name: 'steel flash',  hex: '#59697A' },
-    { name: 'green sheen',  hex: '#557A66' },
-    { name: 'golden',       hex: '#8C7A52' },
-  ]},
-  { id: 'citrine', name: 'citrine', add: 130, order: false, colours: [
-    { name: 'honey',        hex: '#DFA236' },
-    { name: 'straw',        hex: '#EFD07A' },
-  ]},
-  { id: 'garnet', name: 'garnet', add: 135, order: true, colours: [
-    { name: 'dark cherry',  hex: '#76202D' },
-    { name: 'brick',        hex: '#B0402F' },
-  ]},
-  { id: 'turquoise', name: 'turquoise', add: 110, order: false, colours: [
-    { name: 'pale blue',    hex: '#5BB8C2' },
-    { name: 'greenish',     hex: '#3E9080' },
-    { name: 'with matrix',  hex: '#4E8E92' },
-  ]},
-  { id: 'onyx', name: 'onyx', add: 100, order: false, colours: [
-    { name: 'matte black',    hex: '#2C2C31' },
-    { name: 'polished black', hex: '#141416' },
-  ]},
-  { id: 'pearl', name: 'freshwater pearl', add: 95, order: false, colours: [
-    { name: 'cream',        hex: '#F2E8DA' },
-    { name: 'graphite',     hex: '#8A8891' },
-    { name: 'rose sheen',   hex: '#E8C7CD' },
-  ]},
-  { id: 'sapphire', name: 'sapphire', add: 620, order: true, colours: [
-    { name: 'cornflower',   hex: '#2B4C8C' },
-    { name: 'steel',        hex: '#4A6480' },
+  { id: 'cyrkonia', name: 'cubic zirconia', add: 90, order: false, colours: [
+    { name: 'sky blue', hex: '#7EC8E3' },
+    { name: 'blue',     hex: '#2B4C8C' },
+    { name: 'navy',     hex: '#1F3A5F' },
+    { name: 'burgundy', hex: '#76202D' },
+    { name: 'yellow',   hex: '#DFA236' },
+    { name: 'green',    hex: '#3E8C5A' },
+    { name: 'pink',     hex: '#D6538C' },
+    { name: 'tea',      hex: '#B08D57' },
   ]},
 ];
 
@@ -89,98 +59,72 @@ const SIZE_BANDS = [
 
 /* =============================================================================
    DATA — 4. RINGS
-   price  = base price: silver 925, no stone, standard size (12–15)
-   photos = file names from zdj/web/ (without -640.jpg / -1280.jpg)
+   price  = base price: silver 930, no stone, standard size (12–15)
+   photos = file names from zdj/customs/ (without -640.jpg / -1280.jpg)
    wksMin / wksMax = base lead time in weeks
    preset = what is selected when you land on the ring page
    ============================================================================= */
 const RINGS = [
   {
-    id: 'lavender', nr: '01', name: 'Lavender', drop: 1,
-    short: 'wide, heavy ring with a single stone',
-    text: 'The widest thing I make — hammered by hand, so every piece catches the light a little differently. It sits on the finger like something you have worn for years, even on day one.',
-    price: 340, width: '8 mm', weight: '~9 g', wksMin: 2, wksMax: 3,
-    photos: ['IMG_2841', 'IMG_2869', 'IMG_2165'],
-    preset: { material: 'oxidised', stone: 'labradorite', colour: 0, size: 14 },
+    id: 'ashleen', nr: '01', name: 'Ashleen', drop: 1,
+    short: 'thin hammered band with a single stone',
+    text: 'A narrow, textured band with one round zircon set into it — the kind of ring that looks right stacked three at a time, one colour each.',
+    price: 240, width: '2 mm', weight: '~3 g', wksMin: 2, wksMax: 3,
+    photos: ['ashleen-1', 'ashleen-2', 'ashleen-3'],
+    preset: { material: 'silver930', stone: 'cyrkonia', colour: 1, size: 13 },
   },
   {
-    id: 'lemongrass', nr: '02', name: 'Lemongrass', drop: 1,
-    short: 'narrow ring, hand-polished',
-    text: 'Thin, smooth, made for wearing several at once. I made the first one for myself and it never left the collection, because it goes with basically everything.',
-    price: 260, width: '3 mm', weight: '~4 g', wksMin: 2, wksMax: 3,
-    photos: ['IMG_2231', 'IMG_2233'],
-    preset: { material: 'silver925', stone: 'citrine', colour: 0, size: 13 },
+    id: 'courtney', nr: '02', name: 'Courtney', drop: 1,
+    short: 'wide signet with one large stone',
+    text: 'The wide, chunky one — hand-textured all the way round, with a large square-cut zircon set high on the face.',
+    price: 380, width: '9 mm', weight: '~10 g', wksMin: 3, wksMax: 4,
+    photos: ['courtney-1', 'courtney-2', 'courtney-3', 'courtney-4'],
+    preset: { material: 'silver930', stone: 'cyrkonia', colour: 0, size: 14 },
   },
   {
-    id: 'raspberry', nr: '03', name: 'Raspberry', drop: 1,
-    short: 'stone set in a silver lattice',
-    text: 'The lattice is soldered from thin wire and the stone sits high in it, so it really catches the eye. The most "going out" piece in the collection — and I still wear it to the corner shop.',
-    price: 395, width: '5 mm', weight: '~6 g', wksMin: 3, wksMax: 4,
-    photos: ['IMG_2845', 'IMG_2858'],
-    preset: { material: 'silver925', stone: 'garnet', colour: 0, size: 13 },
+    id: 'delia', nr: '03', name: 'Delia', drop: 1,
+    short: 'signet with a rectangular stone',
+    text: 'A signet-shaped face holding one rectangular zircon, textured band underneath. Reads a little like a worn family ring.',
+    price: 320, width: '7 mm', weight: '~7 g', wksMin: 2, wksMax: 3,
+    photos: ['delia-1', 'delia-2'],
+    preset: { material: 'silver930', stone: 'cyrkonia', colour: 4, size: 13 },
   },
   {
-    id: 'powder', nr: '04', name: 'Powder', drop: 1,
-    short: 'thin, made for stacking',
-    text: 'The lightest thing I have. Designed so you can wear three or four on one finger and nothing catches on anything.',
-    price: 215, width: '2 mm', weight: '~3 g', wksMin: 2, wksMax: 2,
-    photos: ['IMG_2870', 'IMG_2836'],
-    preset: { material: 'silver925', stone: 'none', colour: 0, size: 13 },
+    id: 'genevieve', nr: '04', name: 'Genevieve', drop: 1,
+    short: 'rectangular signet, two stones',
+    text: 'A rectangular signet face set with two zircons side by side — usually one warmer, one cooler colour, so it reads as one deliberate pair rather than a mismatch.',
+    price: 410, width: '10 mm face', weight: '~11 g', wksMin: 3, wksMax: 4,
+    photos: ['genevieve-1', 'genevieve-2', 'genevieve-3', 'genevieve-4', 'genevieve-5'],
+    preset: { material: 'silver930', stone: 'cyrkonia', colour: 6, size: 14 },
   },
   {
-    id: 'sunset', nr: '05', name: 'Sunset', drop: 1,
-    short: 'engraved, 24k gilding',
-    text: 'The surface is engraved by hand — the lines never come out the same way twice. The gilding settles into the grooves and after a few months it turns into a genuinely beautiful map.',
-    price: 310, width: '6 mm', weight: '~7 g', wksMin: 3, wksMax: 4,
-    photos: ['IMG_2850', 'IMG_2849'],
-    preset: { material: 'gilded', stone: 'none', colour: 0, size: 14 },
+    id: 'kathleen', nr: '05', name: 'Kathleen', drop: 1,
+    short: 'sculptural setting, one stone',
+    text: 'The most sculptural piece I make — an organic, almost hand-carved setting around a single zircon, on a heavily textured band.',
+    price: 290, width: '3 mm', weight: '~4 g', wksMin: 2, wksMax: 3,
+    photos: ['kathleen-1', 'kathleen-2', 'kathleen-3'],
+    preset: { material: 'silver930', stone: 'cyrkonia', colour: 6, size: 13 },
+  },
+  {
+    id: 'odette', nr: '06', name: 'Odette', drop: 1,
+    short: 'open toi-et-moi, two stones',
+    text: 'An open band that wraps almost all the way round, a different zircon set at each end. Sits slightly loose by design — that is the point.',
+    price: 350, width: '3 mm', weight: '~5 g', wksMin: 3, wksMax: 4,
+    photos: ['odette-1', 'odette-2'],
+    preset: { material: 'silver930', stone: 'cyrkonia', colour: 2, size: 14 },
   },
 ];
 
 /* -----------------------------------------------------------------------------
    A second drop does not exist yet — nothing here should look purchasable
-   until it does. Keep the four designs below on ice; move them back into
-   RINGS (with drop: 2, and a DROPS[2] entry restored above) when it launches.
-
-  {
-    id: 'midnight', nr: '06', name: 'Midnight', drop: 2,
-    short: 'deeply darkened, with a small stone',
-    text: 'The oxidisation goes very deep here, almost to black, and the stone stays the only bright point. Over time the raised parts wear back to silver.',
-    price: 355, width: '6 mm', weight: '~7 g', wksMin: 3, wksMax: 4,
-    photos: ['IMG_2863', 'IMG_2847'],
-    preset: { material: 'oxidised', stone: 'moonstone', colour: 1, size: 14 },
-  },
-  {
-    id: 'morning-mist', nr: '07', name: 'Morning Mist', drop: 2,
-    short: 'matte silver with a linen texture',
-    text: 'I press the texture from a real piece of linen, so the weave is uneven exactly where the fabric was uneven. Matte — it does not flash in photos, and that was the point.',
-    price: 285, width: '5 mm', weight: '~6 g', wksMin: 2, wksMax: 3,
-    photos: ['IMG_2262', 'IMG_2842'],
-    preset: { material: 'silver925', stone: 'pearl', colour: 0, size: 13 },
-  },
-  {
-    id: 'wild-lime', nr: '08', name: 'Wild Lime', drop: 2,
-    short: 'irregular shape, like it grew there',
-    text: 'It started as a piece of wax I crushed out of frustration, and it turned into my favourite form. No two pieces are the same — it cannot be repeated.',
-    price: 330, width: '4–9 mm', weight: '~8 g', wksMin: 3, wksMax: 4,
-    photos: ['IMG_2866', 'IMG_2861'],
-    preset: { material: 'silver925', stone: 'turquoise', colour: 0, size: 14 },
-  },
-  {
-    id: 'amaranth', nr: '09', name: 'Amaranth', drop: 2,
-    short: 'carved signet, initial to order',
-    text: 'A signet with a flat face where I can engrave an initial, a date, or anything that fits into ten millimetres. Tell me in the order what it should say.',
-    price: 420, width: '10 mm face', weight: '~11 g', wksMin: 3, wksMax: 5,
-    photos: ['IMG_2862', 'IMG_2843'],
-    preset: { material: 'silver925', stone: 'onyx', colour: 0, size: 15 },
-  },
+   until it does. Add a DROPS[2] entry and give new rings drop: 2 when it launches.
 ----------------------------------------------------------------------------- */
 
 /* =============================================================================
    DATA — 5. DROPS (collections under the "shop" menu)
    ============================================================================= */
 const DROPS = {
-  1: { name: 'drop', subtitle: 'summer / everyday', text: 'The five pieces I make most often, and the ones that most often come back to me in your photos. All of them can be made in your size and material.' },
+  1: { name: 'drop', subtitle: 'made to order', text: 'Six pieces, each one built around a real design of mine. All of them can be made in your size, with your choice of zircon colour.' },
 };
 
 /* =============================================================================
@@ -195,14 +139,15 @@ const INSTAGRAM_URL = 'https://www.instagram.com/artarual.jewellery/';
    =============  LOGIC — normally nothing below needs changing  ==============
    ============================================================================= */
 
-const PHOTO_DIR = 'zdj/web/';
+const PHOTO_DIR = 'zdj/customs/';  // where the ring product photos live
+const SESJA_DIR = 'zdj/web/';      // where the photoshoot/session photos live
 
-function photoSrc(name, w) { return `${PHOTO_DIR}${name}-${w}.jpg`; }
+function photoSrc(name, w, dir = PHOTO_DIR) { return `${dir}${name}-${w}.jpg`; }
 
 /** <img> with srcset — the browser picks 400 / 640 / 1280 px itself. */
-function photoTag(name, alt, sizes, cls) {
-  return `<img src="${photoSrc(name, 640)}"
-    srcset="${photoSrc(name, 400)} 400w, ${photoSrc(name, 640)} 640w, ${photoSrc(name, 1280)} 1280w"
+function photoTag(name, alt, sizes, cls, dir = PHOTO_DIR) {
+  return `<img src="${photoSrc(name, 640, dir)}"
+    srcset="${photoSrc(name, 400, dir)} 400w, ${photoSrc(name, 640, dir)} 640w, ${photoSrc(name, 1280, dir)} 1280w"
     sizes="${sizes}" alt="${alt}" loading="lazy" decoding="async"${cls ? ` class="${cls}"` : ''}>`;
 }
 
@@ -323,7 +268,9 @@ function bagWrite(items) {
 }
 function bagAdd(item) { const b = bagRead(); b.push(item); bagWrite(b); }
 function bagRemove(i) { const b = bagRead(); b.splice(i, 1); bagWrite(b); }
-function bagTotal() { return bagRead().reduce((sum, it) => sum + it.price, 0); }
+function bagTotal() { return bagRead().reduce((sum, it) => sum + (it.price || 0), 0); }
+/** True if any bag item still needs an individual gold quote. */
+function bagHasQuoted() { return bagRead().some(it => it.price == null); }
 
 /** Updates the counter in the header and redraws the drawer if it is open. */
 function bagRefresh() {
@@ -341,9 +288,13 @@ function bagMailto() {
    material:  ${it.material}
    stone:     ${it.stone}
    size:      ${it.size} (${it.size + 40} mm)
-   price:     ${zl(it.price)}
+   price:     ${it.priceText || zl(it.price)}
    lead time: ${it.lead}`
   )).join('\n\n');
+
+  const totalLine = bagHasQuoted()
+    ? `Total (excluding pieces quoted individually): ${zl(bagTotal())}`
+    : `Total: ${zl(bagTotal())}`;
 
   const body =
 `Hi Laura!
@@ -352,7 +303,7 @@ I would like to order:
 
 ${lines}
 
-Total: ${zl(bagTotal())}
+${totalLine}
 
 My details / notes:
 `;
@@ -379,13 +330,13 @@ function bagDraw() {
         <p class="bag__spec">${it.material}<br>${it.stone}<br>size ${it.size} · ${it.lead}</p>
       </div>
       <div class="bag__side">
-        <span class="bag__price">${zl(it.price)}</span>
+        <span class="bag__price">${it.priceText || zl(it.price)}</span>
         <button type="button" class="bag__remove" data-remove="${i}">remove</button>
       </div>
     </div>`).join('');
 
   foot.innerHTML = `
-    <div class="bag__total"><span>total</span><span>${zl(bagTotal())}</span></div>
+    <div class="bag__total"><span>total${bagHasQuoted() ? ' (excl. quoted)' : ''}</span><span>${zl(bagTotal())}</span></div>
     <a href="${bagMailto()}" class="btn btn-primary bag__send">send order by email</a>
     <p class="bag__note">No payment here — I confirm every order personally by email, so we can agree the size and details before I start.</p>`;
 
@@ -581,9 +532,11 @@ function renderRing() {
     const m = findMaterial(state.material);
     const s = findStone(state.stone);
     const colour = s.colours.length ? s.colours[state.colour] : null;
+    const quote = !!m.quote;
+    const price = calcPrice(r, state.material, state.stone, state.size);
     return {
-      m, s, colour,
-      price: calcPrice(r, state.material, state.stone, state.size),
+      m, s, colour, quote, price,
+      priceText: quote ? 'on request' : zl(price),
       lead: calcLeadTime(r, state.material, state.stone),
       stoneText: s.id === 'none' ? 'no stone' : `${s.name}${colour ? ` (${colour.name})` : ''}`,
     };
@@ -594,21 +547,21 @@ function renderRing() {
 
     const c = config();
     root.querySelector('#pick-size').textContent = `${state.size} · ${state.size + 40} mm`;
-    root.querySelector('#price').textContent = zl(c.price);
+    root.querySelector('#price').textContent = c.priceText;
     root.querySelector('#lead').textContent = c.lead;
 
     root.querySelector('#breakdown').innerHTML = `
-      <li><span class="k">material</span><span class="v">${c.m.name}</span></li>
+      <li><span class="k">material</span><span class="v">${c.m.name}${c.quote ? ' — quoted individually' : ''}</span></li>
       <li><span class="k">stone</span><span class="v">${c.stoneText}</span></li>
       <li><span class="k">size</span><span class="v">${state.size} (${state.size + 40} mm) · ${sizeBand(state.size).note}</span></li>
       <li><span class="k">width</span><span class="v">${r.width}</span></li>`;
 
     const text =
 `Ring:      ${r.name} (no ${r.nr})
-Material:  ${c.m.name}
+Material:  ${c.m.name}${c.quote ? ' (quoted individually)' : ''}
 Stone:     ${c.stoneText}
 Size:      ${state.size} (${state.size + 40} mm)
-Price:     ${zl(c.price)}
+Price:     ${c.priceText}
 Lead time: ${c.lead}`;
     root.querySelector('#copy').dataset.text = text;
   }
@@ -627,7 +580,7 @@ Lead time: ${c.lead}`;
     bagAdd({
       id: r.id, name: r.name, nr: r.nr, photo: r.photos[0],
       material: c.m.name, stone: c.stoneText, size: state.size,
-      price: c.price, lead: c.lead,
+      price: c.quote ? null : c.price, priceText: c.priceText, lead: c.lead,
     });
     const btn = e.currentTarget;
     btn.textContent = 'added';
@@ -681,7 +634,7 @@ function renderPhotoWall() {
   const order = SESJA.map(name => ({ name, k: rnd() })).sort((a, b) => a.k - b.k);
   const picks = order.slice(0, PHOTO_WALL_COUNT);
   el.innerHTML = picks.map(({ name }) =>
-    `<figure>${photoTag(name, 'From the ARTarual photoshoot', '(max-width:560px) 92vw, (max-width:1024px) 46vw, 31vw')}</figure>`
+    `<figure>${photoTag(name, 'From the ARTarual photoshoot', '(max-width:560px) 92vw, (max-width:1024px) 46vw, 31vw', null, SESJA_DIR)}</figure>`
   ).join('');
 }
 
