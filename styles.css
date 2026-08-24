@@ -846,11 +846,25 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
     transform:translateY(-140%); transition:transform .28s cubic-bezier(.2,.6,.2,1);
     max-height:calc(100vh - var(--header-h)); overflow-y:auto; z-index:49;
   }
+  /* 100vh na telefonie liczy się z paskiem przeglądarki schowanym, więc
+     realny widoczny obszar bywa krótszy i dół menu wychodzi poza ekran —
+     100dvh liczy faktyczną widoczną wysokość; przeglądarki bez wsparcia
+     po prostu zignorują tę linię i zostaną przy 100vh powyżej */
+  @supports (height: 100dvh){
+    .main-nav{ max-height:calc(100dvh - var(--header-h)); }
+  }
   .main-nav.open{ transform:translateY(0); }
   .main-nav ul{ flex-direction:column; gap:0; }
   .main-nav > ul > li{ border-bottom:1px solid var(--line); }
   .main-nav > ul > li > a{ display:block; padding:.95rem 0; font-size:13px; }
   .main-nav > ul > li > a::after{ display:none; }
+
+  /* flagi PL/EN: znikają z górnego paska (żeby logo trzymało się środka)
+     i lądują jako ostatnia pozycja rozwijanego menu */
+  .nav-actions > .lang-switch{ display:none; }
+  .nav-lang-item{ display:flex; align-items:center; padding:.95rem 0; }
+  .nav-lang-item .lang-switch{ gap:.7rem; }
+  .nav-lang-item .lang-switch button{ font-size:19px; }
 
   .main-nav li.has-sub{ position:static; }
   .sub-toggle{ display:flex; width:100%; justify-content:space-between; padding:.95rem 0; font-size:13px; }
