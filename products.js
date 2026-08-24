@@ -60,9 +60,14 @@ const STONE_SHAPES = [
 ];
 
 /* =============================================================================
-   DATA — 3. SIZES AND SIZE-BASED PRICING
+   DATA — 3. SIZES
    Size is given on the PL scale (inner circumference in mm = size + 40).
-   The bigger the ring, the more metal — hence the surcharge.
+   No automatic size surcharge any more — the price is the same across the
+   whole range. Very small/large sizes that genuinely need more work or
+   material are quoted individually instead (see produkt.faq2 / rozmiary.
+   table.note in i18n.js), so SIZE_BANDS no longer carries a price (add:0
+   everywhere) — it only keeps the descriptive petite/standard/larger/
+   widest label for the size table and the ring-page breakdown.
    ============================================================================= */
 const SIZE_MIN = 8;
 const SIZE_MAX = 24;
@@ -70,10 +75,10 @@ const SIZE_MAX = 24;
 /* note holds an i18n key (same wording as the size table on rozmiary.html)
    rather than raw text, so both live in one place — see bandLabel() below. */
 const SIZE_BANDS = [
-  { from: 8,  to: 11, add: -25, note: 'rozmiary.band.petite'   },
-  { from: 12, to: 15, add: 0,   note: 'rozmiary.band.standard' },
-  { from: 16, to: 19, add: 35,  note: 'rozmiary.band.larger'   },
-  { from: 20, to: 24, add: 75,  note: 'rozmiary.band.widest'   },
+  { from: 8,  to: 11, add: 0, note: 'rozmiary.band.petite'   },
+  { from: 12, to: 15, add: 0, note: 'rozmiary.band.standard' },
+  { from: 16, to: 19, add: 0, note: 'rozmiary.band.larger'   },
+  { from: 20, to: 24, add: 0, note: 'rozmiary.band.widest'   },
 ];
 
 /* =============================================================================
@@ -249,9 +254,9 @@ function calcPrice(ring, materialId, stoneId, size) {
 }
 
 function priceFrom(ring) {
-  // cheapest sensible combination: no stone, smallest band, cheapest material
+  // cheapest material available — size no longer changes the price
   const cheapest = MATERIALS.reduce((a, b) => (a.add <= b.add ? a : b));
-  return ring.price + cheapest.add + SIZE_BANDS[0].add;
+  return ring.price + cheapest.add;
 }
 
 function calcLeadTime(ring, materialId, stoneId) {
