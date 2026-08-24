@@ -182,7 +182,10 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
   font-size:clamp(2.4rem,5.4vw,4.4rem); line-height:.98; letter-spacing:-.025em; color:#fff;
   margin:0 0 .5rem;
 }
-.hero-band__sub{ font-size:14px; margin:0 0 1.4rem; color:#fff; }
+.hero-band__sub{
+  font-size:17px; font-weight:700; line-height:1.45; margin:0 0 1.4rem; color:#fff;
+  text-shadow:0 1px 14px rgba(0,0,0,.55), 0 1px 3px rgba(0,0,0,.45);
+}
 
 /* biała pigułka na zdjęciu */
 .btn-pill{
