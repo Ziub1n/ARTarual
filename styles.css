@@ -13,6 +13,7 @@
   --tile:    #ECECEC;   /* szary kafel pod zdjęciem */
   --paper:   #FFFFFF;
   --paper-2: #F6F6F6;
+  --navy:    #020085;   /* dokładny kolor z logo.png — stopka i wordmark logo */
 
   --font-sans:  "Archivo", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --font-serif: "Tinos", "Times New Roman", Times, serif;
@@ -88,7 +89,7 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
   height:var(--header-h); gap:1rem;
 }
 .logo{ display:flex; align-items:center; justify-content:center; }
-.logo img{ height:22px; width:auto; filter:grayscale(1) brightness(.25) contrast(2); }
+.logo img{ height:22px; width:auto; } /* logo.png jest już granatowe — bez filtra */
 
 .main-nav{ display:flex; align-items:center; gap:2.2rem; }
 .main-nav ul{ list-style:none; display:flex; gap:2.2rem; margin:0; padding:0; }
@@ -109,6 +110,8 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
   color:var(--ink); white-space:nowrap;
 }
 .nav-actions a:hover{ text-decoration:underline; text-underline-offset:3px; }
+.nav-actions .nav-icon{ display:inline-flex; align-items:center; }
+.nav-actions .nav-icon:hover{ text-decoration:none; opacity:.6; }
 /* dawny przycisk CTA w nawigacji jest teraz zwykłym linkiem po prawej */
 .main-nav .nav-cta{ display:none; }
 
@@ -608,35 +611,36 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 .table-scroll{ overflow-x:auto; }
 
 /* =========================================================
-   Stopka — biała, drobna, z wielkim wordmarkiem
+   Stopka — granatowa, drobna, z wielkim wordmarkiem
    ========================================================= */
-.site-footer{ background:var(--paper); color:var(--ink); padding:4.5rem 0 1.6rem; border-top:1px solid var(--line); }
+.site-footer{ background:var(--navy); color:rgba(255,255,255,.75); padding:4.5rem 0 1.6rem; border-top:1px solid rgba(255,255,255,.15); }
 .footer-top{
   display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:start;
   padding-bottom:3rem; border:0;
 }
 .footer-col h4{
-  font-family:var(--font-serif); font-weight:400; color:var(--ink);
+  font-family:var(--font-serif); font-weight:400; color:#fff;
   font-size:11.5px; text-transform:uppercase; letter-spacing:.08em; margin-bottom:.9rem;
 }
 .footer-col ul{ list-style:none; margin:0; padding:0; display:grid; gap:.45rem; }
-.footer-col a{ font-family:var(--font-serif); font-size:12.5px; color:var(--ink); }
-.footer-col a:hover{ text-decoration:underline; text-underline-offset:3px; }
-.footer-col p{ font-family:var(--font-serif); font-size:12.5px; color:var(--grey); max-width:34ch; margin:1.6rem 0 0; }
+.footer-col a{ font-family:var(--font-serif); font-size:12.5px; color:rgba(255,255,255,.85); }
+.footer-col a:hover{ text-decoration:underline; text-underline-offset:3px; color:#fff; }
+.footer-col p{ font-family:var(--font-serif); font-size:12.5px; color:rgba(255,255,255,.55); max-width:34ch; margin:1.6rem 0 0; }
 
-/* wielki wordmark — typografia, bo logo.png ma tylko 256 px szerokości */
+/* wielki wordmark — typografia, bo logo.png ma tylko 256 px szerokości.
+   Subtelny, jaśniejszy odcień granatu — działa jak wodny znak w tle. */
 .footer-wordmark{
   padding-bottom:.12em;
   font-family:var(--font-sans); font-weight:800; text-transform:uppercase;
   font-size:clamp(3rem,15.2vw,15rem); line-height:.82; letter-spacing:-.035em;
-  color:var(--ink); margin:1rem 0 .6rem; user-select:none;
+  color:rgba(255,255,255,.1); margin:1rem 0 .6rem; user-select:none;
 }
 .footer-bottom{
   display:flex; justify-content:space-between; align-items:center; padding-top:.8rem;
   font-family:var(--font-serif); font-size:11px; text-transform:uppercase; letter-spacing:.06em;
-  color:var(--ink); flex-wrap:wrap; gap:.6rem; border:0;
+  color:rgba(255,255,255,.6); flex-wrap:wrap; gap:.6rem; border:0;
 }
-.footer-bottom a:hover{ text-decoration:underline; text-underline-offset:3px; }
+.footer-bottom a:hover{ text-decoration:underline; text-underline-offset:3px; color:#fff; }
 
 /* =========================================================
    Responsywność
