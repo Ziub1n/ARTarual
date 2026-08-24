@@ -59,10 +59,16 @@ const SIZE_BANDS = [
 
 /* =============================================================================
    DATA — 4. RINGS
-   price  = base price: silver 930, no stone, standard size (12–15)
-   photos = file names from zdj/customs/ (without -640.jpg / -1280.jpg)
-   wksMin / wksMax = base lead time in weeks
-   preset = what is selected when you land on the ring page
+   price       = base price: silver 930, no stone, standard size (12–15)
+   photos      = file names from zdj/customs/ (without -640.jpg / -1280.jpg)
+   wksMin/Max  = base lead time in weeks
+   preset      = what is selected when you land on the ring page
+   materials   = which MATERIALS ids this exact piece actually comes in
+                 (omit to allow all of them; most pieces here are silver-only,
+                 so the picker on the ring page just doesn't show up)
+   stoneColours = which of the cubic zirconia colour names (from STONES
+                 above) this exact piece actually comes in — taken from
+                 Laura's own notes on the ring photos
    ============================================================================= */
 const RINGS = [
   {
@@ -71,7 +77,9 @@ const RINGS = [
     text: 'A narrow, textured band with one round zircon set into it — the kind of ring that looks right stacked three at a time, one colour each.',
     price: 240, width: '2 mm', weight: '~3 g', wksMin: 2, wksMax: 3,
     photos: ['ashleen-1', 'ashleen-2', 'ashleen-3'],
-    preset: { material: 'silver930', stone: 'cyrkonia', colour: 1, size: 13 },
+    materials: ['silver930'],
+    stoneColours: ['sky blue', 'burgundy', 'blue'],
+    preset: { material: 'silver930', stone: 'cyrkonia', colour: 0, size: 13 },
   },
   {
     id: 'courtney', nr: '02', name: 'Courtney', drop: 1,
@@ -79,6 +87,8 @@ const RINGS = [
     text: 'The wide, chunky one — hand-textured all the way round, with a large square-cut zircon set high on the face.',
     price: 380, width: '9 mm', weight: '~10 g', wksMin: 3, wksMax: 4,
     photos: ['courtney-1', 'courtney-2', 'courtney-3', 'courtney-4'],
+    materials: ['silver930'],
+    stoneColours: ['sky blue'],
     preset: { material: 'silver930', stone: 'cyrkonia', colour: 0, size: 14 },
   },
   {
@@ -87,15 +97,19 @@ const RINGS = [
     text: 'A signet-shaped face holding one rectangular zircon, textured band underneath. Reads a little like a worn family ring.',
     price: 320, width: '7 mm', weight: '~7 g', wksMin: 2, wksMax: 3,
     photos: ['delia-1', 'delia-2'],
-    preset: { material: 'silver930', stone: 'cyrkonia', colour: 4, size: 13 },
+    materials: ['silver930'],
+    stoneColours: ['yellow'],
+    preset: { material: 'silver930', stone: 'cyrkonia', colour: 0, size: 13 },
   },
   {
     id: 'genevieve', nr: '04', name: 'Genevieve', drop: 1,
     short: 'rectangular signet, two stones',
-    text: 'A rectangular signet face set with two zircons side by side — usually one warmer, one cooler colour, so it reads as one deliberate pair rather than a mismatch.',
+    text: 'A rectangular signet face set with two zircons side by side — shown in green and pink, so it reads as one deliberate pair rather than a mismatch.',
     price: 410, width: '10 mm face', weight: '~11 g', wksMin: 3, wksMax: 4,
     photos: ['genevieve-1', 'genevieve-2', 'genevieve-3', 'genevieve-4', 'genevieve-5'],
-    preset: { material: 'silver930', stone: 'cyrkonia', colour: 6, size: 14 },
+    materials: ['silver930'],
+    stoneColours: ['green', 'pink'],
+    preset: { material: 'silver930', stone: 'cyrkonia', colour: 0, size: 14 },
   },
   {
     id: 'kathleen', nr: '05', name: 'Kathleen', drop: 1,
@@ -103,15 +117,19 @@ const RINGS = [
     text: 'The most sculptural piece I make — an organic, almost hand-carved setting around a single zircon, on a heavily textured band.',
     price: 290, width: '3 mm', weight: '~4 g', wksMin: 2, wksMax: 3,
     photos: ['kathleen-1', 'kathleen-2', 'kathleen-3'],
-    preset: { material: 'silver930', stone: 'cyrkonia', colour: 6, size: 13 },
+    materials: ['silver930'],
+    stoneColours: ['pink'],
+    preset: { material: 'silver930', stone: 'cyrkonia', colour: 0, size: 13 },
   },
   {
     id: 'odette', nr: '06', name: 'Odette', drop: 1,
     short: 'open toi-et-moi, two stones',
-    text: 'An open band that wraps almost all the way round, a different zircon set at each end. Sits slightly loose by design — that is the point.',
+    text: 'An open band that wraps almost all the way round, a navy zircon set at one end and a tea-coloured one at the other. Sits slightly loose by design — that is the point.',
     price: 350, width: '3 mm', weight: '~5 g', wksMin: 3, wksMax: 4,
     photos: ['odette-1', 'odette-2'],
-    preset: { material: 'silver930', stone: 'cyrkonia', colour: 2, size: 14 },
+    materials: ['silver930'],
+    stoneColours: ['navy', 'tea'],
+    preset: { material: 'silver930', stone: 'cyrkonia', colour: 0, size: 14 },
   },
 ];
 
@@ -416,7 +434,7 @@ function renderRing() {
           </div>
         </div>
 
-        <div class="opt">
+        <div class="opt" id="opt-material">
           <label class="opt__label" for="sel-material">material</label>
           <div class="select-wrap"><select id="sel-material"></select></div>
         </div>
@@ -472,20 +490,44 @@ function renderRing() {
 
   elMain.addEventListener('click', () => openLightbox(photoSrc(r.photos[state.photo], 1280), r.name));
 
-  /* --- options --- */
-  const selMat    = root.querySelector('#sel-material');
-  const selStone  = root.querySelector('#sel-stone');
-  const selColour = root.querySelector('#sel-colour');
-  const optColour = root.querySelector('#opt-colour');
-  const elSizes   = root.querySelector('#sizes');
+  /* --- options ---
+     r.materials / r.stoneColours (both optional, set per ring below in
+     the DATA section) narrow the pickers down to what that specific
+     piece actually comes in — most of these only exist in silver, and
+     in one or two of the eight zircon colours, not all of them. */
+  const selMat     = root.querySelector('#sel-material');
+  const optMaterial = root.querySelector('#opt-material');
+  const selStone   = root.querySelector('#sel-stone');
+  const selColour  = root.querySelector('#sel-colour');
+  const optColour  = root.querySelector('#opt-colour');
+  const elSizes    = root.querySelector('#sizes');
 
   function delta(add) {
     if (!add) return '';
     return ` (${add > 0 ? '+' : '−'}${zl(Math.abs(add))})`;
   }
 
+  /** Materials this specific ring actually comes in (defaults to all). */
+  function activeMaterials() {
+    return r.materials ? MATERIALS.filter(m => r.materials.includes(m.id)) : MATERIALS;
+  }
+
+  /** Colour variants this specific ring actually comes in (defaults to all of that stone's). */
+  function activeColours(stone) {
+    if (!stone.colours.length) return [];
+    return r.stoneColours ? stone.colours.filter(c => r.stoneColours.includes(c.name)) : stone.colours;
+  }
+
   function drawMaterials() {
-    selMat.innerHTML = MATERIALS.map(m =>
+    const mats = activeMaterials();
+    if (!mats.some(m => m.id === state.material)) state.material = mats[0].id;
+    if (mats.length <= 1) {
+      optMaterial.style.display = 'none';
+      selMat.innerHTML = mats.map(m => `<option value="${m.id}" selected>${m.name}</option>`).join('');
+      return;
+    }
+    optMaterial.style.display = '';
+    selMat.innerHTML = mats.map(m =>
       `<option value="${m.id}"${m.id === state.material ? ' selected' : ''}>${m.name}${delta(m.add)}</option>`
     ).join('');
   }
@@ -498,10 +540,12 @@ function renderRing() {
 
   function drawColours() {
     const s = findStone(state.stone);
-    if (!s.colours.length) { optColour.style.display = 'none'; return; }
-    optColour.style.display = '';
-    if (state.colour >= s.colours.length) state.colour = 0;
-    selColour.innerHTML = s.colours.map((c, i) =>
+    const colours = activeColours(s);
+    if (!colours.length) { optColour.style.display = 'none'; return; }
+    if (colours.length === 1) { optColour.style.display = 'none'; state.colour = 0; }
+    else optColour.style.display = '';
+    if (state.colour >= colours.length) state.colour = 0;
+    selColour.innerHTML = colours.map((c, i) =>
       `<option value="${i}"${i === state.colour ? ' selected' : ''}>${c.name}</option>`
     ).join('');
   }
@@ -531,7 +575,8 @@ function renderRing() {
   function config() {
     const m = findMaterial(state.material);
     const s = findStone(state.stone);
-    const colour = s.colours.length ? s.colours[state.colour] : null;
+    const colours = activeColours(s);
+    const colour = colours.length ? colours[state.colour] : null;
     const quote = !!m.quote;
     const price = calcPrice(r, state.material, state.stone, state.size);
     return {
