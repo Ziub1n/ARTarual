@@ -72,7 +72,6 @@ const I18N = {
 
 en: {
   /* ---------- shared: topbar / nav / footer ---------- */
-  'topbar.tagline': 'jewellery for modern princesses',
   'nav.about': 'About me',
   'nav.shop': 'Shop',
   'nav.drop': 'Drop',
@@ -102,7 +101,7 @@ en: {
   'home.step1.title': 'silver, always',
   'home.step1.p': 'Every ring here is sterling silver 930, exactly as shown. Want it in gold instead? That becomes a custom piece, quoted individually.',
   'home.step2.title': 'pick the stone and its colour',
-  'home.step2.p': 'Cubic zirconia, in eight colours &mdash; from sky blue to burgundy to tea.',
+  'home.step2.p': 'Cubic zirconia, in eleven colours &mdash; from clear to sky blue to brown.',
   'home.step3.title': 'give me your size',
   'home.step3.p': 'From 8 to 24. Larger sizes take a little more metal, so the price moves slightly &mdash; you can see it on every tile.',
   'home.build': 'build your ring',
@@ -119,13 +118,13 @@ en: {
   'home.customs.cta': 'see how customs work',
 
   /* ---------- drop.html ---------- */
-  'drop.title': 'Drop — ARTarual',
+  'drop.title': 'Drop 01 — ARTarual',
   'drop.meta': 'The ARTarual drop — six handmade rings in sterling silver 930, made to order: pick the zircon colour and size.',
-  'drop.h1': 'drop',
+  'drop.h1': 'drop 01',
   'drop.p': 'Six pieces, each one a real design of mine &mdash; from a thin stacking band to a two-stone signet. All of them in sterling silver 930; you pick the zircon colour and size.',
   'drop.badge1': '6 designs',
   'drop.badge2': 'made to order',
-  'drop.badge3': '8 zircon colours',
+  'drop.badge3': '11 zircon colours',
   'drop.more': 'see everything',
   'drop.wild.heading': 'the drop in the wild',
 
@@ -136,7 +135,7 @@ en: {
   'kolekcja.p': 'The full drop in one place. Every piece is sterling silver 930, made in your size &mdash; you pick the zircon colour on the ring page.',
   'kolekcja.badge1': '6 designs',
   'kolekcja.badge2': 'sterling silver 930',
-  'kolekcja.badge3': '8 zircon colours',
+  'kolekcja.badge3': '11 zircon colours',
   'kolekcja.more': 'make a custom',
 
   /* ---------- photoshoot.html ---------- */
@@ -306,8 +305,8 @@ en: {
   'cfg.material': 'material',
   'cfg.stone': 'stone',
   'cfg.stonecolour': 'stone colour',
+  'cfg.colournote': 'Special and pastel colours available on request.',
   'cfg.stoneshape': 'stone shape',
-  'cfg.width': 'width',
   'cfg.weight': 'weight',
   'cfg.made.label': 'made',
   'cfg.made': 'by hand, in Warsaw',
@@ -322,12 +321,11 @@ en: {
   'cfg.paynote': 'There is no payment here &mdash; everything in the bag goes to me as one email, and I confirm it personally before I start making anything.',
   'cfg.quoted': 'quoted individually',
   'cfg.onrequest': 'on request',
-  'cfg.nostone': 'no stone',
   'cfg.photo': 'photo',
   'cfg.bd.material': 'material',
   'cfg.bd.stone': 'stone',
   'cfg.bd.size': 'size',
-  'cfg.bd.width': 'width',
+  'cfg.bd.weight': 'weight',
   'cfg.copy.ring': 'Ring:',
   'cfg.copy.material': 'Material:',
   'cfg.copy.stone': 'Stone:',
@@ -359,7 +357,6 @@ en: {
 
 pl: {
   /* ---------- shared: topbar / nav / footer ---------- */
-  'topbar.tagline': 'biżuteria dla współczesnych księżniczek',
   'nav.about': 'O mnie',
   'nav.shop': 'Sklep',
   'nav.drop': 'Drop',
@@ -389,7 +386,7 @@ pl: {
   'home.step1.title': 'zawsze srebro',
   'home.step1.p': 'Każdy pierścionek tutaj to srebro 930, dokładnie takie jak na zdjęciu. Chcesz w złocie? To już zamówienie custom, wyceniane indywidualnie.',
   'home.step2.title': 'wybierz kamień i jego kolor',
-  'home.step2.p': 'Cyrkonia, w ośmiu kolorach &mdash; od błękitnego przez bordowy po herbaciany.',
+  'home.step2.p': 'Cyrkonia, w jedenastu kolorach &mdash; od przezroczystej przez błękitną po brązową.',
   'home.step3.title': 'podaj mi swój rozmiar',
   'home.step3.p': 'Od 8 do 24. Większe rozmiary to trochę więcej metalu, więc cena nieznacznie rośnie &mdash; widać to przy każdym produkcie.',
   'home.build': 'zbuduj swój pierścionek',
@@ -406,13 +403,13 @@ pl: {
   'home.customs.cta': 'zobacz jak działają zamówienia custom',
 
   /* ---------- drop.html ---------- */
-  'drop.title': 'Drop — ARTarual',
+  'drop.title': 'Drop 01 — ARTarual',
   'drop.meta': 'Drop ARTarual — sześć ręcznie robionych pierścionków ze srebra 930, na zamówienie: wybierz kolor cyrkonii i rozmiar.',
-  'drop.h1': 'drop',
+  'drop.h1': 'drop 01',
   'drop.p': 'Sześć modeli, każdy to mój prawdziwy projekt &mdash; od cienkiej obrączki po sygnet z dwoma kamieniami. Wszystkie ze srebra 930; Ty wybierasz kolor cyrkonii i rozmiar.',
   'drop.badge1': '6 projektów',
   'drop.badge2': 'na zamówienie',
-  'drop.badge3': '8 kolorów cyrkonii',
+  'drop.badge3': '11 kolorów cyrkonii',
   'drop.more': 'zobacz wszystko',
   'drop.wild.heading': 'drop w akcji',
 
@@ -423,7 +420,7 @@ pl: {
   'kolekcja.p': 'Cały drop w jednym miejscu. Każdy element to srebro 930, robiony w Twoim rozmiarze &mdash; kolor cyrkonii wybierasz na stronie produktu.',
   'kolekcja.badge1': '6 projektów',
   'kolekcja.badge2': 'srebro 930',
-  'kolekcja.badge3': '8 kolorów cyrkonii',
+  'kolekcja.badge3': '11 kolorów cyrkonii',
   'kolekcja.more': 'zamów custom',
 
   /* ---------- photoshoot.html ---------- */
@@ -593,8 +590,8 @@ pl: {
   'cfg.material': 'materiał',
   'cfg.stone': 'kamień',
   'cfg.stonecolour': 'kolor kamienia',
+  'cfg.colournote': 'Kolory specjalne i pastelowe na zamówienie.',
   'cfg.stoneshape': 'kształt kamienia',
-  'cfg.width': 'szerokość',
   'cfg.weight': 'waga',
   'cfg.made.label': 'wykonanie',
   'cfg.made': 'ręcznie, w Warszawie',
@@ -609,12 +606,11 @@ pl: {
   'cfg.paynote': 'Nie ma tu płatności &mdash; wszystko z koszyka trafia do mnie jako jeden e-mail, a ja potwierdzam go osobiście, zanim zacznę cokolwiek robić.',
   'cfg.quoted': 'wycena indywidualna',
   'cfg.onrequest': 'na zapytanie',
-  'cfg.nostone': 'bez kamienia',
   'cfg.photo': 'zdjęcie',
   'cfg.bd.material': 'materiał',
   'cfg.bd.stone': 'kamień',
   'cfg.bd.size': 'rozmiar',
-  'cfg.bd.width': 'szerokość',
+  'cfg.bd.weight': 'waga',
   'cfg.copy.ring': 'Pierścionek:',
   'cfg.copy.material': 'Materiał:',
   'cfg.copy.stone': 'Kamień:',

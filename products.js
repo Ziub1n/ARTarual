@@ -25,20 +25,26 @@ const MATERIALS = [
 
 /* =============================================================================
    DATA — 2. STONES
-   This collection only comes with cubic zirconia — but in a lot of colours.
+   Every ring comes with a cubic zirconia — it is not an optional extra, so
+   there is no "no stone" entry and no surcharge for it (add: 0). The colour
+   list below is Laura's full standard palette, available on every piece;
+   special/pastel shades outside this list are a custom request (see
+   cfg.colournote in i18n.js).
    colours = colour variants (name + swatch)
    ============================================================================= */
 const STONES = [
-  { id: 'none', name: 'no stone', namePl: 'bez kamienia', add: 0, order: false, colours: [] },
-  { id: 'cyrkonia', name: 'cubic zirconia', namePl: 'cyrkonia', add: 90, order: false, colours: [
-    { name: 'sky blue', namePl: 'błękitna',  hex: '#7EC8E3' },
-    { name: 'blue',     namePl: 'niebieska', hex: '#2B4C8C' },
-    { name: 'navy',     namePl: 'granatowa', hex: '#1F3A5F' },
-    { name: 'burgundy', namePl: 'bordowa',   hex: '#76202D' },
-    { name: 'yellow',   namePl: 'żółta',     hex: '#DFA236' },
-    { name: 'green',    namePl: 'zielona',   hex: '#3E8C5A' },
-    { name: 'pink',     namePl: 'różowa',    hex: '#D6538C' },
-    { name: 'tea',      namePl: 'herbaciana', hex: '#B08D57' },
+  { id: 'cyrkonia', name: 'cubic zirconia', namePl: 'cyrkonia', add: 0, order: false, colours: [
+    { name: 'clear',    namePl: 'przezroczysta', hex: '#F0F1EE' },
+    { name: 'yellow',   namePl: 'żółta',         hex: '#E8C13A' },
+    { name: 'green',    namePl: 'zielona',       hex: '#4C8C5A' },
+    { name: 'pink',     namePl: 'różowa',        hex: '#E0669C' },
+    { name: 'purple',   namePl: 'fioletowa',     hex: '#7C4FA0' },
+    { name: 'sky blue', namePl: 'błękitna',      hex: '#6FB8DA' },
+    { name: 'navy',     namePl: 'granatowa',     hex: '#1F3A6B' },
+    { name: 'orange',   namePl: 'pomarańczowa',  hex: '#E07B2C' },
+    { name: 'red',      namePl: 'czerwona',      hex: '#C42B2B' },
+    { name: 'black',    namePl: 'czarna',        hex: '#1B1B1E' },
+    { name: 'brown',    namePl: 'brązowa',       hex: '#6B4226' },
   ]},
 ];
 
@@ -72,18 +78,18 @@ const SIZE_BANDS = [
 
 /* =============================================================================
    DATA — 4. RINGS
-   price       = base price: silver 930, no stone, standard size (12–15)
+   price       = base price: silver 930, standard size (12–15) — real prices
+                 from Laura
+   weight      = ~5 g for everything here, per Laura
    photos      = file names from zdj/customs/ (without -640.jpg / -1280.jpg)
    wksMin/Max  = base lead time in weeks
    preset      = what is selected when you land on the ring page
    materials   = which MATERIALS ids this exact piece actually comes in
                  (omit to allow all of them; most pieces here are silver-only,
                  so the picker on the ring page just doesn't show up)
-   stoneColours = which of the cubic zirconia colour names (from STONES
-                 above) this exact piece actually comes in — taken from
-                 Laura's own notes on the ring photos
-   stoneShapes  = which STONE_SHAPES ids this exact piece actually comes in
-                 (the cut visible in its own photos — omit to allow all of them)
+   Stone colour and shape are NOT restricted per ring any more — every piece
+   offers the full STONES/STONE_SHAPES lists (see cfg.stonecolour /
+   cfg.stoneshape pickers below).
    shortPl/textPl = Polish versions of short/text, shown when the site is
                  switched to PL (see i18n.js) — name and id stay the same
                  in both languages, they are the piece's own name
@@ -95,11 +101,9 @@ const RINGS = [
     shortPl: 'cienka kuta obrączka z jednym kamieniem',
     text: 'A narrow, textured band with one round zircon set into it — the kind of ring that looks right stacked three at a time, one colour each.',
     textPl: 'Wąska, teksturowana obrączka z jedną okrągłą cyrkonią — pierścionek, który dobrze wygląda noszony po trzy naraz, każdy w innym kolorze.',
-    price: 240, width: '2 mm', weight: '~3 g', wksMin: 2, wksMax: 3,
+    price: 420, weight: '~5 g', wksMin: 2, wksMax: 3,
     photos: ['ashleen-1', 'ashleen-2', 'ashleen-3'],
     materials: ['silver930'],
-    stoneColours: ['sky blue', 'burgundy', 'blue'],
-    stoneShapes: ['circle'],
     preset: { material: 'silver930', stone: 'cyrkonia', colour: 0, size: 13 },
   },
   {
@@ -108,11 +112,9 @@ const RINGS = [
     shortPl: 'szeroki sygnet z jednym dużym kamieniem',
     text: 'The wide, chunky one — hand-textured all the way round, with a large square-cut zircon set high on the face.',
     textPl: 'Ten szeroki, masywny — ręcznie teksturowany dookoła, z dużą cyrkonią o kwadratowym szlifie osadzoną wysoko na powierzchni.',
-    price: 380, width: '9 mm', weight: '~10 g', wksMin: 3, wksMax: 4,
+    price: 550, weight: '~5 g', wksMin: 3, wksMax: 4,
     photos: ['courtney-1', 'courtney-2', 'courtney-3', 'courtney-4'],
     materials: ['silver930'],
-    stoneColours: ['sky blue'],
-    stoneShapes: ['square'],
     preset: { material: 'silver930', stone: 'cyrkonia', colour: 0, size: 14 },
   },
   {
@@ -121,11 +123,9 @@ const RINGS = [
     shortPl: 'sygnet z prostokątnym kamieniem',
     text: 'A signet-shaped face holding one rectangular zircon, textured band underneath. Reads a little like a worn family ring.',
     textPl: 'Sygnetowa powierzchnia z jedną prostokątną cyrkonią, teksturowana obrączka pod spodem. Wygląda trochę jak noszony rodzinny pierścionek.',
-    price: 320, width: '7 mm', weight: '~7 g', wksMin: 2, wksMax: 3,
+    price: 550, weight: '~5 g', wksMin: 2, wksMax: 3,
     photos: ['delia-1', 'delia-2'],
     materials: ['silver930'],
-    stoneColours: ['yellow'],
-    stoneShapes: ['rectangle'],
     preset: { material: 'silver930', stone: 'cyrkonia', colour: 0, size: 13 },
   },
   {
@@ -134,11 +134,9 @@ const RINGS = [
     shortPl: 'prostokątny sygnet, dwa kamienie',
     text: 'A rectangular signet face set with two zircons side by side — shown in green and pink, so it reads as one deliberate pair rather than a mismatch.',
     textPl: 'Prostokątna powierzchnia sygnetu z dwiema cyrkoniami obok siebie — pokazana w zieleni i różu, więc czyta się to jako świadomą parę, nie przypadkowe zestawienie.',
-    price: 410, width: '10 mm face', weight: '~11 g', wksMin: 3, wksMax: 4,
+    price: 820, weight: '~5 g', wksMin: 3, wksMax: 4,
     photos: ['genevieve-1', 'genevieve-2', 'genevieve-3', 'genevieve-4', 'genevieve-5'],
     materials: ['silver930'],
-    stoneColours: ['green', 'pink'],
-    stoneShapes: ['circle'],
     preset: { material: 'silver930', stone: 'cyrkonia', colour: 0, size: 14 },
   },
   {
@@ -147,24 +145,20 @@ const RINGS = [
     shortPl: 'rzeźbiarska oprawa, jeden kamień',
     text: 'The most sculptural piece I make — an organic, almost hand-carved setting around a single zircon, on a heavily textured band.',
     textPl: 'Najbardziej rzeźbiarski element, jaki robię — organiczna, niemal ręcznie rzeźbiona oprawa wokół jednej cyrkonii, na mocno teksturowanej obrączce.',
-    price: 290, width: '3 mm', weight: '~4 g', wksMin: 2, wksMax: 3,
+    price: 500, weight: '~5 g', wksMin: 2, wksMax: 3,
     photos: ['kathleen-1', 'kathleen-2', 'kathleen-3'],
     materials: ['silver930'],
-    stoneColours: ['pink'],
-    stoneShapes: ['circle'],
     preset: { material: 'silver930', stone: 'cyrkonia', colour: 0, size: 13 },
   },
   {
     id: 'odette', nr: '06', name: 'Odette', drop: 1,
     short: 'open toi-et-moi, two stones',
     shortPl: 'otwarty toi-et-moi, dwa kamienie',
-    text: 'An open band that wraps almost all the way round, a navy zircon set at one end and a tea-coloured one at the other. Sits slightly loose by design — that is the point.',
-    textPl: 'Otwarta obrączka, która owija się niemal dookoła — granatowa cyrkonia na jednym końcu, herbaciana na drugim. Celowo siedzi trochę luźno — o to właśnie chodzi.',
-    price: 350, width: '3 mm', weight: '~5 g', wksMin: 3, wksMax: 4,
+    text: 'An open band that wraps almost all the way round, a navy zircon set at one end and a brown one at the other. Sits slightly loose by design — that is the point.',
+    textPl: 'Otwarta obrączka, która owija się niemal dookoła — granatowa cyrkonia na jednym końcu, brązowa na drugim. Celowo siedzi trochę luźno — o to właśnie chodzi.',
+    price: 740, weight: '~5 g', wksMin: 3, wksMax: 4,
     photos: ['odette-1', 'odette-2'],
     materials: ['silver930'],
-    stoneColours: ['navy', 'tea'],
-    stoneShapes: ['circle'],
     preset: { material: 'silver930', stone: 'cyrkonia', colour: 0, size: 14 },
   },
 ];
@@ -178,7 +172,7 @@ const RINGS = [
    DATA — 5. DROPS (collections under the "shop" menu)
    ============================================================================= */
 const DROPS = {
-  1: { name: 'drop', namePl: 'drop', subtitle: 'made to order', text: 'Six pieces, each one built around a real design of mine. All of them can be made in your size, with your choice of zircon colour.' },
+  1: { nr: '01', name: 'drop', namePl: 'drop', subtitle: 'made to order', text: 'Six pieces, each one built around a real design of mine. All of them can be made in your size, with your choice of zircon colour.' },
 };
 
 /* =============================================================================
@@ -278,7 +272,7 @@ function calcLeadTime(ring, materialId, stoneId) {
 function materialCaption(r) {
   const m = findMaterial(r.preset.material);
   const s = findStone(r.preset.stone);
-  return s.id === 'none' ? mLabel(m) : `${mLabel(m)} / ${sLabel(s)}`;
+  return `${mLabel(m)} / ${sLabel(s)}`;
 }
 
 function tile(r) {
@@ -470,6 +464,7 @@ function renderRing() {
 
   const id = new URLSearchParams(location.search).get('id');
   const r = findRing(id) || RINGS[0];
+  const dropNr = DROPS[r.drop] ? DROPS[r.drop].nr : '01'; // the drop's own number, not the ring's
 
   document.title = `${r.name} — ARTarual`;
 
@@ -492,11 +487,10 @@ function renderRing() {
 
       <div class="product__cfg">
         <div class="product__head">
-          <span class="product__no">${DROPS[r.drop] ? dropLabel(DROPS[r.drop]) : t('nav.drop')} ${r.nr}</span>
+          <span class="product__no">${DROPS[r.drop] ? dropLabel(DROPS[r.drop]) : t('nav.drop')} ${dropNr}</span>
           <h1>${r.name}</h1>
           <p class="product__lede">${ringText(r)}</p>
           <div class="product-facts">
-            <div><strong>${t('cfg.width')}</strong>${r.width}</div>
             <div><strong>${t('cfg.weight')}</strong>${r.weight}</div>
             <div><strong>${t('cfg.made.label')}</strong>${t('cfg.made')}</div>
           </div>
@@ -507,7 +501,7 @@ function renderRing() {
           <div class="select-wrap"><select id="sel-material"></select></div>
         </div>
 
-        <div class="opt">
+        <div class="opt" id="opt-stone">
           <label class="opt__label" for="sel-stone">${t('cfg.stone')}</label>
           <div class="select-wrap"><select id="sel-stone"></select></div>
         </div>
@@ -515,6 +509,7 @@ function renderRing() {
         <div class="opt" id="opt-colour">
           <label class="opt__label" for="sel-colour">${t('cfg.stonecolour')}</label>
           <div class="select-wrap"><select id="sel-colour"></select></div>
+          <p class="size-help">${t('cfg.colournote')}</p>
         </div>
 
         <div class="opt" id="opt-shape">
@@ -564,13 +559,15 @@ function renderRing() {
   elMain.addEventListener('click', () => openLightbox(photoSrc(r.photos[state.photo], 1280), r.name));
 
   /* --- options ---
-     r.materials / r.stoneColours / r.stoneShapes (all optional, set per
-     ring in the DATA section) narrow the pickers down to what that
-     specific piece actually comes in — most of these only exist in
-     silver, in one or two of the eight zircon colours, and in one cut. */
+     r.materials (optional, set per ring in the DATA section) narrows the
+     material picker down to what that specific piece actually comes in —
+     most of these are silver-only, so it just doesn't show up. Stone
+     colour and shape are the same full list for every ring; a picker only
+     hides itself when there is truly nothing to choose (one option). */
   const selMat     = root.querySelector('#sel-material');
   const optMaterial = root.querySelector('#opt-material');
   const selStone   = root.querySelector('#sel-stone');
+  const optStone   = root.querySelector('#opt-stone');
   const selColour  = root.querySelector('#sel-colour');
   const optColour  = root.querySelector('#opt-colour');
   const selShape   = root.querySelector('#sel-shape');
@@ -587,16 +584,11 @@ function renderRing() {
     return r.materials ? MATERIALS.filter(m => r.materials.includes(m.id)) : MATERIALS;
   }
 
-  /** Colour variants this specific ring actually comes in (defaults to all of that stone's). */
-  function activeColours(stone) {
-    if (!stone.colours.length) return [];
-    return r.stoneColours ? stone.colours.filter(c => r.stoneColours.includes(c.name)) : stone.colours;
-  }
+  /** Colour variants for the stone the ring currently has selected. */
+  function activeColours(stone) { return stone.colours; }
 
-  /** Stone shapes/cuts this specific ring actually comes in (defaults to all). */
-  function activeShapes() {
-    return r.stoneShapes ? STONE_SHAPES.filter(sh => r.stoneShapes.includes(sh.id)) : STONE_SHAPES;
-  }
+  /** Every available stone shape/cut — same list for every ring. */
+  function activeShapes() { return STONE_SHAPES; }
 
   function drawMaterials() {
     const mats = activeMaterials();
@@ -613,6 +605,12 @@ function renderRing() {
   }
 
   function drawStones() {
+    if (STONES.length <= 1) {
+      optStone.style.display = 'none';
+      selStone.innerHTML = STONES.map(s => `<option value="${s.id}" selected>${sLabel(s)}</option>`).join('');
+      return;
+    }
+    optStone.style.display = '';
     selStone.innerHTML = STONES.map(s =>
       `<option value="${s.id}"${s.id === state.stone ? ' selected' : ''}>${sLabel(s)}${delta(s.add)}</option>`
     ).join('');
@@ -631,8 +629,6 @@ function renderRing() {
   }
 
   function drawShapes() {
-    const s = findStone(state.stone);
-    if (s.id === 'none') { optShape.style.display = 'none'; return; }
     const shapes = activeShapes();
     if (!shapes.some(sh => sh.id === state.shape)) state.shape = shapes[0].id;
     if (shapes.length <= 1) {
@@ -674,7 +670,7 @@ function renderRing() {
     const s = findStone(state.stone);
     const colours = activeColours(s);
     const colour = colours.length ? colours[state.colour] : null;
-    const shape = s.id !== 'none' ? STONE_SHAPES.find(sh => sh.id === state.shape) : null;
+    const shape = STONE_SHAPES.find(sh => sh.id === state.shape) || null;
     const quote = !!m.quote;
     const price = calcPrice(r, state.material, state.stone, state.size);
     const stoneBits = [colour ? cLabel(colour) : null, shape ? shLabel(shape) : null].filter(Boolean).join(', ');
@@ -682,7 +678,7 @@ function renderRing() {
       m, s, colour, shape, quote, price,
       priceText: quote ? t('cfg.onrequest') : zl(price),
       lead: calcLeadTime(r, state.material, state.stone),
-      stoneText: s.id === 'none' ? t('cfg.nostone') : `${sLabel(s)}${stoneBits ? ` (${stoneBits})` : ''}`,
+      stoneText: `${sLabel(s)}${stoneBits ? ` (${stoneBits})` : ''}`,
     };
   }
 
@@ -698,10 +694,10 @@ function renderRing() {
       <li><span class="k">${t('cfg.bd.material')}</span><span class="v">${mLabel(c.m)}${c.quote ? ` — ${t('cfg.quoted')}` : ''}</span></li>
       <li><span class="k">${t('cfg.bd.stone')}</span><span class="v">${c.stoneText}</span></li>
       <li><span class="k">${t('cfg.bd.size')}</span><span class="v">${state.size} (${state.size + 40} mm) · ${bandLabel(sizeBand(state.size))}</span></li>
-      <li><span class="k">${t('cfg.bd.width')}</span><span class="v">${r.width}</span></li>`;
+      <li><span class="k">${t('cfg.bd.weight')}</span><span class="v">${r.weight}</span></li>`;
 
     const text =
-`${t('cfg.copy.ring')} ${r.name} (${t('nav.drop')} ${r.nr})
+`${t('cfg.copy.ring')} ${r.name} (${t('nav.drop')} ${dropNr})
 ${t('cfg.copy.material')} ${mLabel(c.m)}${c.quote ? ` (${t('cfg.quoted')})` : ''}
 ${t('cfg.copy.stone')} ${c.stoneText}
 ${t('cfg.copy.size')} ${state.size} (${state.size + 40} mm)
@@ -725,7 +721,7 @@ ${t('cfg.copy.lead')} ${c.lead}`;
     // language was active at the moment of adding — switching language
     // afterwards won't retranslate items already sitting in the bag.
     bagAdd({
-      id: r.id, name: r.name, nr: r.nr, photo: r.photos[0],
+      id: r.id, name: r.name, nr: dropNr, photo: r.photos[0],
       material: mLabel(c.m), stone: c.stoneText, size: state.size,
       price: c.quote ? null : c.price, priceText: c.priceText, lead: c.lead,
     });

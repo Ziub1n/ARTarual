@@ -64,10 +64,11 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 .ghost{ display:none !important; }
 
 /* =========================================================
-   Czarny pasek informacyjny (statyczny — bez animacji)
+   Pasek z hasłem — pod nagłówkiem, gradient w barwach marki
    ========================================================= */
 .topbar{
-  background:var(--black); color:#fff; height:var(--topbar-h);
+  background:linear-gradient(90deg, #020086, #A1A9FE, #CDD629, #EC1763, #F8C9DD);
+  color:#fff; height:var(--topbar-h);
   display:flex; align-items:center; justify-content:center;
   padding:0 var(--edge);
 }
@@ -113,15 +114,17 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 .nav-actions .nav-icon{ display:inline-flex; align-items:center; }
 .nav-actions .nav-icon:hover{ text-decoration:none; opacity:.6; }
 
-/* PL / EN flag switch */
+/* PL / EN flag switch — flags stay in their real colours always; only
+   opacity marks which one is active (a grayscale filter would make the
+   Polish flag look like it is broken, not just "not selected") */
 .lang-switch{ display:inline-flex; align-items:center; gap:.45rem; }
 .lang-switch button{
   background:none; border:0; padding:0; margin:0; cursor:pointer;
-  font-size:15px; line-height:1; opacity:.35; filter:grayscale(1);
-  transition:opacity .2s ease, filter .2s ease;
+  font-size:15px; line-height:1; opacity:.4;
+  transition:opacity .2s ease;
 }
-.lang-switch button[aria-current="true"]{ opacity:1; filter:none; cursor:default; }
-.lang-switch button:hover{ opacity:.8; }
+.lang-switch button[aria-current="true"]{ opacity:1; cursor:default; }
+.lang-switch button:hover{ opacity:.75; }
 /* dawny przycisk CTA w nawigacji jest teraz zwykłym linkiem po prawej */
 .main-nav .nav-cta{ display:none; }
 
@@ -519,7 +522,7 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 }
 .product__lede{ font-size:13px; color:var(--grey); max-width:52ch; margin-top:.9rem; }
 
-.product-facts{ display:grid; grid-template-columns:repeat(3,1fr); gap:1.6rem; margin-top:1.8rem; }
+.product-facts{ display:grid; grid-template-columns:repeat(2,1fr); gap:1.6rem; margin-top:1.8rem; }
 .product-facts div{ padding-top:.8rem; padding-left:0; border-top:1px solid var(--line); font-size:12.5px; color:var(--ink); }
 .product-facts div::before{ display:none; }
 .product-facts strong{
@@ -828,12 +831,15 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
   .logo{ justify-content:center; }
   .nav-actions{ gap:1rem; }
 
+  /* nagłówek jest jedynym elementem sticky (topbar jedzie teraz pod nim
+     w zwykłym przepływie), więc menu wystarczy przypiąć do jego dołu —
+     bez topbar-h w rachunku, inaczej zostaje szpara po przewinięciu */
   .main-nav{
-    position:fixed; inset:calc(var(--topbar-h) + var(--header-h)) 0 auto 0; background:var(--paper);
+    position:fixed; inset:var(--header-h) 0 auto 0; background:var(--paper);
     flex-direction:column; align-items:stretch; gap:0;
     padding:.6rem var(--edge) 1.6rem; border-bottom:1px solid var(--line);
     transform:translateY(-140%); transition:transform .28s cubic-bezier(.2,.6,.2,1);
-    max-height:calc(100vh - var(--topbar-h) - var(--header-h)); overflow-y:auto; z-index:49;
+    max-height:calc(100vh - var(--header-h)); overflow-y:auto; z-index:49;
   }
   .main-nav.open{ transform:translateY(0); }
   .main-nav ul{ flex-direction:column; gap:0; }
