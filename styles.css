@@ -112,6 +112,16 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 .nav-actions a:hover{ text-decoration:underline; text-underline-offset:3px; }
 .nav-actions .nav-icon{ display:inline-flex; align-items:center; }
 .nav-actions .nav-icon:hover{ text-decoration:none; opacity:.6; }
+
+/* PL / EN flag switch */
+.lang-switch{ display:inline-flex; align-items:center; gap:.45rem; }
+.lang-switch button{
+  background:none; border:0; padding:0; margin:0; cursor:pointer;
+  font-size:15px; line-height:1; opacity:.35; filter:grayscale(1);
+  transition:opacity .2s ease, filter .2s ease;
+}
+.lang-switch button[aria-current="true"]{ opacity:1; filter:none; cursor:default; }
+.lang-switch button:hover{ opacity:.8; }
 /* dawny przycisk CTA w nawigacji jest teraz zwykłym linkiem po prawej */
 .main-nav .nav-cta{ display:none; }
 

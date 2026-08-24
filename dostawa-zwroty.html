@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shipping &amp; returns — ARTarual</title>
-<meta name="description" content="How ARTarual rings are shipped, and what happens if the size is wrong.">
+<title data-i18n="dostawa.title">Shipping &amp; returns — ARTarual</title>
+<meta name="description" content="How ARTarual rings are shipped, and what happens if the size is wrong." data-i18n-attr="content:dostawa.meta">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800&family=Tinos:wght@400;700&display=swap" rel="stylesheet">
@@ -13,7 +13,7 @@
 <body>
 
   <div class="topbar">
-    <span>jewellery for modern princesses</span>
+    <span data-i18n="topbar.tagline">jewellery for modern princesses</span>
   </div>
 
   <header class="site-header">
@@ -23,25 +23,29 @@
       </button>
       <nav class="main-nav" id="main-nav">
         <ul>
-          <li><a href="o-nas.html">About me</a></li>
+          <li><a href="o-nas.html" data-i18n="nav.about">About me</a></li>
           <li class="has-sub">
-            <button type="button" class="sub-toggle" aria-expanded="false">Shop <span class="caret">&#9660;</span></button>
+            <button type="button" class="sub-toggle" aria-expanded="false"><span data-i18n="nav.shop">Shop</span> <span class="caret">&#9660;</span></button>
             <ul class="subnav">
-              <li><a href="drop.html">Drop</a></li>
-              <li><a href="kolekcja.html">Everything</a></li>
+              <li><a href="drop.html" data-i18n="nav.drop">Drop</a></li>
+              <li><a href="kolekcja.html" data-i18n="nav.everything">Everything</a></li>
             </ul>
           </li>
-          <li><a href="photoshoot.html">Photoshoot</a></li>
-          <li><a href="customs.html">Customs</a></li>
-          <li><a href="rozmiary.html">Size guide</a></li>
+          <li><a href="photoshoot.html" data-i18n="nav.photoshoot">Photoshoot</a></li>
+          <li><a href="customs.html" data-i18n="nav.customs">Customs</a></li>
+          <li><a href="rozmiary.html" data-i18n="nav.sizeguide">Size guide</a></li>
         </ul>
       </nav>
       <a href="index.html" class="logo" aria-label="ARTarual — home"><img src="logo.png" alt="ARTarual"></a>
       <div class="nav-actions">
+        <div class="lang-switch" role="group" aria-label="Language">
+          <button type="button" data-lang="en" aria-current="true" aria-label="English">🇬🇧</button>
+          <button type="button" data-lang="pl" aria-current="false" aria-label="Polski">🇵🇱</button>
+        </div>
         <a href="https://www.instagram.com/artarual.jewellery/" target="_blank" rel="noopener" class="nav-icon" aria-label="Instagram">
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5.5"/><circle cx="12" cy="12" r="4.1"/><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"/></svg>
         </a>
-        <a href="#" data-bag-open>Bag (<span data-bag-count>0</span>)</a>
+        <a href="#" data-bag-open><span data-i18n="nav.bag">Bag</span> (<span data-bag-count>0</span>)</a>
       </div>
     </div>
   </header>
@@ -49,43 +53,43 @@
   <main>
     <section class="page-hero">
       <div class="wrap">
-        <h1>shipping &amp; returns</h1>
-        <p>Everything is made to order, so the timings below start from the moment we confirm your ring, not from the moment you write.</p>
+        <h1 data-i18n="dostawa.h1">shipping &amp; returns</h1>
+        <p data-i18n="dostawa.p">Everything is made to order, so the timings below start from the moment we confirm your ring, not from the moment you write.</p>
       </div>
     </section>
 
     <section class="section" style="padding-top:1.5rem">
       <div class="wrap section__inner">
-        <div class="sec-head" id="shipping"><h2>shipping</h2></div>
+        <div class="sec-head" id="shipping"><h2 data-i18n="dostawa.shipping.heading">shipping</h2></div>
         <div class="qa">
           <details open>
-            <summary>When does it ship?</summary>
-            <div class="a">The lead time for each piece is shown on its ring page. Once it is finished, it goes out by InPost.</div>
+            <summary data-i18n="dostawa.s1.q">When does it ship?</summary>
+            <div class="a" data-i18n="dostawa.s1.a">The lead time for each piece is shown on its ring page. Once it is finished, it goes out by InPost.</div>
           </details>
           <details>
-            <summary>How much does delivery cost?</summary>
-            <div class="a">I ship with InPost, so prices follow the InPost price list. If you would rather use a different courier, or want to collect your order in person in Warsaw, just write to me.</div>
+            <summary data-i18n="dostawa.s2.q">How much does delivery cost?</summary>
+            <div class="a" data-i18n="dostawa.s2.a">I ship with InPost, so prices follow the InPost price list. If you would rather use a different courier, or want to collect your order in person in Warsaw, just write to me.</div>
           </details>
           <details>
-            <summary>Do you ship outside Poland?</summary>
-            <div class="a">Yes &mdash; within Poland and across Europe. For anything further afield, text me and we will figure it out.</div>
+            <summary data-i18n="dostawa.s3.q">Do you ship outside Poland?</summary>
+            <div class="a" data-i18n="dostawa.s3.a">Yes &mdash; within Poland and across Europe. For anything further afield, text me and we will figure it out.</div>
           </details>
         </div>
 
-        <div class="sec-head" id="returns" style="margin-top:4rem"><h2>returns &amp; resizing</h2></div>
+        <div class="sec-head" id="returns" style="margin-top:4rem"><h2 data-i18n="dostawa.returns.heading">returns &amp; resizing</h2></div>
         <div class="qa">
           <details open>
-            <summary>Can I return a ring?</summary>
-            <div class="a">Every ARTarual piece is made by hand, specifically for you, and only after you place the order &mdash; that is why I do not accept returns. That said, I really do want you to be fully happy with what you get. If anything about the order feels off, or you have questions, just write to me &mdash; I always try to find the best solution. Handmade jewellery can differ slightly from the photos, and those small differences are exactly what gives each ring its own character.</div>
+            <summary data-i18n="dostawa.r1.q">Can I return a ring?</summary>
+            <div class="a" data-i18n="dostawa.r1.a">Every ARTarual piece is made by hand, specifically for you, and only after you place the order &mdash; that is why I do not accept returns. That said, I really do want you to be fully happy with what you get. If anything about the order feels off, or you have questions, just write to me &mdash; I always try to find the best solution. Handmade jewellery can differ slightly from the photos, and those small differences are exactly what gives each ring its own character.</div>
           </details>
           <details>
-            <summary>What if the size is wrong?</summary>
-            <div class="a">If it turns out too small, I resize it once free of charge &mdash; you only pay postage one way. If it is too big, I cannot simply shrink it: that means taking the whole ring apart and starting again from scratch, so in that case we would talk about making a new piece instead.</div>
+            <summary data-i18n="dostawa.r2.q">What if the size is wrong?</summary>
+            <div class="a" data-i18n="dostawa.r2.a">If it turns out too small, I resize it once free of charge &mdash; you only pay postage one way. If it is too big, I cannot simply shrink it: that means taking the whole ring apart and starting again from scratch, so in that case we would talk about making a new piece instead.</div>
           </details>
         </div>
 
         <div class="btn-row">
-          <a href="kontakt.html" class="btn btn-primary">ask me directly</a>
+          <a href="kontakt.html" class="btn btn-primary" data-i18n="dostawa.askme">ask me directly</a>
         </div>
       </div>
     </section>
@@ -95,41 +99,42 @@
     <div class="wrap">
       <div class="footer-top">
         <div class="footer-col">
-          <h4>shop</h4>
+          <h4 data-i18n="footer.shop">shop</h4>
           <ul>
-            <li><a href="drop.html">Drop</a></li>
-            <li><a href="kolekcja.html">Everything</a></li>
-            <li><a href="photoshoot.html">Photoshoot</a></li>
-            <li><a href="customs.html">Customs</a></li>
-            <li><a href="rozmiary.html">Size guide</a></li>
+            <li><a href="drop.html" data-i18n="nav.drop">Drop</a></li>
+            <li><a href="kolekcja.html" data-i18n="nav.everything">Everything</a></li>
+            <li><a href="photoshoot.html" data-i18n="nav.photoshoot">Photoshoot</a></li>
+            <li><a href="customs.html" data-i18n="nav.customs">Customs</a></li>
+            <li><a href="rozmiary.html" data-i18n="nav.sizeguide">Size guide</a></li>
           </ul>
         </div>
         <div class="footer-col">
-          <h4>help</h4>
+          <h4 data-i18n="footer.help">help</h4>
           <ul>
-            <li><a href="dostawa-zwroty.html#shipping">Shipping</a></li>
-            <li><a href="dostawa-zwroty.html#returns">Returns</a></li>
-            <li><a href="o-nas.html">About me</a></li>
-            <li><a href="kontakt.html">Contact</a></li>
+            <li><a href="dostawa-zwroty.html#shipping" data-i18n="footer.shipping">Shipping</a></li>
+            <li><a href="dostawa-zwroty.html#returns" data-i18n="footer.returns">Returns</a></li>
+            <li><a href="o-nas.html" data-i18n="nav.about">About me</a></li>
+            <li><a href="kontakt.html" data-i18n="nav.contact">Contact</a></li>
           </ul>
         </div>
         <div class="footer-col">
-          <h4>write to me</h4>
+          <h4 data-i18n="footer.writeto">write to me</h4>
           <ul>
             <li><a href="mailto:artarual1@gmail.com">artarual1@gmail.com</a></li>
             <li><a href="https://www.instagram.com/artarual.jewellery/" target="_blank" rel="noopener">@artarual.jewellery</a></li>
           </ul>
-          <p>A one-person studio in Warsaw. I design and forge every piece myself, in short runs.</p>
+          <p data-i18n="footer.paragraph">A one-person studio in Warsaw. I design and forge every piece myself, in short runs.</p>
         </div>
       </div>
       <div class="footer-wordmark" aria-hidden="true">ARTarual</div>
       <div class="footer-bottom">
         <span>&copy; 2026 ARTarual</span>
-        <span>silver 930 &middot; warsaw</span>
+        <span data-i18n="footer.tagline">silver 930 &middot; warsaw</span>
       </div>
     </div>
   </footer>
 
+  <script src="i18n.js"></script>
   <script src="script.js"></script>
   <script src="products.js"></script>
 </body>

@@ -19,8 +19,8 @@
    wks  = how many weeks it adds to the lead time
    ============================================================================= */
 const MATERIALS = [
-  { id: 'silver930', name: 'sterling silver 930', note: 'standard for this collection', add: 0, wks: 0, colour: '#D9D9DE' },
-  { id: 'gold',       name: '14k gold',           note: 'quoted individually — message me before ordering', add: 0, wks: 2, colour: '#F0C75E', quote: true },
+  { id: 'silver930', name: 'sterling silver 930', namePl: 'srebro 930',     note: 'standard for this collection', notePl: 'standard dla tej kolekcji', add: 0, wks: 0, colour: '#D9D9DE' },
+  { id: 'gold',       name: '14k gold',           namePl: 'złoto 14k',     note: 'quoted individually — message me before ordering', notePl: 'wycena indywidualna — napisz przed zamówieniem', add: 0, wks: 2, colour: '#F0C75E', quote: true },
 ];
 
 /* =============================================================================
@@ -29,16 +29,16 @@ const MATERIALS = [
    colours = colour variants (name + swatch)
    ============================================================================= */
 const STONES = [
-  { id: 'none', name: 'no stone', add: 0, order: false, colours: [] },
-  { id: 'cyrkonia', name: 'cubic zirconia', add: 90, order: false, colours: [
-    { name: 'sky blue', hex: '#7EC8E3' },
-    { name: 'blue',     hex: '#2B4C8C' },
-    { name: 'navy',     hex: '#1F3A5F' },
-    { name: 'burgundy', hex: '#76202D' },
-    { name: 'yellow',   hex: '#DFA236' },
-    { name: 'green',    hex: '#3E8C5A' },
-    { name: 'pink',     hex: '#D6538C' },
-    { name: 'tea',      hex: '#B08D57' },
+  { id: 'none', name: 'no stone', namePl: 'bez kamienia', add: 0, order: false, colours: [] },
+  { id: 'cyrkonia', name: 'cubic zirconia', namePl: 'cyrkonia', add: 90, order: false, colours: [
+    { name: 'sky blue', namePl: 'błękitna',  hex: '#7EC8E3' },
+    { name: 'blue',     namePl: 'niebieska', hex: '#2B4C8C' },
+    { name: 'navy',     namePl: 'granatowa', hex: '#1F3A5F' },
+    { name: 'burgundy', namePl: 'bordowa',   hex: '#76202D' },
+    { name: 'yellow',   namePl: 'żółta',     hex: '#DFA236' },
+    { name: 'green',    namePl: 'zielona',   hex: '#3E8C5A' },
+    { name: 'pink',     namePl: 'różowa',    hex: '#D6538C' },
+    { name: 'tea',      namePl: 'herbaciana', hex: '#B08D57' },
   ]},
 ];
 
@@ -46,11 +46,11 @@ const STONES = [
    DATA — 2b. STONE SHAPES (cut of the zircon — separate from its colour)
    ============================================================================= */
 const STONE_SHAPES = [
-  { id: 'circle',    name: 'circle' },
-  { id: 'square',    name: 'square' },
-  { id: 'rectangle', name: 'rectangle' },
-  { id: 'teardrop',  name: 'teardrop' },
-  { id: 'heart',     name: 'heart' },
+  { id: 'circle',    name: 'circle',    namePl: 'okrąg' },
+  { id: 'square',    name: 'square',    namePl: 'kwadrat' },
+  { id: 'rectangle', name: 'rectangle', namePl: 'prostokąt' },
+  { id: 'teardrop',  name: 'teardrop',  namePl: 'łezka' },
+  { id: 'heart',     name: 'heart',     namePl: 'serce' },
 ];
 
 /* =============================================================================
@@ -61,11 +61,13 @@ const STONE_SHAPES = [
 const SIZE_MIN = 8;
 const SIZE_MAX = 24;
 
+/* note holds an i18n key (same wording as the size table on rozmiary.html)
+   rather than raw text, so both live in one place — see bandLabel() below. */
 const SIZE_BANDS = [
-  { from: 8,  to: 11, add: -25, note: 'petite'   },
-  { from: 12, to: 15, add: 0,   note: 'standard' },
-  { from: 16, to: 19, add: 35,  note: 'larger'   },
-  { from: 20, to: 24, add: 75,  note: 'widest'   },
+  { from: 8,  to: 11, add: -25, note: 'rozmiary.band.petite'   },
+  { from: 12, to: 15, add: 0,   note: 'rozmiary.band.standard' },
+  { from: 16, to: 19, add: 35,  note: 'rozmiary.band.larger'   },
+  { from: 20, to: 24, add: 75,  note: 'rozmiary.band.widest'   },
 ];
 
 /* =============================================================================
@@ -82,12 +84,17 @@ const SIZE_BANDS = [
                  Laura's own notes on the ring photos
    stoneShapes  = which STONE_SHAPES ids this exact piece actually comes in
                  (the cut visible in its own photos — omit to allow all of them)
+   shortPl/textPl = Polish versions of short/text, shown when the site is
+                 switched to PL (see i18n.js) — name and id stay the same
+                 in both languages, they are the piece's own name
    ============================================================================= */
 const RINGS = [
   {
     id: 'ashleen', nr: '01', name: 'Ashleen', drop: 1,
     short: 'thin hammered band with a single stone',
+    shortPl: 'cienka kuta obrączka z jednym kamieniem',
     text: 'A narrow, textured band with one round zircon set into it — the kind of ring that looks right stacked three at a time, one colour each.',
+    textPl: 'Wąska, teksturowana obrączka z jedną okrągłą cyrkonią — pierścionek, który dobrze wygląda noszony po trzy naraz, każdy w innym kolorze.',
     price: 240, width: '2 mm', weight: '~3 g', wksMin: 2, wksMax: 3,
     photos: ['ashleen-1', 'ashleen-2', 'ashleen-3'],
     materials: ['silver930'],
@@ -98,7 +105,9 @@ const RINGS = [
   {
     id: 'courtney', nr: '02', name: 'Courtney', drop: 1,
     short: 'wide signet with one large stone',
+    shortPl: 'szeroki sygnet z jednym dużym kamieniem',
     text: 'The wide, chunky one — hand-textured all the way round, with a large square-cut zircon set high on the face.',
+    textPl: 'Ten szeroki, masywny — ręcznie teksturowany dookoła, z dużą cyrkonią o kwadratowym szlifie osadzoną wysoko na powierzchni.',
     price: 380, width: '9 mm', weight: '~10 g', wksMin: 3, wksMax: 4,
     photos: ['courtney-1', 'courtney-2', 'courtney-3', 'courtney-4'],
     materials: ['silver930'],
@@ -109,7 +118,9 @@ const RINGS = [
   {
     id: 'delia', nr: '03', name: 'Delia', drop: 1,
     short: 'signet with a rectangular stone',
+    shortPl: 'sygnet z prostokątnym kamieniem',
     text: 'A signet-shaped face holding one rectangular zircon, textured band underneath. Reads a little like a worn family ring.',
+    textPl: 'Sygnetowa powierzchnia z jedną prostokątną cyrkonią, teksturowana obrączka pod spodem. Wygląda trochę jak noszony rodzinny pierścionek.',
     price: 320, width: '7 mm', weight: '~7 g', wksMin: 2, wksMax: 3,
     photos: ['delia-1', 'delia-2'],
     materials: ['silver930'],
@@ -120,7 +131,9 @@ const RINGS = [
   {
     id: 'genevieve', nr: '04', name: 'Genevieve', drop: 1,
     short: 'rectangular signet, two stones',
+    shortPl: 'prostokątny sygnet, dwa kamienie',
     text: 'A rectangular signet face set with two zircons side by side — shown in green and pink, so it reads as one deliberate pair rather than a mismatch.',
+    textPl: 'Prostokątna powierzchnia sygnetu z dwiema cyrkoniami obok siebie — pokazana w zieleni i różu, więc czyta się to jako świadomą parę, nie przypadkowe zestawienie.',
     price: 410, width: '10 mm face', weight: '~11 g', wksMin: 3, wksMax: 4,
     photos: ['genevieve-1', 'genevieve-2', 'genevieve-3', 'genevieve-4', 'genevieve-5'],
     materials: ['silver930'],
@@ -131,7 +144,9 @@ const RINGS = [
   {
     id: 'kathleen', nr: '05', name: 'Kathleen', drop: 1,
     short: 'sculptural setting, one stone',
+    shortPl: 'rzeźbiarska oprawa, jeden kamień',
     text: 'The most sculptural piece I make — an organic, almost hand-carved setting around a single zircon, on a heavily textured band.',
+    textPl: 'Najbardziej rzeźbiarski element, jaki robię — organiczna, niemal ręcznie rzeźbiona oprawa wokół jednej cyrkonii, na mocno teksturowanej obrączce.',
     price: 290, width: '3 mm', weight: '~4 g', wksMin: 2, wksMax: 3,
     photos: ['kathleen-1', 'kathleen-2', 'kathleen-3'],
     materials: ['silver930'],
@@ -142,7 +157,9 @@ const RINGS = [
   {
     id: 'odette', nr: '06', name: 'Odette', drop: 1,
     short: 'open toi-et-moi, two stones',
+    shortPl: 'otwarty toi-et-moi, dwa kamienie',
     text: 'An open band that wraps almost all the way round, a navy zircon set at one end and a tea-coloured one at the other. Sits slightly loose by design — that is the point.',
+    textPl: 'Otwarta obrączka, która owija się niemal dookoła — granatowa cyrkonia na jednym końcu, herbaciana na drugim. Celowo siedzi trochę luźno — o to właśnie chodzi.',
     price: 350, width: '3 mm', weight: '~5 g', wksMin: 3, wksMax: 4,
     photos: ['odette-1', 'odette-2'],
     materials: ['silver930'],
@@ -161,7 +178,7 @@ const RINGS = [
    DATA — 5. DROPS (collections under the "shop" menu)
    ============================================================================= */
 const DROPS = {
-  1: { name: 'drop', subtitle: 'made to order', text: 'Six pieces, each one built around a real design of mine. All of them can be made in your size, with your choice of zircon colour.' },
+  1: { name: 'drop', namePl: 'drop', subtitle: 'made to order', text: 'Six pieces, each one built around a real design of mine. All of them can be made in your size, with your choice of zircon colour.' },
 };
 
 /* =============================================================================
@@ -190,15 +207,41 @@ function photoTag(name, alt, sizes, cls, dir = PHOTO_DIR) {
 
 function zl(n) { return `${Math.round(n).toLocaleString('pl-PL')} zł`; }
 
-function weeks(n) { return n === 1 ? '1 week' : `${n} weeks`; }
+/** Polish plural of "week" (tydzień/tygodnie/tygodni) — the one bit of
+    grammar t()'s flat dictionary can't hold, so it lives here instead. */
+function plWeekWord(n) {
+  if (n === 1) return 'tydzień';
+  const mod10 = n % 10, mod100 = n % 100;
+  if (mod10 >= 2 && mod10 <= 4 && !(mod100 >= 12 && mod100 <= 14)) return 'tygodnie';
+  return 'tygodni';
+}
+
+function weeks(n) {
+  if (getLang() === 'pl') return `${n} ${plWeekWord(n)}`;
+  return n === 1 ? '1 week' : `${n} weeks`;
+}
 
 function weekRange(min, max) {
-  return min === max ? weeks(min) : `${min}–${max} weeks`;
+  if (min === max) return weeks(min);
+  if (getLang() === 'pl') return `${min}–${max} ${plWeekWord(max)}`;
+  return `${min}–${max} weeks`;
 }
 
 const findMaterial = id => MATERIALS.find(m => m.id === id) || MATERIALS[0];
 const findStone    = id => STONES.find(s => s.id === id)    || STONES[0];
 const findRing     = id => RINGS.find(r => r.id === id);
+
+/* ----- language-aware labels: PL field if the site is switched to PL and
+   the field exists, English otherwise. Keeps DATA above readable — every
+   entry just carries a plain "…Pl" sibling next to the English value. ----- */
+const mLabel  = m  => getLang() === 'pl' ? (m.namePl || m.name)   : m.name;
+const sLabel  = s  => getLang() === 'pl' ? (s.namePl || s.name)   : s.name;
+const cLabel  = c  => getLang() === 'pl' ? (c.namePl || c.name)   : c.name;
+const shLabel = sh => getLang() === 'pl' ? (sh.namePl || sh.name) : sh.name;
+const bandLabel = band => t(band.note); // band.note is already an i18n key
+const ringShort = r => getLang() === 'pl' ? (r.shortPl || r.short) : r.short;
+const ringText  = r => getLang() === 'pl' ? (r.textPl  || r.text)  : r.text;
+const dropLabel = d => getLang() === 'pl' ? (d.namePl  || d.name)  : d.name;
 
 function sizeBand(size) {
   return SIZE_BANDS.find(b => size >= b.from && size <= b.to) || SIZE_BANDS[1];
@@ -235,23 +278,25 @@ function calcLeadTime(ring, materialId, stoneId) {
 function materialCaption(r) {
   const m = findMaterial(r.preset.material);
   const s = findStone(r.preset.stone);
-  return s.id === 'none' ? m.name : `${m.name} / ${s.name}`;
+  return s.id === 'none' ? mLabel(m) : `${mLabel(m)} / ${sLabel(s)}`;
 }
 
 function tile(r) {
-  const alt = `${r.name} — ${r.short}`;
+  const alt = `${r.name} — ${ringShort(r)}`;
   const sizes = '(max-width:720px) 46vw, (max-width:1024px) 30vw, 23vw';
   const second = r.photos[1];
+  const from = getLang() === 'pl' ? 'od' : 'from';
+  const viewLabel = getLang() === 'pl' ? 'zobacz i skonfiguruj' : 'view and configure';
   return `
     <article class="piece" data-category="drop-${r.drop}">
-      <a href="produkt.html?id=${r.id}" aria-label="${r.name} — view and configure">
+      <a href="produkt.html?id=${r.id}" aria-label="${r.name} — ${viewLabel}">
         <div class="piece__frame">
           ${photoTag(r.photos[0], alt, sizes)}
           ${second ? photoTag(second, '', sizes, 'piece__img--alt') : ''}
         </div>
         <div class="piece__meta">
           <span class="piece__name">${r.name}</span>
-          <span class="piece__price">from ${zl(priceFrom(r))}</span>
+          <span class="piece__price">${from} ${zl(priceFrom(r))}</span>
         </div>
         <p class="piece__desc">${materialCaption(r)}</p>
       </a>
@@ -321,30 +366,33 @@ function bagMailto() {
   const items = bagRead();
   if (!items.length) return '#';
   const lines = items.map((it, i) => (
-`${i + 1}. ${it.name} (drop ${it.nr})
-   material:  ${it.material}
-   stone:     ${it.stone}
-   size:      ${it.size} (${it.size + 40} mm)
-   price:     ${it.priceText || zl(it.price)}
-   lead time: ${it.lead}`
+`${i + 1}. ${it.name} (${t('nav.drop')} ${it.nr})
+   ${t('cfg.mail.material')} ${it.material}
+   ${t('cfg.mail.stone')} ${it.stone}
+   ${t('cfg.mail.size')} ${it.size} (${it.size + 40} mm)
+   ${t('cfg.mail.price')} ${it.priceText || zl(it.price)}
+   ${t('cfg.mail.lead')} ${it.lead}`
   )).join('\n\n');
 
   const totalLine = bagHasQuoted()
-    ? `Total (excluding pieces quoted individually): ${zl(bagTotal())}`
-    : `Total: ${zl(bagTotal())}`;
+    ? `${t('cfg.mail.totalexcl')} ${zl(bagTotal())}`
+    : `${t('cfg.mail.total')} ${zl(bagTotal())}`;
 
   const body =
-`Hi Laura!
+`${t('cfg.mail.hi')}
 
-I would like to order:
+${t('cfg.mail.order')}
 
 ${lines}
 
 ${totalLine}
 
-My details / notes:
+${t('cfg.mail.details')}
 `;
-  return `mailto:${ORDER_EMAIL}?subject=${encodeURIComponent(`Order — ${items.length} ${items.length === 1 ? 'ring' : 'rings'}`)}&body=${encodeURIComponent(body)}`;
+  const subject = items.length === 1
+    ? t('cfg.mail.subject.one')
+    : t('cfg.mail.subject.many').replace('{n}', items.length);
+  return `mailto:${ORDER_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
 function bagDraw() {
@@ -354,7 +402,7 @@ function bagDraw() {
   const items = bagRead();
 
   if (!items.length) {
-    body.innerHTML = '<p class="bag__empty">Your bag is empty. Pick a ring, set it up, and it will land here.</p>';
+    body.innerHTML = `<p class="bag__empty">${t('cfg.bag.empty')}</p>`;
     foot.innerHTML = '';
     return;
   }
@@ -364,18 +412,18 @@ function bagDraw() {
       <div class="bag__thumb">${it.photo ? `<img src="${photoSrc(it.photo, 400)}" alt="">` : ''}</div>
       <div class="bag__info">
         <span class="bag__name">${it.name}</span>
-        <p class="bag__spec">${it.material}<br>${it.stone}<br>size ${it.size} · ${it.lead}</p>
+        <p class="bag__spec">${it.material}<br>${it.stone}<br>${t('cfg.size')} ${it.size} · ${it.lead}</p>
       </div>
       <div class="bag__side">
         <span class="bag__price">${it.priceText || zl(it.price)}</span>
-        <button type="button" class="bag__remove" data-remove="${i}">remove</button>
+        <button type="button" class="bag__remove" data-remove="${i}">${t('cfg.bag.remove')}</button>
       </div>
     </div>`).join('');
 
   foot.innerHTML = `
-    <div class="bag__total"><span>total${bagHasQuoted() ? ' (excl. quoted)' : ''}</span><span>${zl(bagTotal())}</span></div>
-    <a href="${bagMailto()}" class="btn btn-primary bag__send">send order by email</a>
-    <p class="bag__note">No payment here — I confirm every order personally by email, so we can agree the size and details before I start.</p>`;
+    <div class="bag__total"><span>${bagHasQuoted() ? t('cfg.bag.totalexcl') : t('cfg.bag.total')}</span><span>${zl(bagTotal())}</span></div>
+    <a href="${bagMailto()}" class="btn btn-primary bag__send">${t('cfg.bag.send')}</a>
+    <p class="bag__note">${t('cfg.bag.note')}</p>`;
 
   body.querySelectorAll('[data-remove]').forEach(b => {
     b.addEventListener('click', () => bagRemove(Number(b.dataset.remove)));
@@ -393,10 +441,10 @@ function initBag() {
     el.className = 'bag';
     el.innerHTML = `
       <div class="bag__backdrop" data-bag-close></div>
-      <aside class="bag__panel" role="dialog" aria-modal="true" aria-label="Bag">
+      <aside class="bag__panel" role="dialog" aria-modal="true" aria-label="${t('cfg.bag.title')}" data-i18n-attr="aria-label:cfg.bag.title">
         <header class="bag__head">
-          <span>bag (<span data-bag-count>0</span>)</span>
-          <button type="button" class="bag__close" data-bag-close aria-label="Close bag">✕</button>
+          <span><span data-i18n="cfg.bag.title">${t('cfg.bag.title')}</span> (<span data-bag-count>0</span>)</span>
+          <button type="button" class="bag__close" data-bag-close aria-label="${t('cfg.bag.close')}" data-i18n-attr="aria-label:cfg.bag.close">✕</button>
         </header>
         <div class="bag__body" id="bag-body"></div>
         <footer class="bag__foot" id="bag-foot"></footer>
@@ -444,55 +492,55 @@ function renderRing() {
 
       <div class="product__cfg">
         <div class="product__head">
-          <span class="product__no">${DROPS[r.drop] ? DROPS[r.drop].name : 'drop'} ${r.nr}</span>
+          <span class="product__no">${DROPS[r.drop] ? dropLabel(DROPS[r.drop]) : t('nav.drop')} ${r.nr}</span>
           <h1>${r.name}</h1>
-          <p class="product__lede">${r.text}</p>
+          <p class="product__lede">${ringText(r)}</p>
           <div class="product-facts">
-            <div><strong>width</strong>${r.width}</div>
-            <div><strong>weight</strong>${r.weight}</div>
-            <div><strong>made</strong>by hand, in Warsaw</div>
+            <div><strong>${t('cfg.width')}</strong>${r.width}</div>
+            <div><strong>${t('cfg.weight')}</strong>${r.weight}</div>
+            <div><strong>${t('cfg.made.label')}</strong>${t('cfg.made')}</div>
           </div>
         </div>
 
         <div class="opt" id="opt-material">
-          <label class="opt__label" for="sel-material">material</label>
+          <label class="opt__label" for="sel-material">${t('cfg.material')}</label>
           <div class="select-wrap"><select id="sel-material"></select></div>
         </div>
 
         <div class="opt">
-          <label class="opt__label" for="sel-stone">stone</label>
+          <label class="opt__label" for="sel-stone">${t('cfg.stone')}</label>
           <div class="select-wrap"><select id="sel-stone"></select></div>
         </div>
 
         <div class="opt" id="opt-colour">
-          <label class="opt__label" for="sel-colour">stone colour</label>
+          <label class="opt__label" for="sel-colour">${t('cfg.stonecolour')}</label>
           <div class="select-wrap"><select id="sel-colour"></select></div>
         </div>
 
         <div class="opt" id="opt-shape">
-          <label class="opt__label" for="sel-shape">stone shape</label>
+          <label class="opt__label" for="sel-shape">${t('cfg.stoneshape')}</label>
           <div class="select-wrap"><select id="sel-shape"></select></div>
         </div>
 
         <div class="opt">
-          <div class="opt__head"><h3>size</h3><span class="opt__pick" id="pick-size"></span></div>
+          <div class="opt__head"><h3>${t('cfg.size')}</h3><span class="opt__pick" id="pick-size"></span></div>
           <div class="sizes" id="sizes"></div>
-          <p class="size-help">Not sure of your size? <a href="rozmiary.html" class="text-link">measure it in 2 minutes</a></p>
+          <p class="size-help">${t('cfg.sizehelp')}</p>
         </div>
 
         <div class="summary">
           <div class="summary__price">
             <span class="val" id="price">—</span>
-            <span class="from">per piece</span>
+            <span class="from">${t('cfg.perpiece')}</span>
           </div>
           <ul class="summary__rows" id="breakdown"></ul>
-          <span class="lead-badge">lead time: <span id="lead">—</span></span>
+          <span class="lead-badge">${t('cfg.leadtime')} <span id="lead">—</span></span>
           <div class="btn-row">
-            <button type="button" class="btn btn-primary" id="add-to-bag">add to bag</button>
-            <button type="button" class="btn btn-ghost" id="copy">copy configuration</button>
-            <span class="copied" id="copied">copied</span>
+            <button type="button" class="btn btn-primary" id="add-to-bag">${t('cfg.addtobag')}</button>
+            <button type="button" class="btn btn-ghost" id="copy">${t('cfg.copyconfig')}</button>
+            <span class="copied" id="copied">${t('cfg.copied')}</span>
           </div>
-          <p class="summary__note">There is no payment here — everything in the bag goes to me as one email, and I confirm it personally before I start making anything.</p>
+          <p class="summary__note">${t('cfg.paynote')}</p>
         </div>
       </div>
     </div>`;
@@ -502,10 +550,10 @@ function renderRing() {
   const elThumbs = root.querySelector('#pgal-thumbs');
 
   function drawPhotos() {
-    elMain.innerHTML = photoTag(r.photos[state.photo], `${r.name} — photo ${state.photo + 1}`, '(max-width:1080px) 92vw, 46vw');
+    elMain.innerHTML = photoTag(r.photos[state.photo], `${r.name} — ${t('cfg.photo')} ${state.photo + 1}`, '(max-width:1080px) 92vw, 46vw');
     if (!elThumbs) return;
     elThumbs.innerHTML = r.photos.map((p, i) => `
-      <button type="button" role="tab" aria-selected="${i === state.photo}" aria-label="Photo ${i + 1}">
+      <button type="button" role="tab" aria-selected="${i === state.photo}" aria-label="${t('cfg.photo')} ${i + 1}">
         <img src="${photoSrc(p, 400)}" alt="" loading="lazy">
       </button>`).join('');
     elThumbs.querySelectorAll('button').forEach((b, i) => {
@@ -555,18 +603,18 @@ function renderRing() {
     if (!mats.some(m => m.id === state.material)) state.material = mats[0].id;
     if (mats.length <= 1) {
       optMaterial.style.display = 'none';
-      selMat.innerHTML = mats.map(m => `<option value="${m.id}" selected>${m.name}</option>`).join('');
+      selMat.innerHTML = mats.map(m => `<option value="${m.id}" selected>${mLabel(m)}</option>`).join('');
       return;
     }
     optMaterial.style.display = '';
     selMat.innerHTML = mats.map(m =>
-      `<option value="${m.id}"${m.id === state.material ? ' selected' : ''}>${m.name}${delta(m.add)}</option>`
+      `<option value="${m.id}"${m.id === state.material ? ' selected' : ''}>${mLabel(m)}${delta(m.add)}</option>`
     ).join('');
   }
 
   function drawStones() {
     selStone.innerHTML = STONES.map(s =>
-      `<option value="${s.id}"${s.id === state.stone ? ' selected' : ''}>${s.name}${delta(s.add)}</option>`
+      `<option value="${s.id}"${s.id === state.stone ? ' selected' : ''}>${sLabel(s)}${delta(s.add)}</option>`
     ).join('');
   }
 
@@ -578,7 +626,7 @@ function renderRing() {
     else optColour.style.display = '';
     if (state.colour >= colours.length) state.colour = 0;
     selColour.innerHTML = colours.map((c, i) =>
-      `<option value="${i}"${i === state.colour ? ' selected' : ''}>${c.name}</option>`
+      `<option value="${i}"${i === state.colour ? ' selected' : ''}>${cLabel(c)}</option>`
     ).join('');
   }
 
@@ -589,12 +637,12 @@ function renderRing() {
     if (!shapes.some(sh => sh.id === state.shape)) state.shape = shapes[0].id;
     if (shapes.length <= 1) {
       optShape.style.display = 'none';
-      selShape.innerHTML = shapes.map(sh => `<option value="${sh.id}" selected>${sh.name}</option>`).join('');
+      selShape.innerHTML = shapes.map(sh => `<option value="${sh.id}" selected>${shLabel(sh)}</option>`).join('');
       return;
     }
     optShape.style.display = '';
     selShape.innerHTML = shapes.map(sh =>
-      `<option value="${sh.id}"${sh.id === state.shape ? ' selected' : ''}>${sh.name}</option>`
+      `<option value="${sh.id}"${sh.id === state.shape ? ' selected' : ''}>${shLabel(sh)}</option>`
     ).join('');
   }
 
@@ -629,12 +677,12 @@ function renderRing() {
     const shape = s.id !== 'none' ? STONE_SHAPES.find(sh => sh.id === state.shape) : null;
     const quote = !!m.quote;
     const price = calcPrice(r, state.material, state.stone, state.size);
-    const stoneBits = [colour?.name, shape?.name].filter(Boolean).join(', ');
+    const stoneBits = [colour ? cLabel(colour) : null, shape ? shLabel(shape) : null].filter(Boolean).join(', ');
     return {
       m, s, colour, shape, quote, price,
-      priceText: quote ? 'on request' : zl(price),
+      priceText: quote ? t('cfg.onrequest') : zl(price),
       lead: calcLeadTime(r, state.material, state.stone),
-      stoneText: s.id === 'none' ? 'no stone' : `${s.name}${stoneBits ? ` (${stoneBits})` : ''}`,
+      stoneText: s.id === 'none' ? t('cfg.nostone') : `${sLabel(s)}${stoneBits ? ` (${stoneBits})` : ''}`,
     };
   }
 
@@ -647,18 +695,18 @@ function renderRing() {
     root.querySelector('#lead').textContent = c.lead;
 
     root.querySelector('#breakdown').innerHTML = `
-      <li><span class="k">material</span><span class="v">${c.m.name}${c.quote ? ' — quoted individually' : ''}</span></li>
-      <li><span class="k">stone</span><span class="v">${c.stoneText}</span></li>
-      <li><span class="k">size</span><span class="v">${state.size} (${state.size + 40} mm) · ${sizeBand(state.size).note}</span></li>
-      <li><span class="k">width</span><span class="v">${r.width}</span></li>`;
+      <li><span class="k">${t('cfg.bd.material')}</span><span class="v">${mLabel(c.m)}${c.quote ? ` — ${t('cfg.quoted')}` : ''}</span></li>
+      <li><span class="k">${t('cfg.bd.stone')}</span><span class="v">${c.stoneText}</span></li>
+      <li><span class="k">${t('cfg.bd.size')}</span><span class="v">${state.size} (${state.size + 40} mm) · ${bandLabel(sizeBand(state.size))}</span></li>
+      <li><span class="k">${t('cfg.bd.width')}</span><span class="v">${r.width}</span></li>`;
 
     const text =
-`Ring:      ${r.name} (drop ${r.nr})
-Material:  ${c.m.name}${c.quote ? ' (quoted individually)' : ''}
-Stone:     ${c.stoneText}
-Size:      ${state.size} (${state.size + 40} mm)
-Price:     ${c.priceText}
-Lead time: ${c.lead}`;
+`${t('cfg.copy.ring')} ${r.name} (${t('nav.drop')} ${r.nr})
+${t('cfg.copy.material')} ${mLabel(c.m)}${c.quote ? ` (${t('cfg.quoted')})` : ''}
+${t('cfg.copy.stone')} ${c.stoneText}
+${t('cfg.copy.size')} ${state.size} (${state.size + 40} mm)
+${t('cfg.copy.price')} ${c.priceText}
+${t('cfg.copy.lead')} ${c.lead}`;
     root.querySelector('#copy').dataset.text = text;
   }
 
@@ -673,14 +721,17 @@ Lead time: ${c.lead}`;
 
   root.querySelector('#add-to-bag').addEventListener('click', e => {
     const c = config();
+    // material/stone are stored as already-translated text, in whichever
+    // language was active at the moment of adding — switching language
+    // afterwards won't retranslate items already sitting in the bag.
     bagAdd({
       id: r.id, name: r.name, nr: r.nr, photo: r.photos[0],
-      material: c.m.name, stone: c.stoneText, size: state.size,
+      material: mLabel(c.m), stone: c.stoneText, size: state.size,
       price: c.quote ? null : c.price, priceText: c.priceText, lead: c.lead,
     });
     const btn = e.currentTarget;
-    btn.textContent = 'added';
-    setTimeout(() => { btn.textContent = 'add to bag'; }, 1400);
+    btn.textContent = t('cfg.added');
+    setTimeout(() => { btn.textContent = t('cfg.addtobag'); }, 1400);
     bagOpen();
   });
 
@@ -730,7 +781,7 @@ function renderPhotoWall() {
   const order = SESJA.map(name => ({ name, k: rnd() })).sort((a, b) => a.k - b.k);
   const picks = order.slice(0, PHOTO_WALL_COUNT);
   el.innerHTML = picks.map(({ name }) =>
-    `<figure>${photoTag(name, 'From the ARTarual photoshoot', '(max-width:560px) 92vw, (max-width:1024px) 46vw, 31vw', null, SESJA_DIR)}</figure>`
+    `<figure>${photoTag(name, t('cfg.photowall.alt'), '(max-width:560px) 92vw, (max-width:1024px) 46vw, 31vw', null, SESJA_DIR)}</figure>`
   ).join('');
 }
 
