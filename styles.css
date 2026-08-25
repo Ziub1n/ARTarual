@@ -103,13 +103,16 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 .nav-toggle span{ display:block; width:20px; height:1px; background:var(--ink); margin:5px auto; }
 
 /* nagłówek jest jedynym elementem sticky (topbar jedzie pod nim w
-   zwykłym przepływie), więc menu wystarczy przypiąć do jego dołu */
+   zwykłym przepływie), więc menu wystarczy przypiąć do jego dołu.
+   Delikatne wsunięcie + fade zamiast wyciągania panelu z daleka nad
+   ekranem — to drugie wygląda jak "rozciąganie się" znikąd. */
 .main-nav{
   position:fixed; inset:var(--header-h) 0 auto 0; background:var(--paper);
   display:flex; flex-direction:column; align-items:stretch; gap:0;
   padding:.6rem var(--edge) 1.6rem; border-bottom:1px solid var(--line);
   box-shadow:0 16px 32px -12px rgba(0,0,0,.1);
-  transform:translateY(-140%); transition:transform .28s cubic-bezier(.2,.6,.2,1);
+  opacity:0; visibility:hidden; transform:translateY(-8px);
+  transition:opacity .2s ease, transform .2s ease, visibility .2s;
   max-height:calc(100vh - var(--header-h)); overflow-y:auto; z-index:49;
 }
 /* 100vh na telefonie liczy się z paskiem przeglądarki schowanym, więc
@@ -118,7 +121,7 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 @supports (height: 100dvh){
   .main-nav{ max-height:calc(100dvh - var(--header-h)); }
 }
-.main-nav.open{ transform:translateY(0); }
+.main-nav.open{ opacity:1; visibility:visible; transform:translateY(0); }
 .main-nav ul{ list-style:none; display:flex; flex-direction:column; gap:0; margin:0; padding:0; max-width:380px; }
 .main-nav > ul > li{ border-bottom:1px solid var(--line); }
 .main-nav > ul > li > a{
