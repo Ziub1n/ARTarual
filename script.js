@@ -62,12 +62,17 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // "sklep" submenu — click/tap accordion, same on every screen size
-  document.querySelectorAll('.has-sub').forEach(item => {
+  const hasSubItems = document.querySelectorAll('.has-sub');
+  console.log('[debug] .has-sub found:', hasSubItems.length); // TEMP — remove after diagnosing
+  hasSubItems.forEach(item => {
     const btn = item.querySelector('.sub-toggle');
+    console.log('[debug] .sub-toggle for this item:', btn); // TEMP
     if (!btn) return;
     btn.addEventListener('click', () => {
       const open = item.classList.toggle('open');
       btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      const subnav = item.querySelector('.subnav');
+      console.log('[debug] toggle clicked — open:', open, '| subnav computed display:', subnav && getComputedStyle(subnav).display); // TEMP
     });
   });
   // klik poza menu / Escape zamyka rozwinięte podmenu
