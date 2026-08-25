@@ -198,9 +198,14 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 /* =========================================================
    Baner pełnoekranowy (hero)
    ========================================================= */
-.hero-band{ position:relative; display:grid; grid-template-columns:1fr; height:min(62vh,560px); }
+/* na komputerze/laptopie: dwa zdjęcia obok siebie, na wysokość
+   wypełniają resztę ekranu pod paskiem i nagłówkiem (żeby nic z
+   sekcji "new" nie było widać bez przewinięcia) */
+.hero-band{
+  position:relative; display:grid; grid-template-columns:1fr 1fr;
+  height:calc(100vh - var(--topbar-h) - var(--header-h)); min-height:480px;
+}
 .hero-band figure{ margin:0; overflow:hidden; background:var(--tile); }
-.hero-band figure:nth-child(2){ display:none; } /* jedno zdjęcie na całą szerokość */
 .hero-band img{ width:100%; height:100%; object-fit:cover; }
 .hero-band__overlay{
   position:absolute; left:var(--edge); bottom:2.6rem; z-index:2; color:#fff; max-width:min(46ch,54%);
@@ -721,7 +726,8 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 @media (max-width:900px){
   .split, .contact-grid{ grid-template-columns:1fr; gap:2.4rem; }
   .stuff{ grid-template-columns:1fr; gap:1.8rem; }
-  .hero-band{ height:min(58vh,460px); }
+  .hero-band{ grid-template-columns:1fr; height:min(58vh,460px); min-height:0; }
+  .hero-band figure:nth-child(2){ display:none; } /* jedno zdjęcie na telefonie */
   .hero-band__overlay{ max-width:none; right:var(--edge); }
   .footer-top{ grid-template-columns:1fr; gap:2.4rem; }
 }
