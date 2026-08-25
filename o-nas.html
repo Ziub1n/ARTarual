@@ -17,7 +17,11 @@
       <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="main-nav">
         <span></span><span></span><span></span>
       </button>
+      <div class="nav-backdrop" data-nav-close></div>
       <nav class="main-nav" id="main-nav">
+        <div class="main-nav__head">
+          <button type="button" class="main-nav__close" data-nav-close aria-label="Close menu" data-i18n-attr="aria-label:nav.close">&#10005;</button>
+        </div>
         <ul>
           <li><a href="o-nas.html" aria-current="page" data-i18n="nav.about">About me</a></li>
           <li class="has-sub">

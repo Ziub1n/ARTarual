@@ -1,17 +1,19 @@
 // ARTarual — shared interactions
 document.addEventListener('DOMContentLoaded', () => {
-  // Mobile nav toggle
+  // Nav drawer — slides in from the left, with a backdrop, same pattern as the bag
   const toggle = document.querySelector('.nav-toggle');
   const nav = document.querySelector('.main-nav');
+  const navBackdrop = document.querySelector('.nav-backdrop');
   if (toggle && nav) {
-    toggle.addEventListener('click', () => {
-      const open = nav.classList.toggle('open');
+    const navSetOpen = open => {
+      nav.classList.toggle('open', open);
+      navBackdrop?.classList.toggle('open', open);
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-    nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-      nav.classList.remove('open');
-      toggle.setAttribute('aria-expanded', 'false');
-    }));
+    };
+    toggle.addEventListener('click', () => navSetOpen(!nav.classList.contains('open')));
+    document.querySelectorAll('[data-nav-close]').forEach(el => el.addEventListener('click', () => navSetOpen(false)));
+    nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navSetOpen(false)));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') navSetOpen(false); });
   }
 
   // "sklep" submenu — click/tap accordion, same on every screen size

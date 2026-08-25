@@ -102,27 +102,28 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 }
 .nav-toggle span{ display:block; width:20px; height:1px; background:var(--ink); margin:5px auto; }
 
-/* nagłówek jest jedynym elementem sticky (topbar jedzie pod nim w
-   zwykłym przepływie), więc menu wystarczy przypiąć do jego dołu.
-   Delikatne wsunięcie + fade zamiast wyciągania panelu z daleka nad
-   ekranem — to drugie wygląda jak "rozciąganie się" znikąd. */
+/* Menu jako szuflada z lewej krawędzi + przyciemnione tło — ten sam
+   język wizualny co koszyk (.bag), tylko z drugiej strony. Zasłania
+   cały ekran (łącznie z nagłówkiem), więc ma własny przycisk zamknięcia
+   u góry — hamburger jest wtedy i tak schowany pod tłem. */
+.nav-backdrop{
+  position:fixed; inset:0; z-index:58; background:rgba(0,0,0,.32);
+  opacity:0; visibility:hidden; transition:opacity .25s ease, visibility .25s;
+}
+.nav-backdrop.open{ opacity:1; visibility:visible; }
+
 .main-nav{
-  position:fixed; inset:var(--header-h) 0 auto 0; background:var(--paper);
-  display:flex; flex-direction:column; align-items:stretch; gap:0;
-  padding:.6rem var(--edge) 1.6rem; border-bottom:1px solid var(--line);
-  box-shadow:0 16px 32px -12px rgba(0,0,0,.1);
-  opacity:0; visibility:hidden; transform:translateY(-8px);
-  transition:opacity .2s ease, transform .2s ease, visibility .2s;
-  max-height:calc(100vh - var(--header-h)); overflow-y:auto; z-index:49;
+  position:fixed; inset:0 auto 0 0; z-index:59; width:min(320px,86vw); height:100%;
+  background:var(--paper); display:flex; flex-direction:column; align-items:stretch;
+  overflow-y:auto; box-shadow:24px 0 60px -34px rgba(0,0,0,.4);
+  transform:translateX(-100%); transition:transform .3s cubic-bezier(.2,.6,.2,1);
 }
-/* 100vh na telefonie liczy się z paskiem przeglądarki schowanym, więc
-   realny widoczny obszar bywa krótszy — 100dvh liczy faktyczną widoczną
-   wysokość; przeglądarki bez wsparcia zostają przy 100vh powyżej */
-@supports (height: 100dvh){
-  .main-nav{ max-height:calc(100dvh - var(--header-h)); }
-}
-.main-nav.open{ opacity:1; visibility:visible; transform:translateY(0); }
-.main-nav ul{ list-style:none; display:flex; flex-direction:column; gap:0; margin:0; padding:0; max-width:380px; }
+.main-nav.open{ transform:translateX(0); }
+
+.main-nav__head{ display:flex; justify-content:flex-end; padding:1.3rem var(--edge) 0; }
+.main-nav__close{ background:none; border:0; padding:0; cursor:pointer; font-size:15px; color:var(--ink); }
+
+.main-nav ul{ list-style:none; display:flex; flex-direction:column; gap:0; margin:0; padding:.4rem var(--edge) 1.8rem; }
 .main-nav > ul > li{ border-bottom:1px solid var(--line); }
 .main-nav > ul > li > a{
   display:block; padding:.95rem 0; font-size:13.5px; color:var(--ink);
