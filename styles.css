@@ -81,33 +81,55 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 .topbar span::before, .topbar span::after{ content:"✦"; font-size:7px; opacity:.55; }
 
 /* =========================================================
-   Header — nawigacja z lewej, logo na środku, akcje z prawej
+   Header — hamburger z lewej, logo na środku, akcje z prawej.
+   Menu jest rozwijaną listą na KAŻDEJ szerokości ekranu (nie tylko na
+   telefonie) — jedna wersja wyglądu i zachowania wszędzie.
    ========================================================= */
 .site-header{
   position:sticky; top:0; z-index:50; background:var(--paper);
   border-bottom:1px solid var(--line);
 }
 .site-header .wrap{
-  display:grid; grid-template-columns:1fr auto 1fr; align-items:center;
+  display:grid; grid-template-columns:auto 1fr auto; align-items:center;
   height:var(--header-h); gap:1rem;
 }
 .logo{ display:flex; align-items:center; justify-content:center; }
-.logo img{ height:22px; width:auto; } /* logo.png jest już granatowe — bez filtra */
+.logo img{ height:28px; width:auto; } /* logo.png jest już granatowe — bez filtra */
 
-.main-nav{ display:flex; align-items:center; gap:2.2rem; }
-.main-nav ul{ list-style:none; display:flex; gap:2.2rem; margin:0; padding:0; }
-.main-nav a{
-  font-size:12.5px; font-weight:400; color:var(--ink); position:relative; padding:.2rem 0;
-  white-space:nowrap;
+.nav-toggle{
+  display:block; justify-self:start; background:none; border:0;
+  width:34px; height:34px; cursor:pointer; padding:0;
 }
-.main-nav a::after{
-  content:""; position:absolute; left:0; right:0; bottom:0; height:1px; background:var(--ink);
-  transform:scaleX(0); transform-origin:left; transition:transform .25s ease;
-}
-.main-nav a:hover::after, .main-nav a[aria-current="page"]::after{ transform:scaleX(1); }
+.nav-toggle span{ display:block; width:20px; height:1px; background:var(--ink); margin:5px auto; }
 
-/* prawa strona nagłówka */
-.nav-actions{ display:flex; align-items:center; justify-content:flex-end; gap:1.8rem; }
+/* nagłówek jest jedynym elementem sticky (topbar jedzie pod nim w
+   zwykłym przepływie), więc menu wystarczy przypiąć do jego dołu */
+.main-nav{
+  position:fixed; inset:var(--header-h) 0 auto 0; background:var(--paper);
+  display:flex; flex-direction:column; align-items:stretch; gap:0;
+  padding:.6rem var(--edge) 1.6rem; border-bottom:1px solid var(--line);
+  box-shadow:0 16px 32px -12px rgba(0,0,0,.1);
+  transform:translateY(-140%); transition:transform .28s cubic-bezier(.2,.6,.2,1);
+  max-height:calc(100vh - var(--header-h)); overflow-y:auto; z-index:49;
+}
+/* 100vh na telefonie liczy się z paskiem przeglądarki schowanym, więc
+   realny widoczny obszar bywa krótszy — 100dvh liczy faktyczną widoczną
+   wysokość; przeglądarki bez wsparcia zostają przy 100vh powyżej */
+@supports (height: 100dvh){
+  .main-nav{ max-height:calc(100dvh - var(--header-h)); }
+}
+.main-nav.open{ transform:translateY(0); }
+.main-nav ul{ list-style:none; display:flex; flex-direction:column; gap:0; margin:0; padding:0; max-width:380px; }
+.main-nav > ul > li{ border-bottom:1px solid var(--line); }
+.main-nav > ul > li > a{
+  display:block; padding:.95rem 0; font-size:13.5px; color:var(--ink);
+  transition:opacity .15s ease;
+}
+.main-nav > ul > li > a:hover{ opacity:.55; }
+
+/* prawa strona nagłówka — tylko Instagram i koszyk; flagi PL/EN mieszkają
+   teraz w rozwijanym menu (.nav-lang-item), nie tutaj */
+.nav-actions{ display:flex; align-items:center; justify-content:flex-end; gap:1.4rem; }
 .nav-actions a{
   font-size:11.5px; text-transform:uppercase; letter-spacing:.09em; font-weight:500;
   color:var(--ink); white-space:nowrap;
@@ -119,52 +141,36 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 /* PL / EN flag switch — flags stay in their real colours always; only
    opacity marks which one is active (a grayscale filter would make the
    Polish flag look like it is broken, not just "not selected") */
-.lang-switch{ display:inline-flex; align-items:center; gap:.45rem; }
+.lang-switch{ display:inline-flex; align-items:center; gap:.7rem; }
 .lang-switch button{
   background:none; border:0; padding:0; margin:0; cursor:pointer;
-  font-size:15px; line-height:1; opacity:.4;
+  font-size:19px; line-height:1; opacity:.4;
   transition:opacity .2s ease;
 }
 .lang-switch button[aria-current="true"]{ opacity:1; cursor:default; }
 .lang-switch button:hover{ opacity:.75; }
-/* dawny przycisk CTA w nawigacji jest teraz zwykłym linkiem po prawej */
-.main-nav .nav-cta{ display:none; }
-
-.nav-toggle{
-  display:none; background:none; border:0; width:34px; height:34px; cursor:pointer; padding:0;
-}
-.nav-toggle span{ display:block; width:20px; height:1px; background:var(--ink); margin:5px auto; }
+.nav-lang-item{ display:flex; align-items:center; padding:.95rem 0; }
 
 /* =========================================================
-   Rozwijane „sklep"
+   Rozwijane „sklep" — zawsze klik/tap, jedna pozycja w liście
    ========================================================= */
-.main-nav li.has-sub{ position:relative; }
+.main-nav li.has-sub{ position:static; }
 .sub-toggle{
-  font-family:var(--font-sans); font-size:12.5px; font-weight:400; color:var(--ink);
-  background:none; border:0; padding:.2rem 0; cursor:pointer; position:relative;
-  display:inline-flex; align-items:center; gap:.4rem; white-space:nowrap;
+  font-family:var(--font-sans); font-size:13.5px; font-weight:400; color:var(--ink);
+  background:none; border:0; padding:.95rem 0; cursor:pointer;
+  display:flex; width:100%; align-items:center; justify-content:space-between;
 }
-.sub-toggle::after{
-  content:""; position:absolute; left:0; right:0; bottom:0; height:1px; background:var(--ink);
-  transform:scaleX(0); transform-origin:left; transition:transform .25s ease;
-}
-.has-sub:hover .sub-toggle::after, .has-sub.open .sub-toggle::after, .sub-toggle[aria-current="page"]::after{ transform:scaleX(1); }
 .sub-toggle .caret{ font-size:6px; transition:transform .25s ease; }
 .has-sub.open .sub-toggle .caret{ transform:rotate(180deg); }
 
 .subnav{
-  list-style:none; margin:0; padding:.7rem 0; position:absolute; top:calc(100% + 1.1rem); left:0;
-  min-width:190px; background:var(--paper); border:1px solid var(--line);
-  display:grid; gap:0; opacity:0; visibility:hidden; transform:translateY(-4px);
-  transition:opacity .2s ease, transform .2s ease, visibility .2s;
+  list-style:none; margin:0; padding:0 0 .7rem .9rem; position:static;
+  display:none; gap:0;
 }
-.has-sub:hover .subnav, .has-sub:focus-within .subnav, .has-sub.open .subnav{ opacity:1; visibility:visible; transform:translateY(0); }
-.subnav::before{ content:""; position:absolute; top:-1.1rem; left:0; right:0; height:1.1rem; }
+.has-sub.open .subnav{ display:grid; }
 .subnav li{ border:0 !important; }
-.subnav a{ display:block !important; padding:.5rem 1.2rem !important; font-size:12.5px; white-space:nowrap; }
-.subnav a::after{ display:none; }
-.subnav a:hover, .subnav a[aria-current="page"]{ background:var(--paper-2); }
-.subnav .sub-note{ font-size:10.5px; text-transform:uppercase; letter-spacing:.09em; color:var(--grey-2); padding:.4rem 1.2rem .2rem; }
+.subnav a{ display:block !important; padding:.55rem 0 !important; font-size:12.5px; white-space:nowrap; }
+.subnav a:hover, .subnav a[aria-current="page"]{ opacity:.55; }
 
 /* =========================================================
    Baner pełnoekranowy (hero)
@@ -528,7 +534,7 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 }
 .product__lede{ font-size:13px; color:var(--grey); max-width:52ch; margin-top:.9rem; }
 
-.product-facts{ display:grid; grid-template-columns:repeat(2,1fr); gap:1.6rem; margin-top:1.8rem; }
+.product-facts{ display:grid; grid-template-columns:1fr; gap:1.6rem; margin-top:1.8rem; }
 .product-facts div{ padding-top:.8rem; padding-left:0; border-top:1px solid var(--line); font-size:12.5px; color:var(--ink); }
 .product-facts div::before{ display:none; }
 .product-facts strong{
@@ -583,6 +589,7 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
   font-family:var(--font-serif); font-size:11px; text-transform:uppercase;
   letter-spacing:.08em; color:var(--grey);
 }
+.summary__pricenote{ font-size:11.5px; color:var(--grey); margin:.5rem 0 0; }
 .summary__rows{ list-style:none; margin:1.5rem 0 0; padding:0; display:grid; gap:0; font-size:12.5px; }
 .summary__rows li{ display:flex; justify-content:space-between; gap:1.2rem; padding:.6rem 0; border-bottom:1px solid var(--line); }
 .summary__rows li:first-child{ border-top:1px solid var(--line); }
@@ -683,7 +690,6 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
   .hero-band{ height:min(58vh,460px); }
   .hero-band__overlay{ max-width:none; right:var(--edge); }
   .footer-top{ grid-template-columns:1fr; gap:2.4rem; }
-  .product-facts{ grid-template-columns:1fr 1fr; }
 }
 @media (max-width:720px){
   :root{ --edge:18px; }
@@ -694,7 +700,6 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
   .story-list .row{ grid-template-columns:1fr; gap:.3rem; }
   .form .row2{ grid-template-columns:1fr; }
   .footer-bottom{ justify-content:flex-start; }
-  .product-facts{ grid-template-columns:1fr; }
   .summary{ padding:1.3rem; }
   .pgal__thumbs button{ width:64px; }
   .filter-row{ gap:1.4rem; }
@@ -826,57 +831,3 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
   .step__art{ aspect-ratio:2/1; }
 }
 
-/* =========================================================
-   Nawigacja mobilna — próg 900px.
-   Blok na końcu pliku, żeby wygrywał w kaskadzie.
-   ========================================================= */
-@media (max-width:900px){
-  .site-header .wrap{ grid-template-columns:auto 1fr auto; }
-  .nav-toggle{ display:block; justify-self:start; }
-  .logo{ justify-content:center; }
-  .nav-actions{ gap:1rem; }
-
-  /* nagłówek jest jedynym elementem sticky (topbar jedzie teraz pod nim
-     w zwykłym przepływie), więc menu wystarczy przypiąć do jego dołu —
-     bez topbar-h w rachunku, inaczej zostaje szpara po przewinięciu */
-  .main-nav{
-    position:fixed; inset:var(--header-h) 0 auto 0; background:var(--paper);
-    flex-direction:column; align-items:stretch; gap:0;
-    padding:.6rem var(--edge) 1.6rem; border-bottom:1px solid var(--line);
-    transform:translateY(-140%); transition:transform .28s cubic-bezier(.2,.6,.2,1);
-    max-height:calc(100vh - var(--header-h)); overflow-y:auto; z-index:49;
-  }
-  /* 100vh na telefonie liczy się z paskiem przeglądarki schowanym, więc
-     realny widoczny obszar bywa krótszy i dół menu wychodzi poza ekran —
-     100dvh liczy faktyczną widoczną wysokość; przeglądarki bez wsparcia
-     po prostu zignorują tę linię i zostaną przy 100vh powyżej */
-  @supports (height: 100dvh){
-    .main-nav{ max-height:calc(100dvh - var(--header-h)); }
-  }
-  .main-nav.open{ transform:translateY(0); }
-  .main-nav ul{ flex-direction:column; gap:0; }
-  .main-nav > ul > li{ border-bottom:1px solid var(--line); }
-  .main-nav > ul > li > a{ display:block; padding:.95rem 0; font-size:13px; }
-  .main-nav > ul > li > a::after{ display:none; }
-
-  /* flagi PL/EN: znikają z górnego paska (żeby logo trzymało się środka)
-     i lądują jako ostatnia pozycja rozwijanego menu */
-  .nav-actions > .lang-switch{ display:none; }
-  .nav-lang-item{ display:flex; align-items:center; padding:.95rem 0; }
-  .nav-lang-item .lang-switch{ gap:.7rem; }
-  .nav-lang-item .lang-switch button{ font-size:19px; }
-
-  .main-nav li.has-sub{ position:static; }
-  .sub-toggle{ display:flex; width:100%; justify-content:space-between; padding:.95rem 0; font-size:13px; }
-  .sub-toggle::after{ display:none; }
-  .subnav{
-    position:static; transform:none; min-width:0; opacity:1; visibility:visible;
-    border:0; background:transparent; margin:0; padding:0 0 .7rem .9rem; display:none;
-  }
-  .has-sub:hover .subnav, .has-sub:focus-within .subnav{ display:none; }
-  .has-sub.open .subnav,
-  .has-sub.open:hover .subnav,
-  .has-sub.open:focus-within .subnav{ display:grid; transform:none; }
-  .subnav::before{ display:none; }
-  .subnav a{ font-size:12.5px; padding:.55rem 0 !important; }
-}

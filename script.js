@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }));
   }
 
-  // "sklep" submenu — hover on desktop (CSS), click/tap accordion on mobile
+  // "sklep" submenu — click/tap accordion, same on every screen size
   document.querySelectorAll('.has-sub').forEach(item => {
     const btn = item.querySelector('.sub-toggle');
     if (!btn) return;

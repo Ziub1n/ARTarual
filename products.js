@@ -5,9 +5,8 @@
        lead times, photos) lives in the "DATA" section below.
        The rest of the file is logic — normally you don't need to touch it.
 
-   PRICES, WIDTHS, WEIGHTS AND LEAD TIMES ARE PLACEHOLDERS — swap them for
-   the real ones. Everything else (names, material, stone colours) is taken
-   from Laura's own notes on the ring photos.
+   Prices are real, from Laura. Lead times are still placeholders — swap
+   them for the real ones once she confirms.
    ============================================================================= */
 
 /* =============================================================================
@@ -85,7 +84,6 @@ const SIZE_BANDS = [
    DATA — 4. RINGS
    price       = base price: silver 930, standard size (12–15) — real prices
                  from Laura
-   weight      = ~5 g for everything here, per Laura
    photos      = file names from zdj/customs/ (without -640.jpg / -1280.jpg)
    wksMin/Max  = base lead time in weeks
    preset      = what is selected when you land on the ring page
@@ -106,7 +104,7 @@ const RINGS = [
     shortPl: 'cienka kuta obrączka z jednym kamieniem',
     text: 'A narrow, textured band with one round zircon set into it — the kind of ring that looks right stacked three at a time, one colour each.',
     textPl: 'Wąska, teksturowana obrączka z jedną okrągłą cyrkonią — pierścionek, który dobrze wygląda noszony po trzy naraz, każdy w innym kolorze.',
-    price: 420, weight: '~5 g', wksMin: 2, wksMax: 3,
+    price: 420, wksMin: 2, wksMax: 3,
     photos: ['ashleen-1', 'ashleen-2', 'ashleen-3'],
     materials: ['silver930'],
     preset: { material: 'silver930', stone: 'cyrkonia', colour: 0, size: 13 },
@@ -117,7 +115,7 @@ const RINGS = [
     shortPl: 'szeroki sygnet z jednym dużym kamieniem',
     text: 'The wide, chunky one — hand-textured all the way round, with a large square-cut zircon set high on the face.',
     textPl: 'Ten szeroki, masywny — ręcznie teksturowany dookoła, z dużą cyrkonią o kwadratowym szlifie osadzoną wysoko na powierzchni.',
-    price: 550, weight: '~5 g', wksMin: 3, wksMax: 4,
+    price: 550, wksMin: 3, wksMax: 4,
     photos: ['courtney-1b', 'courtney-2b', 'courtney-3', 'courtney-4'],
     materials: ['silver930'],
     preset: { material: 'silver930', stone: 'cyrkonia', colour: 0, size: 14 },
@@ -128,7 +126,7 @@ const RINGS = [
     shortPl: 'sygnet z prostokątnym kamieniem',
     text: 'A signet-shaped face holding one rectangular zircon, textured band underneath. Reads a little like a worn family ring.',
     textPl: 'Sygnetowa powierzchnia z jedną prostokątną cyrkonią, teksturowana obrączka pod spodem. Wygląda trochę jak noszony rodzinny pierścionek.',
-    price: 550, weight: '~5 g', wksMin: 2, wksMax: 3,
+    price: 550, wksMin: 2, wksMax: 3,
     photos: ['delia-1b', 'delia-2'],
     materials: ['silver930'],
     preset: { material: 'silver930', stone: 'cyrkonia', colour: 0, size: 13 },
@@ -139,7 +137,7 @@ const RINGS = [
     shortPl: 'prostokątny sygnet, dwa kamienie',
     text: 'A rectangular signet face set with two zircons side by side — shown in green and pink, so it reads as one deliberate pair rather than a mismatch.',
     textPl: 'Prostokątna powierzchnia sygnetu z dwiema cyrkoniami obok siebie — pokazana w zieleni i różu, więc czyta się to jako świadomą parę, nie przypadkowe zestawienie.',
-    price: 820, weight: '~5 g', wksMin: 3, wksMax: 4,
+    price: 820, wksMin: 3, wksMax: 4,
     photos: ['genevieve-1', 'genevieve-2b', 'genevieve-3', 'genevieve-4', 'genevieve-5'],
     materials: ['silver930'],
     preset: { material: 'silver930', stone: 'cyrkonia', colour: 0, size: 14 },
@@ -150,7 +148,7 @@ const RINGS = [
     shortPl: 'rzeźbiarska oprawa, jeden kamień',
     text: 'The most sculptural piece I make — an organic, almost hand-carved setting around a single zircon, on a heavily textured band.',
     textPl: 'Najbardziej rzeźbiarski element, jaki robię — organiczna, niemal ręcznie rzeźbiona oprawa wokół jednej cyrkonii, na mocno teksturowanej obrączce.',
-    price: 500, weight: '~5 g', wksMin: 2, wksMax: 3,
+    price: 500, wksMin: 2, wksMax: 3,
     photos: ['kathleen-1', 'kathleen-2', 'kathleen-3'],
     materials: ['silver930'],
     preset: { material: 'silver930', stone: 'cyrkonia', colour: 0, size: 13 },
@@ -161,7 +159,7 @@ const RINGS = [
     shortPl: 'otwarty toi-et-moi, dwa kamienie',
     text: 'An open band that wraps almost all the way round, a navy zircon set at one end and a brown one at the other. Sits slightly loose by design — that is the point.',
     textPl: 'Otwarta obrączka, która owija się niemal dookoła — granatowa cyrkonia na jednym końcu, brązowa na drugim. Celowo siedzi trochę luźno — o to właśnie chodzi.',
-    price: 740, weight: '~5 g', wksMin: 3, wksMax: 4,
+    price: 740, wksMin: 3, wksMax: 4,
     photos: ['odette-1b', 'odette-2'],
     materials: ['silver930'],
     preset: { material: 'silver930', stone: 'cyrkonia', colour: 0, size: 14 },
@@ -499,7 +497,6 @@ function renderRing() {
           <h1>${r.name}</h1>
           <p class="product__lede">${ringText(r)}</p>
           <div class="product-facts">
-            <div><strong>${t('cfg.weight')}</strong>${r.weight}</div>
             <div><strong>${t('cfg.made.label')}</strong>${t('cfg.made')}</div>
           </div>
         </div>
@@ -536,6 +533,7 @@ function renderRing() {
             <span class="val" id="price">—</span>
             <span class="from">${t('cfg.perpiece')}</span>
           </div>
+          <p class="summary__pricenote">${t('cfg.pricenote')}</p>
           <ul class="summary__rows" id="breakdown"></ul>
           <span class="lead-badge">${t('cfg.leadtime')} <span id="lead">—</span></span>
           <div class="btn-row">
@@ -631,8 +629,11 @@ function renderRing() {
     if (colours.length === 1) { optColour.style.display = 'none'; state.colour = 0; }
     else optColour.style.display = '';
     if (state.colour >= colours.length) state.colour = 0;
+    // a coloured dot in front of each name — most desktop browsers also
+    // apply the inline colour to the option's own text, native <select>
+    // styling can't do more than that without replacing it entirely
     selColour.innerHTML = colours.map((c, i) =>
-      `<option value="${i}"${i === state.colour ? ' selected' : ''}>${cLabel(c)}</option>`
+      `<option value="${i}" style="color:${c.hex}"${i === state.colour ? ' selected' : ''}>● ${cLabel(c)}</option>`
     ).join('');
   }
 
@@ -701,8 +702,7 @@ function renderRing() {
     root.querySelector('#breakdown').innerHTML = `
       <li><span class="k">${t('cfg.bd.material')}</span><span class="v">${mLabel(c.m)}${c.quote ? ` — ${t('cfg.quoted')}` : ''}</span></li>
       <li><span class="k">${t('cfg.bd.stone')}</span><span class="v">${c.stoneText}</span></li>
-      <li><span class="k">${t('cfg.bd.size')}</span><span class="v">${state.size} (${state.size + 40} mm) · ${bandLabel(sizeBand(state.size))}</span></li>
-      <li><span class="k">${t('cfg.bd.weight')}</span><span class="v">${r.weight}</span></li>`;
+      <li><span class="k">${t('cfg.bd.size')}</span><span class="v">${state.size} (${state.size + 40} mm) · ${bandLabel(sizeBand(state.size))}</span></li>`;
 
     const text =
 `${t('cfg.copy.ring')} ${r.name} (${t('nav.drop')} ${dropNr})
