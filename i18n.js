@@ -281,6 +281,13 @@ en: {
   'onas.hello.p': 'So &mdash; are you ready to join our Modern Princess world? Email or Instagram work best. No ghost forms and no bots &mdash; it is me writing back.',
   'onas.gotocontact': 'go to contact',
 
+  /* ---------- 404.html ---------- */
+  'notfound.title': '404 — page not found — ARTarual',
+  'notfound.meta': 'This page does not exist. Have a look at the ARTarual collection instead.',
+  'notfound.heading': 'this page does not exist',
+  'notfound.text': 'The link is broken, or the page moved. Whichever it is, it is not here any more.',
+  'notfound.cta': 'see the collection',
+
   /* ---------- dostawa-zwroty.html ---------- */
   'dostawa.title': 'Shipping &amp; returns — ARTarual',
   'dostawa.meta': 'How ARTarual rings are shipped, and what happens if the size is wrong.',
@@ -563,6 +570,13 @@ pl: {
   'onas.hello.heading': 'przywitaj się',
   'onas.hello.p': 'Więc &mdash; jesteś gotowa/gotowy dołączyć do naszego świata Modern Princess? Email albo Instagram sprawdzają się najlepiej. Żadnych formularzy-widmo i botów &mdash; to ja odpisuję.',
   'onas.gotocontact': 'przejdź do kontaktu',
+
+  /* ---------- 404.html ---------- */
+  'notfound.title': '404 — nie znaleziono strony — ARTarual',
+  'notfound.meta': 'Ta strona nie istnieje. Zobacz za to kolekcję ARTarual.',
+  'notfound.heading': 'ta strona nie istnieje',
+  'notfound.text': 'Link jest zepsuty albo strona się przeniosła. Tak czy siak, już jej tu nie ma.',
+  'notfound.cta': 'zobacz kolekcję',
 
   /* ---------- dostawa-zwroty.html ---------- */
   'dostawa.title': 'Wysyłka i zwroty — ARTarual',
