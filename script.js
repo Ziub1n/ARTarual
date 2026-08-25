@@ -1,5 +1,39 @@
 // ARTarual — shared interactions
+
+/* Scroll reveal — sections/tiles fade and rise a little as they enter
+   the viewport. observeReveal() is exposed on window so products.js can
+   call it again after it rebuilds a gallery/photo wall (those elements
+   do not exist yet on the first, page-load pass). Respects
+   prefers-reduced-motion via the .reveal override in styles.css. */
+const REVEAL_SELECTORS = [
+  '.sec-head', '.step', '.stuff__item', '.story-list .row',
+  '.collage > figure', '.wall > figure', '.statement', '.cta-split',
+  '.piece', '.photo-wall figure',
+].join(', ');
+
+const revealIO = ('IntersectionObserver' in window)
+  ? new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        revealIO.unobserve(entry.target);
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' })
+  : null;
+
+function observeReveal(root = document) {
+  if (!revealIO) return; // no IntersectionObserver support — just show everything, no fallback needed since .reveal starts unstyled without JS
+  root.querySelectorAll(REVEAL_SELECTORS).forEach((el) => {
+    if (el.classList.contains('reveal')) return; // already wired up on an earlier pass
+    el.classList.add('reveal');
+    revealIO.observe(el);
+  });
+}
+window.observeReveal = observeReveal;
+
 document.addEventListener('DOMContentLoaded', () => {
+  observeReveal();
+
   // Nav drawer — slides in from the left, with a backdrop, same pattern as the bag
   const toggle = document.querySelector('.nav-toggle');
   const nav = document.querySelector('.main-nav');

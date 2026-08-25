@@ -54,7 +54,23 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 :focus-visible{ outline:1px solid var(--black); outline-offset:2px; }
 @media (prefers-reduced-motion: reduce){
   *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important; }
+  .reveal{ opacity:1 !important; transform:none !important; }
 }
+
+/* =========================================================
+   Delikatny fade + wsunięcie przy wjeżdżaniu w viewport (script.js
+   dopisuje .reveal do sekcji/kafli, .is-visible po wejściu w kadr —
+   patrz IntersectionObserver w script.js)
+   ========================================================= */
+.reveal{
+  opacity:0; transform:translateY(22px);
+  transition:opacity .7s ease, transform .7s ease;
+}
+.reveal.is-visible{ opacity:1; transform:none; }
+/* lekki poślizg kolejnych kafli w rzędzie siatki produktów */
+.piece.reveal:nth-child(4n+2){ transition-delay:.08s; }
+.piece.reveal:nth-child(4n+3){ transition-delay:.16s; }
+.piece.reveal:nth-child(4n+4){ transition-delay:.24s; }
 
 /* wspólna etykieta: drobne wersaliki */
 .note{

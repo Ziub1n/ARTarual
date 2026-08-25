@@ -316,6 +316,7 @@ function renderLists() {
     el.innerHTML = list.map(tile).join('');
   });
   wireFilters();
+  window.observeReveal?.();
 }
 
 /** Filters above the grid (kolekcja.html). Wired after render, because the
@@ -756,6 +757,7 @@ function renderRelated(r) {
   const el = document.querySelector('#podobne');
   if (!el) return;
   el.innerHTML = RINGS.filter(x => x.id !== r.id).slice(0, 3).map(tile).join('');
+  window.observeReveal?.();
 }
 
 
@@ -795,6 +797,7 @@ function renderPhotoWall() {
   el.innerHTML = picks.map(({ name }) =>
     `<figure>${photoTag(name, t('cfg.photowall.alt'), '(max-width:560px) 92vw, (max-width:1024px) 46vw, 31vw', null, SESJA_DIR)}</figure>`
   ).join('');
+  window.observeReveal?.();
 }
 
 
