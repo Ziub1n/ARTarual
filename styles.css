@@ -198,11 +198,9 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 /* =========================================================
    Baner pełnoekranowy (hero)
    ========================================================= */
-/* dwa zdjęcia obok siebie na szerszych ekranach — jedno na całą
-   szerokość na dużym monitorze skaluje się słabo (za mało pikseli
-   źródłowych na taką szerokość, robi się nieostre) */
-.hero-band{ position:relative; display:grid; grid-template-columns:1fr 1fr; height:min(62vh,560px); }
+.hero-band{ position:relative; display:grid; grid-template-columns:1fr; height:min(62vh,560px); }
 .hero-band figure{ margin:0; overflow:hidden; background:var(--tile); }
+.hero-band figure:nth-child(2){ display:none; } /* jedno zdjęcie na całą szerokość */
 .hero-band img{ width:100%; height:100%; object-fit:cover; }
 .hero-band__overlay{
   position:absolute; left:var(--edge); bottom:2.6rem; z-index:2; color:#fff; max-width:min(46ch,54%);
@@ -723,8 +721,7 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 @media (max-width:900px){
   .split, .contact-grid{ grid-template-columns:1fr; gap:2.4rem; }
   .stuff{ grid-template-columns:1fr; gap:1.8rem; }
-  .hero-band{ grid-template-columns:1fr; height:min(58vh,460px); }
-  .hero-band figure:nth-child(2){ display:none; } /* jedno zdjęcie na telefonie */
+  .hero-band{ height:min(58vh,460px); }
   .hero-band__overlay{ max-width:none; right:var(--edge); }
   .footer-top{ grid-template-columns:1fr; gap:2.4rem; }
 }
