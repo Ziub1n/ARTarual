@@ -43,6 +43,17 @@ document.addEventListener('DOMContentLoaded', () => {
       nav.classList.toggle('open', open);
       navBackdrop?.classList.toggle('open', open);
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (!open) {
+        // "Shop" stayed expanded across drawer close/reopen otherwise —
+        // reset it once the drawer has finished sliding away, so the menu
+        // always starts collapsed the next time it opens
+        setTimeout(() => {
+          nav.querySelectorAll('.has-sub.open').forEach(item => {
+            item.classList.remove('open');
+            item.querySelector('.sub-toggle')?.setAttribute('aria-expanded', 'false');
+          });
+        }, 320);
+      }
     };
     toggle.addEventListener('click', () => navSetOpen(!nav.classList.contains('open')));
     document.querySelectorAll('[data-nav-close]').forEach(el => el.addEventListener('click', () => navSetOpen(false)));
