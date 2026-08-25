@@ -722,6 +722,9 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
   .pgal{ position:static; max-width:560px; }
   .gallery{ grid-template-columns:repeat(3,1fr); }
   .collage, .wall, .strip__track{ grid-template-columns:repeat(3,1fr); }
+  /* rozciągnięcia kafelkują się bez dziur tylko przy 4 kolumnach */
+  .collage .tall{ grid-row:auto; }
+  .collage .wide{ grid-column:auto; }
 }
 @media (max-width:900px){
   .split, .contact-grid{ grid-template-columns:1fr; gap:2.4rem; }
