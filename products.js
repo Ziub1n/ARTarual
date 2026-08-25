@@ -512,8 +512,8 @@ function renderRing() {
         </div>
 
         <div class="opt" id="opt-colour">
-          <label class="opt__label" for="sel-colour">${t('cfg.stonecolour')}</label>
-          <div class="select-wrap"><select id="sel-colour"></select></div>
+          <div class="opt__head"><h3>${t('cfg.stonecolour')}</h3><span class="opt__pick" id="colour-pick"></span></div>
+          <div class="chips" id="colour-chips"></div>
           <p class="size-help">${t('cfg.colournote')}</p>
         </div>
 
@@ -574,7 +574,8 @@ function renderRing() {
   const optMaterial = root.querySelector('#opt-material');
   const selStone   = root.querySelector('#sel-stone');
   const optStone   = root.querySelector('#opt-stone');
-  const selColour  = root.querySelector('#sel-colour');
+  const colourChips = root.querySelector('#colour-chips');
+  const colourPick  = root.querySelector('#colour-pick');
   const optColour  = root.querySelector('#opt-colour');
   const selShape   = root.querySelector('#sel-shape');
   const optShape   = root.querySelector('#opt-shape');
@@ -629,12 +630,14 @@ function renderRing() {
     if (colours.length === 1) { optColour.style.display = 'none'; state.colour = 0; }
     else optColour.style.display = '';
     if (state.colour >= colours.length) state.colour = 0;
-    // a coloured dot in front of each name — most desktop browsers also
-    // apply the inline colour to the option's own text, native <select>
-    // styling can't do more than that without replacing it entirely
-    selColour.innerHTML = colours.map((c, i) =>
-      `<option value="${i}" style="color:${c.hex}"${i === state.colour ? ' selected' : ''}>● ${cLabel(c)}</option>`
-    ).join('');
+    // real swatch buttons, not a native <select> — <option> ignores inline
+    // colour styling in most browsers, so that route never actually showed
+    // the colour at all
+    colourChips.innerHTML = colours.map((c, i) => `
+      <button type="button" class="chip" data-i="${i}" aria-pressed="${i === state.colour}">
+        <span class="dot" style="background:${c.hex}"></span>${cLabel(c)}
+      </button>`).join('');
+    colourPick.textContent = cLabel(colours[state.colour]);
   }
 
   function drawShapes() {
@@ -670,7 +673,12 @@ function renderRing() {
 
   selMat.addEventListener('change', () => { state.material = selMat.value; recalc(); });
   selStone.addEventListener('change', () => { state.stone = selStone.value; state.colour = 0; state.shape = null; recalc(); });
-  selColour.addEventListener('change', () => { state.colour = Number(selColour.value); recalc(); });
+  colourChips.addEventListener('click', e => {
+    const btn = e.target.closest('.chip');
+    if (!btn) return;
+    state.colour = Number(btn.dataset.i);
+    recalc();
+  });
   selShape.addEventListener('change', () => { state.shape = selShape.value; recalc(); });
 
   /* --- summary --- */
