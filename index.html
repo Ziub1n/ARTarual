@@ -26,7 +26,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800&family=Tinos:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=202611071600">
+<link rel="stylesheet" href="styles.css?v=202611071800">
 </head>
 <body>
 
@@ -77,9 +77,11 @@
 
   <main>
 
-    <!-- opening banner: one full-bleed photo (zdjecia/glowne/) with the text on top -->
-    <section class="hero-band hero-band--single">
-      <figure><img src="zdj/sklep/glowne-01-1280.jpg" srcset="zdj/sklep/glowne-01-640.jpg 640w, zdj/sklep/glowne-01-1280.jpg 1280w, zdj/sklep/glowne-01-1920.jpg 1920w" sizes="100vw" alt="Two modern princesses wearing ARTarual rings" fetchpriority="high"></figure>
+    <!-- opening banner: two photos side by side (zdjecia/glowne/01 + 02) with the text on top;
+         on phones only the first one is shown -->
+    <section class="hero-band hero-band--shade">
+      <figure><img src="zdj/sklep/glowne-01-1280.jpg" srcset="zdj/sklep/glowne-01-640.jpg 640w, zdj/sklep/glowne-01-1280.jpg 1280w, zdj/sklep/glowne-01-1920.jpg 1450w" sizes="(max-width:900px) 100vw, 50vw" alt="Two modern princesses wearing ARTarual rings" fetchpriority="high"></figure>
+      <figure><img src="zdj/sklep/glowne-02-1280.jpg" srcset="zdj/sklep/glowne-02-640.jpg 640w, zdj/sklep/glowne-02-1280.jpg 1086w" sizes="(max-width:900px) 100vw, 50vw" alt="A close-up of The One with Moonstone and Charms, worn" loading="lazy"></figure>
       <div class="hero-band__overlay">
         <h1 class="hero-band__title" data-i18n="home.hero.title">made by hand</h1>
         <p class="hero-band__sub" data-i18n="home.hero.sub">Rings and signets from a one-person studio in Warsaw. You pick the zircon colour and the size.</p>
@@ -208,9 +210,9 @@
     </div>
   </footer>
 
-  <script src="i18n.js?v=202611071600"></script>
-  <script src="script.js?v=202611071600"></script>
-  <script src="zdjecia.js?v=202611071600"></script>
-  <script src="products.js?v=202611071600"></script>
+  <script src="i18n.js?v=202611071800"></script>
+  <script src="script.js?v=202611071800"></script>
+  <script src="zdjecia.js?v=202611071800"></script>
+  <script src="products.js?v=202611071800"></script>
 </body>
 </html>

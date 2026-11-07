@@ -26,7 +26,7 @@ except Exception:
     pass
 
 try:
-    from PIL import Image, ImageOps
+    from PIL import Image, ImageFilter, ImageOps
 except ImportError:
     sys.exit("Brakuje biblioteki Pillow. Zainstaluj ją komendą:  python -m pip install Pillow")
 
@@ -59,15 +59,15 @@ def natural_key(name):
 # Foldery, które NIE są zdjęciami produktów — zostają w oryginalnym kadrze.
 NIE_KADRUJ = {"sesja", "glowne"}
 KADR = 4 / 5          # proporcje kafelka / zdjęcia produktu (szer. / wys.)
-MIN_SZER = 900        # nie przycinamy węższej niż tyle — żeby nie tracić ostrości
-WYPELNIENIE = 0.58    # ile kadru (mniej więcej) ma zajmować pierścionek
+MIN_SZER = 800        # nie przycinamy węższej niż tyle – żeby nie tracić ostrości
+WYPELNIENIE = 0.52    # ile szerokości kadru (mniej więcej) ma zajmować pierścionek
 
 
 def wykryj_obiekt(im):
     """Prostokąt, w którym jest pierścionek (na jasnym tle), albo None,
     gdy to zdjęcie „z ręki” / bez jednolitego tła — wtedy kadr zostaje środkowy."""
     small = im.copy()
-    small.thumbnail((300, 300))
+    small.thumbnail((400, 400))
     a = np.asarray(small).astype(np.int16)
     h, w, _ = a.shape
     brzeg = np.concatenate([a[0], a[-1], a[:, 0], a[:, -1]])
@@ -75,9 +75,17 @@ def wykryj_obiekt(im):
     # tło musi być jasne i dość jednolite, inaczej to nie packshot
     if tlo.mean() < 170 or np.abs(brzeg - tlo).sum(axis=1).mean() > 45:
         return None
-    roznica = np.abs(a - tlo).sum(axis=2)
+    # Cień NIE jest częścią pierścionka (inaczej np. ametyst z dużym cieniem
+    # po lewej lądował z prawej strony kadru). Cień ma miękkie, rozmyte
+    # krawędzie, a srebro i kamienie – ostre detale i odblaski, więc
+    # pierścionek wykrywamy po ostrych krawędziach + po kolorze.
+    szary = np.asarray(small.convert("L").filter(ImageFilter.GaussianBlur(1))).astype(np.float32)
+    gx = np.abs(np.diff(szary, axis=1, append=szary[:, -1:]))
+    gy = np.abs(np.diff(szary, axis=0, append=szary[-1:, :]))
+    krawedzie = (gx + gy) > 14
     nasycenie = a.max(axis=2) - a.min(axis=2)
-    maska = (roznica > 75) | (nasycenie > 45)
+    maska = krawedzie | (nasycenie > 45)
+    # krawędzie odstające od reszty (pyłek, rysa na tle) nie przesuwają kadru
     ys, xs = np.nonzero(maska)
     if len(xs) < 50:
         return None
