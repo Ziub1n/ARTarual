@@ -923,11 +923,13 @@ function renderPhotoWall() {
   window.observeReveal?.();
 }
 
-/** [data-collage-sesja] – the first 5 photos of zdjecia/sesja/: one big
+/** [data-collage-sesja] – the first 5 photos of zdjecia/kolaz/ (or of
+    zdjecia/sesja/ if there is no kolaz folder): one big
     tile + four small ones (layout in styles.css, .collage--five). */
 function renderSessionCollage() {
   document.querySelectorAll('[data-collage-sesja]').forEach(el => {
-    const photos = NOWA_SESJA.slice(0, 5);
+    const src = (typeof ZDJECIA !== 'undefined' && ZDJECIA.kolaz && ZDJECIA.kolaz.length) ? ZDJECIA.kolaz : NOWA_SESJA;
+    const photos = src.slice(0, 5);
     if (!photos.length) return;
     el.innerHTML = photos.map((name, i) =>
       `<figure>${photoTag(name, t('cfg.photowall.alt'), i === 0 ? '(max-width:1024px) 92vw, 50vw' : '(max-width:1024px) 46vw, 25vw')}</figure>`

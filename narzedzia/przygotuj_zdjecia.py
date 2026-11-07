@@ -57,7 +57,7 @@ def natural_key(name):
 
 
 # Foldery, które NIE są zdjęciami produktów — zostają w oryginalnym kadrze.
-NIE_KADRUJ = {"sesja", "glowne"}
+NIE_KADRUJ = {"sesja", "glowne", "kolaz"}
 KADR = 4 / 5          # proporcje kafelka / zdjęcia produktu (szer. / wys.)
 MIN_SZER = 800        # nie przycinamy węższej niż tyle – żeby nie tracić ostrości
 WYPELNIENIE = 0.52    # ile szerokości kadru (mniej więcej) ma zajmować pierścionek
@@ -85,7 +85,6 @@ def wykryj_obiekt(im):
     krawedzie = (gx + gy) > 14
     nasycenie = a.max(axis=2) - a.min(axis=2)
     maska = krawedzie | (nasycenie > 45)
-    # krawędzie odstające od reszty (pyłek, rysa na tle) nie przesuwają kadru
     ys, xs = np.nonzero(maska)
     if len(xs) < 50:
         return None
@@ -94,8 +93,12 @@ def wykryj_obiekt(im):
     y0, y1 = np.percentile(ys, [1, 99])
     if (x1 - x0) * (y1 - y0) > 0.7 * w * h:  # obiekt na całe zdjęcie → nie packshot
         return None
+    # środek ciężkości detali (kamień, faktura, charmsy) – to on przyciąga
+    # wzrok; jasna, gładka część obrączki na białym tle „waży” mniej
+    wewnatrz = (xs >= x0) & (xs <= x1) & (ys >= y0) & (ys <= y1)
+    mx, my = xs[wewnatrz].mean(), ys[wewnatrz].mean()
     s = im.width / w
-    return x0 * s, y0 * s, (x1 + 1) * s, (y1 + 1) * s
+    return x0 * s, y0 * s, (x1 + 1) * s, (y1 + 1) * s, mx * s, my * s
 
 
 def dociagnij_tlo(im, pad_l, pad_t, pad_r, pad_b, przejscie=60):
@@ -145,8 +148,10 @@ def kadruj_produkt(im):
         cx, cy = W / 2, H / 2
         cw = min(W, H * KADR)
     else:
-        x0, y0, x1, y1 = box
-        cx, cy = (x0 + x1) / 2, (y0 + y1) / 2
+        x0, y0, x1, y1, mx, my = box
+        # środek kadru: w większości środek ciężkości detali, trochę obrys
+        cx = 0.35 * (x0 + x1) / 2 + 0.65 * mx
+        cy = 0.35 * (y0 + y1) / 2 + 0.65 * my
         potrzeba = max(x1 - x0, (y1 - y0) * KADR) / WYPELNIENIE
         cw = max(min(W, potrzeba), min(MIN_SZER, W))
     ch = cw / KADR

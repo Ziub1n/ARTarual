@@ -210,10 +210,10 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 .hero-band figure{ margin:0; overflow:hidden; background:var(--tile); }
 .hero-band img{ width:100%; height:100%; object-fit:cover; }
 /* zdjęcia z zdjecia/glowne/ – twarze są w górnej części kadru, więc przy
-   przycinaniu trzymamy górę (pierścionek na drugim zdjęciu jest niżej);
+   przycinaniu trzymamy górę;
    lekki cień od dołu, żeby biały tekst był czytelny na jasnym zdjęciu */
 .hero-band--shade figure:first-child img{ object-position:center 22%; }
-.hero-band--shade figure:nth-child(2) img{ object-position:center 62%; }
+.hero-band--shade figure:nth-child(2) img{ object-position:center 15%; }
 .hero-band--shade::after{
   content:""; position:absolute; inset:0; pointer-events:none; z-index:1;
   background:linear-gradient(to top, rgba(0,0,0,.42) 0%, rgba(0,0,0,.12) 34%, rgba(0,0,0,0) 55%);

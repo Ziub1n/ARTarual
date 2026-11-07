@@ -8,16 +8,17 @@ Każdy folder tutaj = jeden zestaw zdjęć na stronie:
   crown-star/         The One with a Crown and a Star
   moonstone-charms/   The One with Moonstone and Charms
   gemstone-charm/     The One with Gemstone and Charm of Your Choice
-  sesja/              zdjęcia z sesji (strona główna, Drop 02, Photoshoot)
-  glowne/             duże zdjęcie na górze strony głównej (liczy się tylko pierwsze)
+  sesja/              zdjęcia z sesji – wszystkie są na podstronie Photoshoot
+  kolaz/              5 zdjęć do kolaży na stronie głównej i Drop 02
+                      (01 = duży kafel, 02–05 = małe)
+  glowne/             zdjęcia na górze strony głównej: 01 = lewe (na telefonie
+                      tylko to), 02 = prawe (tylko na komputerze)
 
 KOLEJNOŚĆ = kolejność nazw plików: 01.jpg, 02.jpg, 03.jpg …
   - 01 to zdjęcie główne pierścionka (na kafelku i na stronie produktu),
   - 02 pokazuje się po najechaniu myszką na kafelek.
   - Żeby zamienić kolejność, po prostu zamień nazwy plików
     (np. 03.jpg -> 00.jpg, i ono będzie pierwsze).
-  - W folderze sesja/ pierwsze 5 zdjęć trafia do kolaży na stronie głównej
-    i na stronie Drop 02; na Photoshoot są wszystkie.
 
 DODANIE ZDJĘCIA: wrzuć plik (jpg / png / webp) do właściwego folderu
 i nadaj mu numer, w którym miejscu ma być (np. 08.jpg).

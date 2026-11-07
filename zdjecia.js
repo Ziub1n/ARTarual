@@ -63,6 +63,13 @@ const ZDJECIA = {
     "zdj/sklep/kathleen-02",
     "zdj/sklep/kathleen-03"
   ],
+  "kolaz": [
+    "zdj/sklep/kolaz-01",
+    "zdj/sklep/kolaz-02",
+    "zdj/sklep/kolaz-03",
+    "zdj/sklep/kolaz-04",
+    "zdj/sklep/kolaz-05"
+  ],
   "moonstone-charms": [
     "zdj/sklep/moonstone-charms-01",
     "zdj/sklep/moonstone-charms-02",
