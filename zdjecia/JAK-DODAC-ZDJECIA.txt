@@ -1,0 +1,31 @@
+JAK DODAĆ / ZMIENIĆ KOLEJNOŚĆ ZDJĘĆ
+===================================
+
+Każdy folder tutaj = jeden zestaw zdjęć na stronie:
+
+  amber-teapot/       The One with Amber and the Teapot
+  amethyst/           The One with Amethyst
+  crown-star/         The One with a Crown and a Star
+  moonstone-charms/   The One with Moonstone and Charms
+  gemstone-charm/     The One with Gemstone and Charm of Your Choice
+  sesja/              zdjęcia z sesji (strona główna, Drop 02, Photoshoot)
+  glowne/             duże zdjęcie na górze strony głównej (liczy się tylko pierwsze)
+
+KOLEJNOŚĆ = kolejność nazw plików: 01.jpg, 02.jpg, 03.jpg …
+  - 01 to zdjęcie główne pierścionka (na kafelku i na stronie produktu),
+  - 02 pokazuje się po najechaniu myszką na kafelek.
+  - Żeby zamienić kolejność, po prostu zamień nazwy plików
+    (np. 03.jpg -> 00.jpg, i ono będzie pierwsze).
+  - W folderze sesja/ pierwsze 5 zdjęć trafia do kolaży na stronie głównej
+    i na stronie Drop 02; na Photoshoot są wszystkie.
+
+DODANIE ZDJĘCIA: wrzuć plik (jpg / png / webp) do właściwego folderu
+i nadaj mu numer, w którym miejscu ma być (np. 08.jpg).
+
+PO KAŻDEJ ZMIANIE: dwuklik w  przygotuj-zdjecia.bat  (w głównym folderze
+projektu). Skrypt sam przeskaluje zdjęcia do zdj/sklep/ i zaktualizuje
+zdjecia.js. Potem tylko commit + push (albo wrzucenie na Netlify).
+
+NOWY PIERŚCIONEK: utwórz nowy folder (np. nowy-pierscionek/) ze zdjęciami,
+uruchom skrypt, a w products.js dodaj pierścionek z  id: 'nowy-pierscionek'
+– zdjęcia podepną się same (id = nazwa folderu).

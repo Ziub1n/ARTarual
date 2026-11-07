@@ -1,5 +1,5 @@
 /* =========================================================
-   ARTarual — pracownia biżuterii
+   ARTarual – pracownia biżuterii
    Kierunek: katalog. Drobna typografia, dużo bieli,
    szare kafle ze zdjęciami, czarny pasek na górze,
    biała stopka z wielkim wordmarkiem.
@@ -13,7 +13,7 @@
   --tile:    #ECECEC;   /* szary kafel pod zdjęciem */
   --paper:   #FFFFFF;
   --paper-2: #F6F6F6;
-  --navy:    #020085;   /* dokładny kolor z logo.png — stopka i wordmark logo */
+  --navy:    #020085;   /* dokładny kolor z logo.png – stopka i wordmark logo */
 
   --font-sans:  "Archivo", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --font-serif: "Tinos", "Times New Roman", Times, serif;
@@ -26,7 +26,7 @@
 }
 
 *,*::before,*::after{ box-sizing:border-box; }
-/* overflow-x na html, nie na body — na body tworzy osobny kontekst
+/* overflow-x na html, nie na body – na body tworzy osobny kontekst
    przewijania i psuje position:sticky w potomkach (np. .pgal na
    stronie produktu przestaje się trzymać przy scrollu) */
 html{ scroll-behavior:smooth; overflow-x:hidden; }
@@ -48,7 +48,7 @@ p{ margin:0 0 1em; }
 h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 
 .wrap{ width:100%; margin:0 auto; padding:0 var(--edge); }
-/* wąska kolumna na dłuższy tekst — reszta strony jedzie na pełną szerokość */
+/* wąska kolumna na dłuższy tekst – reszta strony jedzie na pełną szerokość */
 .wrap--narrow{ max-width:1080px; }
 
 :focus-visible{ outline:1px solid var(--black); outline-offset:2px; }
@@ -59,7 +59,7 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 
 /* =========================================================
    Delikatny fade + wsunięcie przy wjeżdżaniu w viewport (script.js
-   dopisuje .reveal do sekcji/kafli, .is-visible po wejściu w kadr —
+   dopisuje .reveal do sekcji/kafli, .is-visible po wejściu w kadr –
    patrz IntersectionObserver w script.js)
    ========================================================= */
 .reveal{
@@ -82,7 +82,7 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 .ghost{ display:none !important; }
 
 /* =========================================================
-   Pasek z hasłem — pod nagłówkiem, w kolorze loga
+   Pasek z hasłem – pod nagłówkiem, w kolorze loga
    ========================================================= */
 .topbar{
   background:var(--navy);
@@ -96,15 +96,15 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 }
 
 /* =========================================================
-   Header — hamburger z lewej, logo na środku, akcje z prawej.
+   Header – hamburger z lewej, logo na środku, akcje z prawej.
    Menu jest rozwijaną listą na KAŻDEJ szerokości ekranu (nie tylko na
-   telefonie) — jedna wersja wyglądu i zachowania wszędzie.
+   telefonie) – jedna wersja wyglądu i zachowania wszędzie.
    ========================================================= */
 .site-header{
   position:sticky; top:0; z-index:50; background:var(--paper);
   border-bottom:1px solid var(--line);
 }
-/* 1fr po obu stronach (nie auto) — inaczej hamburger (wąski) i
+/* 1fr po obu stronach (nie auto) – inaczej hamburger (wąski) i
    Instagram+koszyk (szersze) mają różną szerokość, środkowa kolumna z
    logiem przesuwa się od prawdziwego środka i wygląda na "nie
    wyśrodkowane" względem paska z hasłem pod spodem */
@@ -113,7 +113,7 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
   height:var(--header-h); gap:1rem;
 }
 .logo{ display:flex; align-items:center; justify-content:center; }
-.logo img{ height:28px; width:auto; } /* logo.png jest już granatowe — bez filtra */
+.logo img{ height:28px; width:auto; } /* logo.png jest już granatowe – bez filtra */
 
 .nav-toggle{
   display:block; justify-self:start; background:none; border:0;
@@ -121,10 +121,10 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 }
 .nav-toggle span{ display:block; width:20px; height:1px; background:var(--ink); margin:5px auto; }
 
-/* Menu jako szuflada z lewej krawędzi + przyciemnione tło — ten sam
+/* Menu jako szuflada z lewej krawędzi + przyciemnione tło – ten sam
    język wizualny co koszyk (.bag), tylko z drugiej strony. Zasłania
    cały ekran (łącznie z nagłówkiem), więc ma własny przycisk zamknięcia
-   u góry — hamburger jest wtedy i tak schowany pod tłem. */
+   u góry – hamburger jest wtedy i tak schowany pod tłem. */
 .nav-backdrop{
   position:fixed; inset:0; z-index:58; background:rgba(0,0,0,.32);
   opacity:0; visibility:hidden; transition:opacity .25s ease, visibility .25s;
@@ -150,7 +150,7 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 }
 .main-nav > ul > li > a:hover{ opacity:.55; }
 
-/* prawa strona nagłówka — tylko Instagram i koszyk; flagi PL/EN mieszkają
+/* prawa strona nagłówka – tylko Instagram i koszyk; flagi PL/EN mieszkają
    teraz w rozwijanym menu (.nav-lang-item), nie tutaj */
 .nav-actions{ display:flex; align-items:center; justify-content:flex-end; gap:1.4rem; }
 .nav-actions a{
@@ -161,7 +161,7 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 .nav-actions .nav-icon{ display:inline-flex; align-items:center; }
 .nav-actions .nav-icon:hover{ text-decoration:none; opacity:.6; }
 
-/* PL / EN flag switch — flags stay in their real colours always; only
+/* PL / EN flag switch – flags stay in their real colours always; only
    opacity marks which one is active (a grayscale filter would make the
    Polish flag look like it is broken, not just "not selected") */
 .lang-switch{ display:inline-flex; align-items:center; gap:.7rem; }
@@ -171,11 +171,13 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
   transition:opacity .2s ease;
 }
 .lang-switch button[aria-current="true"]{ opacity:1; cursor:default; }
+/* flagi jako SVG – emoji flag nie wyświetlają się na Windowsie (pokazuje tylko litery "PL"/"GB") */
+.lang-switch .flag{ display:block; width:22px; height:14px; border-radius:2px; box-shadow:0 0 0 1px rgba(0,0,0,.18); }
 .lang-switch button:hover{ opacity:.75; }
 .nav-lang-item{ display:flex; align-items:center; padding:.95rem 0; }
 
 /* =========================================================
-   Rozwijane „sklep" — zawsze klik/tap, jedna pozycja w liście
+   Rozwijane „sklep" – zawsze klik/tap, jedna pozycja w liście
    ========================================================= */
 .main-nav li.has-sub{ position:static; }
 .sub-toggle{
@@ -207,6 +209,15 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 }
 .hero-band figure{ margin:0; overflow:hidden; background:var(--tile); }
 .hero-band img{ width:100%; height:100%; object-fit:cover; }
+/* jedno zdjęcie na całą szerokość (zdjecia/glowne/) – twarze są w górnej
+   części kadru, więc przy przycinaniu trzymamy górę; lekki cień od dołu,
+   żeby biały tekst był czytelny na jasnym zdjęciu */
+.hero-band--single{ grid-template-columns:1fr; }
+.hero-band--single img{ object-position:center 22%; }
+.hero-band--single::after{
+  content:""; position:absolute; inset:0; pointer-events:none; z-index:1;
+  background:linear-gradient(to top, rgba(0,0,0,.42) 0%, rgba(0,0,0,.12) 34%, rgba(0,0,0,0) 55%);
+}
 .hero-band__overlay{
   position:absolute; left:var(--edge); bottom:2.6rem; z-index:2; color:#fff; max-width:min(46ch,54%);
   text-shadow:0 1px 22px rgba(0,0,0,.34);
@@ -261,7 +272,7 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
   font-family:var(--font-sans); font-weight:700; font-size:12px;
   text-transform:uppercase; letter-spacing:.09em; color:var(--ink); line-height:1.4;
 }
-/* eyebrow jest już zbędny — etykietą jest sam nagłówek */
+/* eyebrow jest już zbędny – etykietą jest sam nagłówek */
 .sec-head .note{ display:none; }
 .section--navy .sec-head h2{ color:#fff; }
 
@@ -281,7 +292,7 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
   box-shadow:0 0 0 rgba(0,0,0,0); display:block;
   transition:box-shadow .35s ease;
 }
-/* delikatny cień + powiększenie zdjęcia na hover — bez tego siatka
+/* delikatny cień + powiększenie zdjęcia na hover – bez tego siatka
    produktów wygląda trochę statycznie */
 .piece:hover .piece__frame{ box-shadow:0 20px 36px -20px rgba(0,0,0,.24); }
 .piece__frame img{
@@ -289,7 +300,7 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
   transition:opacity .5s ease, transform .5s ease;
 }
 .piece:hover .piece__frame img{ transform:scale(1.045); }
-/* drugie zdjęcie odsłania się na hover — jak w referencji */
+/* drugie zdjęcie odsłania się na hover – jak w referencji */
 .piece__frame .piece__img--alt{ opacity:0; }
 .piece:hover .piece__frame .piece__img--alt{ opacity:1; }
 
@@ -308,7 +319,7 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
   font-family:var(--font-sans); font-size:12px; color:var(--grey);
   margin:.35rem 0 0; line-height:1.5;
 }
-/* numer i plakietka z poprzedniej wersji — w katalogu zbędne */
+/* numer i plakietka z poprzedniej wersji – w katalogu zbędne */
 .piece__no, .piece__frame .tag{ display:none; }
 
 .gallery-more{ text-align:center; margin-top:3.4rem; }
@@ -331,7 +342,7 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 .section--navy .btn-row .text-link:hover{ background:#fff; color:var(--ink); }
 
 /* =========================================================
-   Photo wall (photoshoot.html) — kolumnowy kolaż, sam się
+   Photo wall (photoshoot.html) – kolumnowy kolaż, sam się
    zwija do jednej kolumny na telefonie, bez dodatkowego JS-a
    ========================================================= */
 .photo-wall{ column-count:3; column-gap:14px; }
@@ -344,7 +355,7 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 @media (max-width:560px){ .photo-wall{ column-count:1; } }
 
 /* =========================================================
-   Filtry kolekcji — środek, drobny tekst, bez ramek
+   Filtry kolekcji – środek, drobny tekst, bez ramek
    ========================================================= */
 .filter-row{
   display:flex; justify-content:center; flex-wrap:wrap; gap:2.4rem;
@@ -359,7 +370,7 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 .filter-btn.active{ color:var(--ink); text-decoration:underline; text-underline-offset:4px; }
 
 /* =========================================================
-   Nagłówek podstrony / kolekcji — wyśrodkowany, drobny
+   Nagłówek podstrony / kolekcji – wyśrodkowany, drobny
    ========================================================= */
 .page-hero{ padding:3.4rem 0 3rem; text-align:center; }
 .page-hero h1{
@@ -377,7 +388,7 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 }
 .page-hero > .wrap > .note{ display:none; }
 
-/* metryczka dropu — drobny szary tekst rozdzielony kropkami */
+/* metryczka dropu – drobny szary tekst rozdzielony kropkami */
 .drop-meta{
   display:flex; justify-content:center; flex-wrap:wrap; gap:0; margin-top:1.2rem;
   font-size:11.5px; color:var(--grey);
@@ -390,7 +401,7 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 .badge + .badge::before{ content:"·"; margin:0 .7rem; color:var(--grey-2); }
 
 /* =========================================================
-   Kolaż zdjęć — statyczny, bez animacji
+   Kolaż zdjęć – statyczny, bez animacji
    ========================================================= */
 .collage{ display:grid; grid-template-columns:repeat(4,1fr); grid-auto-rows:200px; gap:14px; }
 .collage figure{ margin:0; overflow:hidden; border-radius:var(--radius); background:var(--tile); }
@@ -398,15 +409,23 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 .collage figure:hover img{ transform:scale(1.03); }
 .collage .tall{ grid-row:span 2; }
 .collage .wide{ grid-column:span 2; }
+/* kolaż z sesji (5 poziomych zdjęć): jedno duże 2×2 + cztery małe –
+   na 4 kolumnach to dokładnie dwa pełne rzędy, bez dziur */
+.collage.collage--five{ grid-auto-rows:auto; }
+.collage--five figure{ cursor:zoom-in; position:relative; aspect-ratio:4/3; }
+/* zdjęcie nie wpływa na wysokość rzędu – rzędy wyznaczają małe kafle 4:3
+   (takie proporcje mają zdjęcia z sesji), więc nic nie jest ucinane */
+.collage--five img{ position:absolute; inset:0; object-position:center 25%; }
+.collage--five figure:first-child{ grid-column:span 2; grid-row:span 2; aspect-ratio:auto; }
 
-/* dawny przewijany pas — zatrzymany i sprowadzony do statycznej siatki */
+/* dawny przewijany pas – zatrzymany i sprowadzony do statycznej siatki */
 .strip{ position:relative; background:var(--paper); overflow:hidden; border:0; }
 .strip__track{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; width:auto; animation:none; padding:0 var(--edge); }
 .strip__track img{ width:100%; height:230px; object-fit:cover; border:0; border-radius:var(--radius); }
 .strip__label{ display:none; }
 
 /* =========================================================
-   Zdjęcia — wspólne
+   Zdjęcia – wspólne
    ========================================================= */
 .ph{
   margin:0; position:relative; aspect-ratio:3/4; overflow:hidden;
@@ -421,7 +440,7 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 .wall .ph img{ transition:transform .7s cubic-bezier(.2,.6,.2,1); }
 .wall .ph:hover img{ transform:scale(1.03); }
 
-/* hero z poprzedniej wersji — gdyby gdzieś zostało w markupie */
+/* hero z poprzedniej wersji – gdyby gdzieś zostało w markupie */
 .hero{ padding:3rem 0; }
 .hero__grid{ display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:center; }
 .hero-cluster{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
@@ -616,7 +635,7 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 .size-btn[aria-pressed="true"]{ background:var(--black); color:#fff; border-color:var(--black); box-shadow:none; }
 .size-btn[aria-pressed="true"] .mm, .size-btn[aria-pressed="true"] .d{ color:rgba(255,255,255,.6); opacity:1; }
 .size-help{ margin-top:1rem; font-size:12px; color:var(--grey); }
-/* .text-link w tym miejscu jest zwykłym linkiem — patrz reguła bazowa */
+/* .text-link w tym miejscu jest zwykłym linkiem – patrz reguła bazowa */
 
 .summary{ margin-top:2.2rem; background:var(--paper-2); border:0; border-radius:0; padding:1.8rem; box-shadow:none; }
 .summary__price{ display:flex; align-items:baseline; gap:.7rem; flex-wrap:wrap; }
@@ -676,7 +695,7 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 .table-scroll{ overflow-x:auto; }
 
 /* =========================================================
-   Stopka — granatowa, drobna, z wielkim wordmarkiem
+   Stopka – granatowa, drobna, z wielkim wordmarkiem
    ========================================================= */
 .site-footer{ background:var(--navy); color:rgba(255,255,255,.75); padding:4.5rem 0 1.6rem; border-top:1px solid rgba(255,255,255,.15); }
 .footer-top{
@@ -692,8 +711,8 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 .footer-col a:hover{ text-decoration:underline; text-underline-offset:3px; color:#fff; }
 .footer-col p{ font-family:var(--font-serif); font-size:12.5px; color:rgba(255,255,255,.55); max-width:34ch; margin:1.6rem 0 0; }
 
-/* wielki wordmark — typografia, bo logo.png ma tylko 256 px szerokości.
-   Subtelny, jaśniejszy odcień granatu — działa jak wodny znak w tle. */
+/* wielki wordmark – typografia, bo logo.png ma tylko 256 px szerokości.
+   Subtelny, jaśniejszy odcień granatu – działa jak wodny znak w tle. */
 .footer-wordmark{
   padding-bottom:.12em;
   font-family:var(--font-sans); font-weight:800; text-transform:uppercase;
@@ -725,6 +744,10 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
   /* rozciągnięcia kafelkują się bez dziur tylko przy 4 kolumnach */
   .collage .tall{ grid-row:auto; }
   .collage .wide{ grid-column:auto; }
+  /* 5 kafli: przy 3 kolumnach zostawałaby dziura, więc 2 kolumny –
+     duże zdjęcie na całą szerokość, pod nim 2×2 */
+  .collage.collage--five{ grid-template-columns:repeat(2,1fr); }
+  .collage--five figure:first-child{ grid-column:1 / -1; grid-row:auto; aspect-ratio:4/3; }
 }
 @media (max-width:900px){
   .split, .contact-grid{ grid-template-columns:1fr; gap:2.4rem; }
@@ -739,6 +762,7 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
   .gallery{ grid-template-columns:repeat(2,1fr); gap:2rem 12px; }
   .collage, .wall, .strip__track{ grid-template-columns:repeat(2,1fr); gap:12px; }
   .collage{ grid-auto-rows:150px; }
+  .collage.collage--five{ grid-auto-rows:auto; }
   .section{ padding:3.2rem 0; }
   .story-list .row{ grid-template-columns:1fr; gap:.3rem; }
   .form .row2{ grid-template-columns:1fr; }
@@ -757,7 +781,7 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 /* =========================================================
    Kroki z ilustracją (jak to działa / customs / rozmiarówka)
    Rysunki to inline SVG w kolorze tekstu, na tym samym szarym
-   kaflu co zdjęcia produktów — żeby siatka trzymała się kupy.
+   kaflu co zdjęcia produktów – żeby siatka trzymała się kupy.
    ========================================================= */
 .steps{ display:grid; grid-template-columns:repeat(3,1fr); gap:2.6rem 14px; }
 .step__art{
@@ -800,7 +824,7 @@ h1,h2,h3,h4{ margin:0; font-weight:700; color:var(--ink); line-height:1.2; }
 .select-wrap select:focus{ border-color:var(--ink); outline:0; }
 
 /* =========================================================
-   Koszyk — szuflada z prawej. Bez płatności: całość idzie
+   Koszyk – szuflada z prawej. Bez płatności: całość idzie
    jednym mailem, stan trzymany w localStorage.
    ========================================================= */
 .bag{ position:fixed; inset:0; z-index:300; display:none; }

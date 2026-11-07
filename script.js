@@ -1,6 +1,6 @@
-// ARTarual — shared interactions
+// ARTarual – shared interactions
 
-/* Scroll reveal — sections/tiles fade and rise a little as they enter
+/* Scroll reveal – sections/tiles fade and rise a little as they enter
    the viewport. observeReveal() is exposed on window so products.js can
    call it again after it rebuilds a gallery/photo wall (those elements
    do not exist yet on the first, page-load pass). Respects
@@ -22,7 +22,7 @@ const revealIO = ('IntersectionObserver' in window)
   : null;
 
 function observeReveal(root = document) {
-  if (!revealIO) return; // no IntersectionObserver support — just show everything, no fallback needed since .reveal starts unstyled without JS
+  if (!revealIO) return; // no IntersectionObserver support – just show everything, no fallback needed since .reveal starts unstyled without JS
   root.querySelectorAll(REVEAL_SELECTORS).forEach((el) => {
     if (el.classList.contains('reveal')) return; // already wired up on an earlier pass
     el.classList.add('reveal');
@@ -34,7 +34,7 @@ window.observeReveal = observeReveal;
 document.addEventListener('DOMContentLoaded', () => {
   observeReveal();
 
-  // Nav drawer — slides in from the left, with a backdrop, same pattern as the bag
+  // Nav drawer – slides in from the left, with a backdrop, same pattern as the bag
   const toggle = document.querySelector('.nav-toggle');
   const nav = document.querySelector('.main-nav');
   const navBackdrop = document.querySelector('.nav-backdrop');
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
       navBackdrop?.classList.toggle('open', open);
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
       if (!open) {
-        // "Shop" stayed expanded across drawer close/reopen otherwise —
+        // "Shop" stayed expanded across drawer close/reopen otherwise –
         // reset it once the drawer has finished sliding away, so the menu
         // always starts collapsed the next time it opens
         setTimeout(() => {
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keydown', e => { if (e.key === 'Escape') navSetOpen(false); });
   }
 
-  // "sklep" submenu — click/tap accordion, same on every screen size
+  // "sklep" submenu – click/tap accordion, same on every screen size
   document.querySelectorAll('.has-sub').forEach(item => {
     const btn = item.querySelector('.sub-toggle');
     if (!btn) return;
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Contact form (front-end only — no backend wired up yet)
+  // Contact form (front-end only – no backend wired up yet)
   const form = document.querySelector('#contact-form');
   const success = document.querySelector('#form-success');
   if (form && success) {

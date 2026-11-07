@@ -1,16 +1,16 @@
 /* =============================================================================
-   ARTarual — shop data, ring configurator and bag
+   ARTarual – shop data, ring configurator and bag
 
    ⚠️  EVERYTHING THAT CHANGES DAY TO DAY (prices, stones, materials,
        lead times, photos) lives in the "DATA" section below.
-       The rest of the file is logic — normally you don't need to touch it.
+       The rest of the file is logic – normally you don't need to touch it.
 
-   Prices are real, from Laura. Lead times are still placeholders — swap
+   Prices are real, from Laura. Lead times are still placeholders – swap
    them for the real ones once she confirms.
    ============================================================================= */
 
 /* =============================================================================
-   DATA — 1. MATERIALS
+   DATA – 1. MATERIALS
    Only two options for this collection: silver at a fixed price, or gold
    quoted individually (quote: true → no surcharge is added automatically,
    the UI shows "quoted individually" instead of a number).
@@ -19,12 +19,12 @@
    ============================================================================= */
 const MATERIALS = [
   { id: 'silver930', name: 'sterling silver 930', namePl: 'srebro 930',     note: 'standard for this collection', notePl: 'standard dla tej kolekcji', add: 0, wks: 0, colour: '#D9D9DE' },
-  { id: 'gold',       name: '14k gold',           namePl: 'złoto 14k',     note: 'quoted individually — message me before ordering', notePl: 'wycena indywidualna — napisz przed zamówieniem', add: 0, wks: 2, colour: '#F0C75E', quote: true },
+  { id: 'gold',       name: '14k gold',           namePl: 'złoto 14k',     note: 'quoted individually – message me before ordering', notePl: 'wycena indywidualna – napisz przed zamówieniem', add: 0, wks: 2, colour: '#F0C75E', quote: true },
 ];
 
 /* =============================================================================
-   DATA — 2. STONES
-   Every ring comes with a cubic zirconia — it is not an optional extra, so
+   DATA – 2. STONES
+   Every ring comes with a cubic zirconia – it is not an optional extra, so
    there is no "no stone" entry and no surcharge for it (add: 0). The colour
    list below is Laura's full standard palette, available on every piece;
    special/pastel shades outside this list are a custom request (see
@@ -48,7 +48,7 @@ const STONES = [
 ];
 
 /* =============================================================================
-   DATA — 2b. STONE SHAPES (cut of the zircon — separate from its colour)
+   DATA – 2b. STONE SHAPES (cut of the zircon – separate from its colour)
    ============================================================================= */
 const STONE_SHAPES = [
   { id: 'circle',    name: 'circle',    namePl: 'okrąg' },
@@ -59,20 +59,20 @@ const STONE_SHAPES = [
 ];
 
 /* =============================================================================
-   DATA — 3. SIZES
+   DATA – 3. SIZES
    Size is given on the PL scale (inner circumference in mm = size + 40).
-   No automatic size surcharge any more — the price is the same across the
+   No automatic size surcharge any more – the price is the same across the
    whole range. Very small/large sizes that genuinely need more work or
    material are quoted individually instead (see produkt.faq2 / rozmiary.
    table.note in i18n.js), so SIZE_BANDS no longer carries a price (add:0
-   everywhere) — it only keeps the descriptive petite/standard/larger/
+   everywhere) – it only keeps the descriptive petite/standard/larger/
    widest label for the size table and the ring-page breakdown.
    ============================================================================= */
 const SIZE_MIN = 8;
 const SIZE_MAX = 24;
 
 /* note holds an i18n key (same wording as the size table on rozmiary.html)
-   rather than raw text, so both live in one place — see bandLabel() below. */
+   rather than raw text, so both live in one place – see bandLabel() below. */
 const SIZE_BANDS = [
   { from: 8,  to: 11, add: 0, note: 'rozmiary.band.petite'   },
   { from: 12, to: 15, add: 0, note: 'rozmiary.band.standard' },
@@ -81,8 +81,8 @@ const SIZE_BANDS = [
 ];
 
 /* =============================================================================
-   DATA — 4. RINGS
-   price       = base price: silver 930, standard size (12–15) — real prices
+   DATA – 4. RINGS
+   price       = base price: silver 930, standard size (12–15) – real prices
                  from Laura
    photos      = file names from zdj/customs/ (without -640.jpg / -1280.jpg)
    wksMin/Max  = base lead time in weeks
@@ -90,11 +90,11 @@ const SIZE_BANDS = [
    materials   = which MATERIALS ids this exact piece actually comes in
                  (omit to allow all of them; most pieces here are silver-only,
                  so the picker on the ring page just doesn't show up)
-   Stone colour and shape are NOT restricted per ring any more — every piece
+   Stone colour and shape are NOT restricted per ring any more – every piece
    offers the full STONES/STONE_SHAPES lists (see cfg.stonecolour /
    cfg.stoneshape pickers below).
    shortPl/textPl = Polish versions of short/text, shown when the site is
-                 switched to PL (see i18n.js) — name and id stay the same
+                 switched to PL (see i18n.js) – name and id stay the same
                  in both languages, they are the piece's own name
    ============================================================================= */
 const RINGS = [
@@ -102,8 +102,8 @@ const RINGS = [
     id: 'ashleen', nr: '01', name: 'Ashleen', drop: 1,
     short: 'thin hammered band with a single stone',
     shortPl: 'cienka kuta obrączka z jednym kamieniem',
-    text: 'A narrow, textured band with one round zircon set into it — the kind of ring that looks right stacked three at a time, one colour each.',
-    textPl: 'Wąska, teksturowana obrączka z jedną okrągłą cyrkonią — pierścionek, który dobrze wygląda noszony po trzy naraz, każdy w innym kolorze.',
+    text: 'A narrow, textured band with one round zircon set into it – the kind of ring that looks right stacked three at a time, one colour each.',
+    textPl: 'Wąska, teksturowana obrączka z jedną okrągłą cyrkonią – pierścionek, który dobrze wygląda noszony po trzy naraz, każdy w innym kolorze.',
     price: 420, wksMin: 2, wksMax: 3,
     photos: ['ashleen-1', 'ashleen-2', 'ashleen-3'],
     materials: ['silver930'],
@@ -113,8 +113,8 @@ const RINGS = [
     id: 'courtney', nr: '02', name: 'Courtney', drop: 1,
     short: 'wide signet with one large stone',
     shortPl: 'szeroki sygnet z jednym dużym kamieniem',
-    text: 'The wide, chunky one — hand-textured all the way round, with a large square-cut zircon set high on the face.',
-    textPl: 'Ten szeroki, masywny — ręcznie teksturowany dookoła, z dużą cyrkonią o kwadratowym szlifie osadzoną wysoko na powierzchni.',
+    text: 'The wide, chunky one – hand-textured all the way round, with a large square-cut zircon set high on the face.',
+    textPl: 'Ten szeroki, masywny – ręcznie teksturowany dookoła, z dużą cyrkonią o kwadratowym szlifie osadzoną wysoko na powierzchni.',
     price: 550, wksMin: 3, wksMax: 4,
     photos: ['courtney-1b', 'courtney-2b', 'courtney-3', 'courtney-4'],
     materials: ['silver930'],
@@ -135,8 +135,8 @@ const RINGS = [
     id: 'genevieve', nr: '04', name: 'Genevieve', drop: 1,
     short: 'rectangular signet, two stones',
     shortPl: 'prostokątny sygnet, dwa kamienie',
-    text: 'A rectangular signet face set with two zircons side by side — shown in green and pink, so it reads as one deliberate pair rather than a mismatch.',
-    textPl: 'Prostokątna powierzchnia sygnetu z dwiema cyrkoniami obok siebie — pokazana w zieleni i różu, więc czyta się to jako świadomą parę, nie przypadkowe zestawienie.',
+    text: 'A rectangular signet face set with two zircons side by side – shown in green and pink, so it reads as one deliberate pair rather than a mismatch.',
+    textPl: 'Prostokątna powierzchnia sygnetu z dwiema cyrkoniami obok siebie – pokazana w zieleni i różu, więc czyta się to jako świadomą parę, nie przypadkowe zestawienie.',
     price: 820, wksMin: 3, wksMax: 4,
     photos: ['genevieve-1', 'genevieve-2b', 'genevieve-3', 'genevieve-4', 'genevieve-5'],
     materials: ['silver930'],
@@ -146,8 +146,8 @@ const RINGS = [
     id: 'kathleen', nr: '05', name: 'Kathleen', drop: 1,
     short: 'sculptural setting, one stone',
     shortPl: 'rzeźbiarska oprawa, jeden kamień',
-    text: 'The most sculptural piece I make — an organic, almost hand-carved setting around a single zircon, on a heavily textured band.',
-    textPl: 'Najbardziej rzeźbiarski element, jaki robię — organiczna, niemal ręcznie rzeźbiona oprawa wokół jednej cyrkonii, na mocno teksturowanej obrączce.',
+    text: 'The most sculptural piece I make – an organic, almost hand-carved setting around a single zircon, on a heavily textured band.',
+    textPl: 'Najbardziej rzeźbiarski element, jaki robię – organiczna, niemal ręcznie rzeźbiona oprawa wokół jednej cyrkonii, na mocno teksturowanej obrączce.',
     price: 500, wksMin: 2, wksMax: 3,
     photos: ['kathleen-1', 'kathleen-2', 'kathleen-3'],
     materials: ['silver930'],
@@ -157,29 +157,108 @@ const RINGS = [
     id: 'odette', nr: '06', name: 'Odette', drop: 1,
     short: 'open toi-et-moi, two stones',
     shortPl: 'otwarty toi-et-moi, dwa kamienie',
-    text: 'An open band that wraps almost all the way round, a navy zircon set at one end and a brown one at the other. Sits slightly loose by design — that is the point.',
-    textPl: 'Otwarta obrączka, która owija się niemal dookoła — granatowa cyrkonia na jednym końcu, brązowa na drugim. Celowo siedzi trochę luźno — o to właśnie chodzi.',
+    text: 'An open band that wraps almost all the way round, a navy zircon set at one end and a brown one at the other. Sits slightly loose by design – that is the point.',
+    textPl: 'Otwarta obrączka, która owija się niemal dookoła – granatowa cyrkonia na jednym końcu, brązowa na drugim. Celowo siedzi trochę luźno – o to właśnie chodzi.',
     price: 740, wksMin: 3, wksMax: 4,
     photos: ['odette-1b', 'odette-2'],
     materials: ['silver930'],
     preset: { material: 'silver930', stone: 'cyrkonia', colour: 0, size: 14 },
   },
+
+  /* ---------------------------------------------------------------------------
+     DROP 02 – real gemstones and charms, so no zircon pickers here.
+     Extra fields used only by these pieces:
+       sizes   = the only size(s) the piece comes in (one size → no picker,
+                 just shown as info). Leave it out → free choice SIZE_MIN–MAX.
+       stones: false = hide the stone / colour / shape pickers
+       details / detailsPl = what it is made of – shown on the tile, the ring
+                 page and in the order email instead of the zircon choice
+       price: null = quoted individually ("price on request")
+     PHOTOS: taken automatically from the folder zdjecia/<id>/ (see
+     zdjecia/JAK-DODAC-ZDJECIA.txt) – the order of the files is the order
+     of the photos, so there is no photos list to keep in sync here.
+     No textPl/shortPl on purpose – the descriptions stay in English
+                 also when the site is switched to PL.
+     ready: true = the piece already exists – shows "ready to ship" instead
+                 of a lead time. Only the custom one (no ready) has a lead time
+                 (wksMin/wksMax, still a placeholder).
+     --------------------------------------------------------------------------- */
+  {
+    id: 'amber-teapot', nr: '01', name: 'The One with Amber and the Teapot', drop: 2,
+    short: 'chunky silver ring with amber and a teapot charm',
+    text: 'Irregular, eye-catching ring that comes with a little orange teapot, because why not? It has amber that goes with it perfectly. This chunky piece will make your whole outfit but also bring some warmth to your day.',
+    details: 'silver · amber · teapot charm from Bangkok',
+    detailsPl: 'srebro · bursztyn · charms-czajniczek z Bangkoku',
+    price: 650, ready: true,
+    sizes: [12], stones: false,
+    materials: ['silver930'],
+    preset: { material: 'silver930', size: 12 },
+  },
+  {
+    id: 'amethyst', nr: '02', name: 'The One with Amethyst', drop: 2,
+    short: 'oval statement ring with an amethyst',
+    text: 'This oval shaped ring makes a statement by its weight and insanely gorgeous gemstone. You will love how much sun it catches, thanks to the "see-through" stone setting. It goes with every outfit, but also makes an outfit on its own. If You\'re looking for something classy yet original, this one\'s for You.',
+    details: 'silver · amethyst',
+    detailsPl: 'srebro · ametyst',
+    price: 820, ready: true,
+    sizes: [14], stones: false,
+    materials: ['silver930'],
+    preset: { material: 'silver930', size: 14 },
+  },
+  {
+    id: 'crown-star', nr: '03', name: 'The One with a Crown and a Star', drop: 2,
+    short: 'crown-shaped band with a star charm',
+    text: 'This crown-shaped ring speaks Modern Princess, as it expresses her (maybe yours?) vibe. It comes with a star charm, because there\'s always a place for extra spark. There\'s no gemstone in this piece, so it\'s great if You\'re looking for something less expressive but also meaningful.',
+    details: 'silver · star charm from Bangkok',
+    detailsPl: 'srebro · charms-gwiazdka z Bangkoku',
+    price: 650, ready: true,
+    sizes: [13], stones: false,
+    materials: ['silver930'],
+    preset: { material: 'silver930', size: 13 },
+  },
+  {
+    id: 'moonstone-charms', nr: '04', name: 'The One with Moonstone and Charms', drop: 2,
+    short: 'chunky ring built around a moonstone, with charms',
+    text: 'This huge chunky piece has a lot of light and gives some magical energy. Silver is built around the stone, as the gem plays the main role here. It\'s a really original piece that obviously catches attention, but also will remind You to take a moment for yourself and just admire everything that\'s happening inside this gemstone and inside of You.',
+    details: 'silver · moonstone · charms from Bangkok',
+    detailsPl: 'srebro · kamień księżycowy · charmsy z Bangkoku',
+    price: 850, ready: true,
+    sizes: [12], stones: false,
+    materials: ['silver930'],
+    preset: { material: 'silver930', size: 12 },
+  },
+  {
+    id: 'gemstone-charm', nr: '05', name: 'The One with Gemstone and Charm of Your Choice', drop: 2,
+    custom: true,
+    short: 'your gemstone, your charm, any size',
+    text: 'If You have your favourite gemstone that speaks to You, You can customize it with one of the charms from my collection (You can see them all in the gallery). How it works: add this piece to the bag, which sends your order to me by email. In the email let me know which gemstone You chose, which charm and which design (You can send me pics of any of my designs from my website or Instagram). If You have your own design or sketch, just send me the references and we will work with that :)',
+    details: 'silver · gemstone and charm of your choice',
+    detailsPl: 'srebro · kamień i charms do wyboru',
+    detailsNote: 'gemstone, charm and design – tell me in the email',
+    detailsNotePl: 'kamień, charms i projekt – napisz w mailu',
+    price: null, wksMin: 3, wksMax: 4,
+    stones: false,
+    materials: ['silver930'],
+    preset: { material: 'silver930', size: 13 },
+  },
 ];
 
-/* -----------------------------------------------------------------------------
-   A second drop does not exist yet — nothing here should look purchasable
-   until it does. Add a DROPS[2] entry and give new rings drop: 2 when it launches.
------------------------------------------------------------------------------ */
+/* Photos from the zdjecia/ folders (generated zdjecia.js) win over the
+   hand-written photos lists above – ring id = folder name. */
+if (typeof ZDJECIA !== 'undefined') {
+  RINGS.forEach(r => { if (ZDJECIA[r.id] && ZDJECIA[r.id].length) r.photos = ZDJECIA[r.id]; });
+}
 
 /* =============================================================================
-   DATA — 5. DROPS (collections under the "shop" menu)
+   DATA – 5. DROPS (collections under the "shop" menu)
    ============================================================================= */
 const DROPS = {
   1: { nr: '01', name: 'drop', namePl: 'drop', subtitle: 'made to order', text: 'Six pieces, each one built around a real design of mine. All of them can be made in your size, with your choice of zircon colour.' },
+  2: { nr: '02', name: 'drop', namePl: 'drop', subtitle: 'gemstones and charms', text: 'Five pieces with real gemstones and charms from Bangkok.' },
 };
 
 /* =============================================================================
-   CONTACT — orders land here
+   CONTACT – orders land here
    ============================================================================= */
 const ORDER_EMAIL = 'artarual1@gmail.com';
 const INSTAGRAM   = 'artarual.jewellery';
@@ -187,15 +266,18 @@ const INSTAGRAM_URL = 'https://www.instagram.com/artarual.jewellery/';
 
 
 /* =============================================================================
-   =============  LOGIC — normally nothing below needs changing  ==============
+   =============  LOGIC – normally nothing below needs changing  ==============
    ============================================================================= */
 
 const PHOTO_DIR = 'zdj/customs/';  // where the ring product photos live
 const SESJA_DIR = 'zdj/web/';      // where the photoshoot/session photos live
 
-function photoSrc(name, w, dir = PHOTO_DIR) { return `${dir}${name}-${w}.jpg`; }
+/** name with a "/" is already a full path (photos from zdjecia.js). */
+function photoSrc(name, w, dir = PHOTO_DIR) {
+  return name.includes('/') ? `${name}-${w}.jpg` : `${dir}${name}-${w}.jpg`;
+}
 
-/** <img> with srcset — the browser picks 400 / 640 / 1280 px itself. */
+/** <img> with srcset – the browser picks 400 / 640 / 1280 px itself. */
 function photoTag(name, alt, sizes, cls, dir = PHOTO_DIR) {
   return `<img src="${photoSrc(name, 640, dir)}"
     srcset="${photoSrc(name, 400, dir)} 400w, ${photoSrc(name, 640, dir)} 640w, ${photoSrc(name, 1280, dir)} 1280w"
@@ -204,7 +286,7 @@ function photoTag(name, alt, sizes, cls, dir = PHOTO_DIR) {
 
 function zl(n) { return `${Math.round(n).toLocaleString('pl-PL')} zł`; }
 
-/** Polish plural of "week" (tydzień/tygodnie/tygodni) — the one bit of
+/** Polish plural of "week" (tydzień/tygodnie/tygodni) – the one bit of
     grammar t()'s flat dictionary can't hold, so it lives here instead. */
 function plWeekWord(n) {
   if (n === 1) return 'tydzień';
@@ -229,7 +311,7 @@ const findStone    = id => STONES.find(s => s.id === id)    || STONES[0];
 const findRing     = id => RINGS.find(r => r.id === id);
 
 /* ----- language-aware labels: PL field if the site is switched to PL and
-   the field exists, English otherwise. Keeps DATA above readable — every
+   the field exists, English otherwise. Keeps DATA above readable – every
    entry just carries a plain "…Pl" sibling next to the English value. ----- */
 const mLabel  = m  => getLang() === 'pl' ? (m.namePl || m.name)   : m.name;
 const sLabel  = s  => getLang() === 'pl' ? (s.namePl || s.name)   : s.name;
@@ -239,20 +321,35 @@ const bandLabel = band => t(band.note); // band.note is already an i18n key
 const ringShort = r => getLang() === 'pl' ? (r.shortPl || r.short) : r.short;
 const ringText  = r => getLang() === 'pl' ? (r.textPl  || r.text)  : r.text;
 const dropLabel = d => getLang() === 'pl' ? (d.namePl  || d.name)  : d.name;
+const ringDetails = r => getLang() === 'pl' ? (r.detailsPl || r.details) : r.details;
+const ringDetailsNote = r => getLang() === 'pl' ? (r.detailsNotePl || r.detailsNote) : r.detailsNote;
+
+/** Sizes a ring can be ordered in: its own list, or the full range. */
+function ringSizes(r) {
+  if (r.sizes && r.sizes.length) return r.sizes;
+  const all = [];
+  for (let s = SIZE_MIN; s <= SIZE_MAX; s++) all.push(s);
+  return all;
+}
+const fixedSize = r => !!(r.sizes && r.sizes.length === 1);
 
 function sizeBand(size) {
   return SIZE_BANDS.find(b => size >= b.from && size <= b.to) || SIZE_BANDS[1];
 }
 
+/** null = quoted individually (ring without a set price). */
 function calcPrice(ring, materialId, stoneId, size) {
+  if (ring.price == null) return null;
+  const stoneAdd = ring.stones === false ? 0 : findStone(stoneId).add;
   return ring.price
     + findMaterial(materialId).add
-    + findStone(stoneId).add
+    + stoneAdd
     + sizeBand(size).add;
 }
 
 function priceFrom(ring) {
-  // cheapest material available — size no longer changes the price
+  if (ring.price == null) return null;
+  // cheapest material available – size no longer changes the price
   const cheapest = MATERIALS.reduce((a, b) => (a.add <= b.add ? a : b));
   return ring.price + cheapest.add;
 }
@@ -271,47 +368,55 @@ function calcLeadTime(ring, materialId, stoneId) {
    Ring listing (home page, drops, collection)
    ----------------------------------------------------------------------------- */
 
-/** Caption under the name: preset material + stone — like "925 Sterling Silver / Swarovski". */
+/** Caption under the name: preset material + stone – like "925 Sterling Silver / Swarovski". */
 function materialCaption(r) {
+  if (r.details) return ringDetails(r);
   const m = findMaterial(r.preset.material);
   const s = findStone(r.preset.stone);
   return `${mLabel(m)} / ${sLabel(s)}`;
 }
 
 function tile(r) {
-  const alt = `${r.name} — ${ringShort(r)}`;
-  // must match .gallery's real column widths at each breakpoint in styles.css —
+  const alt = `${r.name} – ${ringShort(r)}`;
+  // must match .gallery's real column widths at each breakpoint in styles.css –
   // a stale value here makes the browser under-fetch resolution and the grid
   // looks softer than the (correctly-sized) product page
   const sizes = '(max-width:560px) 92vw, (max-width:720px) 46vw, (max-width:1024px) 30vw, 23vw';
   const second = r.photos[1];
-  const from = getLang() === 'pl' ? 'od' : 'from';
-  const viewLabel = getLang() === 'pl' ? 'zobacz i skonfiguruj' : 'view and configure';
+  const pl = getLang() === 'pl';
+  const viewLabel = pl ? 'zobacz i skonfiguruj' : 'view and configure';
+  // one fixed size → one fixed price, no "from"; no price → on request
+  const priceText = r.price == null
+    ? (pl ? 'cena indywidualna' : 'price on request')
+    : `${fixedSize(r) ? '' : (pl ? 'od ' : 'from ')}${zl(priceFrom(r))}`;
   return `
     <article class="piece" data-category="drop-${r.drop}">
-      <a href="produkt.html?id=${r.id}" aria-label="${r.name} — ${viewLabel}">
+      <a href="produkt.html?id=${r.id}" aria-label="${r.name} – ${viewLabel}">
         <div class="piece__frame">
           ${photoTag(r.photos[0], alt, sizes)}
           ${second ? photoTag(second, '', sizes, 'piece__img--alt') : ''}
         </div>
         <div class="piece__meta">
           <span class="piece__name">${r.name}</span>
-          <span class="piece__price">${from} ${zl(priceFrom(r))}</span>
+          <span class="piece__price">${priceText}</span>
         </div>
         <p class="piece__desc">${materialCaption(r)}</p>
       </a>
     </article>`;
 }
 
-/** Fills every [data-lista] with rings: "all" | "drop:1" | "n:6" */
+/** Rings with the newest drop first (stable within a drop). */
+const newestFirst = () => [...RINGS].sort((a, b) => b.drop - a.drop);
+
+/** Fills every [data-lista] with rings: "all" | "drop:1" | "n:6" (newest drop first) */
 function renderLists() {
   document.querySelectorAll('[data-lista]').forEach(el => {
     const filter = el.dataset.lista;
-    let list = RINGS;
+    let list = newestFirst();
     if (filter.startsWith('drop:')) {
       list = RINGS.filter(r => String(r.drop) === filter.slice(5));
     } else if (filter.startsWith('n:')) {
-      list = RINGS.slice(0, Number(filter.slice(2)));
+      list = newestFirst().slice(0, Number(filter.slice(2)));
     }
     el.innerHTML = list.map(tile).join('');
   });
@@ -320,7 +425,7 @@ function renderLists() {
 }
 
 /** Filters above the grid (kolekcja.html). Wired after render, because the
-    tiles only exist at this point — script.js would run on an empty list. */
+    tiles only exist at this point – script.js would run on an empty list. */
 function wireFilters() {
   const btns = document.querySelectorAll('.filter-btn');
   if (!btns.length) return;
@@ -337,7 +442,7 @@ function wireFilters() {
 
 
 /* -----------------------------------------------------------------------------
-   Bag — kept in localStorage. No payments: the whole bag is sent as one email.
+   Bag – kept in localStorage. No payments: the whole bag is sent as one email.
    ----------------------------------------------------------------------------- */
 const BAG_KEY = 'artarual-bag';
 
@@ -463,7 +568,7 @@ function initBag() {
 
 
 /* -----------------------------------------------------------------------------
-   Ring page — configurator
+   Ring page – configurator
    ----------------------------------------------------------------------------- */
 function renderRing() {
   const root = document.querySelector('#produkt');
@@ -473,7 +578,7 @@ function renderRing() {
   const r = findRing(id) || RINGS[0];
   const dropNr = DROPS[r.drop] ? DROPS[r.drop].nr : '01'; // the drop's own number, not the ring's
 
-  document.title = `${r.name} — ARTarual`;
+  document.title = `${r.name} – ARTarual`;
 
   const preset = r.preset;
   const state = {
@@ -481,9 +586,11 @@ function renderRing() {
     stone:    findStone(preset.stone).id,
     colour:   preset.colour || 0,
     shape:    null,
-    size:     preset.size || 13,
+    size:     ringSizes(r).includes(preset.size) ? preset.size : ringSizes(r)[0],
     photo:    0,
   };
+  const noStones = r.stones === false;
+  const oneSize = fixedSize(r);
 
   root.innerHTML = `
     <div class="product">
@@ -526,17 +633,17 @@ function renderRing() {
         <div class="opt">
           <div class="opt__head"><h3>${t('cfg.size')}</h3><span class="opt__pick" id="pick-size"></span></div>
           <div class="sizes" id="sizes"></div>
-          <p class="size-help">${t('cfg.sizehelp')}</p>
+          <p class="size-help">${oneSize ? t('cfg.sizefixed') : t('cfg.sizehelp')}</p>
         </div>
 
         <div class="summary">
           <div class="summary__price">
-            <span class="val" id="price">—</span>
+            <span class="val" id="price">–</span>
             <span class="from">${t('cfg.perpiece')}</span>
           </div>
-          <p class="summary__pricenote">${t('cfg.pricenote')}</p>
+          ${r.sizes || r.price == null ? '' : `<p class="summary__pricenote">${t('cfg.pricenote')}</p>`}
           <ul class="summary__rows" id="breakdown"></ul>
-          <span class="lead-badge">${t('cfg.leadtime')} <span id="lead">—</span></span>
+          <span class="lead-badge">${r.ready ? '' : `${t('cfg.leadtime')} `}<span id="lead">–</span></span>
           <div class="btn-row">
             <button type="button" class="btn btn-primary" id="add-to-bag">${t('cfg.addtobag')}</button>
             <button type="button" class="btn btn-ghost" id="copy">${t('cfg.copyconfig')}</button>
@@ -552,7 +659,7 @@ function renderRing() {
   const elThumbs = root.querySelector('#pgal-thumbs');
 
   function drawPhotos() {
-    elMain.innerHTML = photoTag(r.photos[state.photo], `${r.name} — ${t('cfg.photo')} ${state.photo + 1}`, '(max-width:1080px) 92vw, 460px');
+    elMain.innerHTML = photoTag(r.photos[state.photo], `${r.name} – ${t('cfg.photo')} ${state.photo + 1}`, '(max-width:1080px) 92vw, 460px');
     if (!elThumbs) return;
     elThumbs.innerHTML = r.photos.map((p, i) => `
       <button type="button" role="tab" aria-selected="${i === state.photo}" aria-label="${t('cfg.photo')} ${i + 1}">
@@ -567,7 +674,7 @@ function renderRing() {
 
   /* --- options ---
      r.materials (optional, set per ring in the DATA section) narrows the
-     material picker down to what that specific piece actually comes in —
+     material picker down to what that specific piece actually comes in –
      most of these are silver-only, so it just doesn't show up. Stone
      colour and shape are the same full list for every ring; a picker only
      hides itself when there is truly nothing to choose (one option). */
@@ -595,7 +702,7 @@ function renderRing() {
   /** Colour variants for the stone the ring currently has selected. */
   function activeColours(stone) { return stone.colours; }
 
-  /** Every available stone shape/cut — same list for every ring. */
+  /** Every available stone shape/cut – same list for every ring. */
   function activeShapes() { return STONE_SHAPES; }
 
   function drawMaterials() {
@@ -613,7 +720,7 @@ function renderRing() {
   }
 
   function drawStones() {
-    if (STONES.length <= 1) {
+    if (noStones || STONES.length <= 1) {
       optStone.style.display = 'none';
       selStone.innerHTML = STONES.map(s => `<option value="${s.id}" selected>${sLabel(s)}</option>`).join('');
       return;
@@ -627,11 +734,11 @@ function renderRing() {
   function drawColours() {
     const s = findStone(state.stone);
     const colours = activeColours(s);
-    if (!colours.length) { optColour.style.display = 'none'; return; }
+    if (noStones || !colours.length) { optColour.style.display = 'none'; return; }
     if (colours.length === 1) { optColour.style.display = 'none'; state.colour = 0; }
     else optColour.style.display = '';
     if (state.colour >= colours.length) state.colour = 0;
-    // real swatch buttons, not a native <select> — <option> ignores inline
+    // real swatch buttons, not a native <select> – <option> ignores inline
     // colour styling in most browsers, so that route never actually showed
     // the colour at all
     colourChips.innerHTML = colours.map((c, i) => `
@@ -643,6 +750,7 @@ function renderRing() {
 
   function drawShapes() {
     const shapes = activeShapes();
+    if (noStones) { optShape.style.display = 'none'; state.shape = null; return; }
     if (!shapes.some(sh => sh.id === state.shape)) state.shape = shapes[0].id;
     if (shapes.length <= 1) {
       optShape.style.display = 'none';
@@ -657,7 +765,7 @@ function renderRing() {
 
   function drawSizes() {
     let html = '';
-    for (let s = SIZE_MIN; s <= SIZE_MAX; s++) {
+    for (const s of ringSizes(r)) {
       const add = sizeBand(s).add;
       html += `
         <button type="button" class="size-btn" data-s="${s}" aria-pressed="${s === state.size}">
@@ -689,14 +797,20 @@ function renderRing() {
     const colours = activeColours(s);
     const colour = colours.length ? colours[state.colour] : null;
     const shape = STONE_SHAPES.find(sh => sh.id === state.shape) || null;
-    const quote = !!m.quote;
     const price = calcPrice(r, state.material, state.stone, state.size);
+    const quote = !!m.quote || price == null;
     const stoneBits = [colour ? cLabel(colour) : null, shape ? shLabel(shape) : null].filter(Boolean).join(', ');
+    // drop 02 pieces: no zircon choice – their fixed make-up stands in for it
+    const note = ringDetailsNote(r);
+    const stoneText = noStones
+      ? `${ringDetails(r)}${note ? ` (${note})` : ''}`
+      : `${sLabel(s)}${stoneBits ? ` (${stoneBits})` : ''}`;
     return {
       m, s, colour, shape, quote, price,
       priceText: quote ? t('cfg.onrequest') : zl(price),
-      lead: calcLeadTime(r, state.material, state.stone),
-      stoneText: `${sLabel(s)}${stoneBits ? ` (${stoneBits})` : ''}`,
+      lead: r.ready ? t('cfg.ready')
+        : noStones ? weekRange(r.wksMin, r.wksMax) : calcLeadTime(r, state.material, state.stone),
+      stoneText,
     };
   }
 
@@ -709,13 +823,13 @@ function renderRing() {
     root.querySelector('#lead').textContent = c.lead;
 
     root.querySelector('#breakdown').innerHTML = `
-      <li><span class="k">${t('cfg.bd.material')}</span><span class="v">${mLabel(c.m)}${c.quote ? ` — ${t('cfg.quoted')}` : ''}</span></li>
-      <li><span class="k">${t('cfg.bd.stone')}</span><span class="v">${c.stoneText}</span></li>
-      <li><span class="k">${t('cfg.bd.size')}</span><span class="v">${state.size} (${state.size + 40} mm) · ${bandLabel(sizeBand(state.size))}</span></li>`;
+      <li><span class="k">${t('cfg.bd.material')}</span><span class="v">${mLabel(c.m)}${c.m.quote ? ` – ${t('cfg.quoted')}` : ''}</span></li>
+      <li><span class="k">${noStones ? t('cfg.bd.details') : t('cfg.bd.stone')}</span><span class="v">${c.stoneText}</span></li>
+      <li><span class="k">${t('cfg.bd.size')}</span><span class="v">${state.size} (${state.size + 40} mm)${oneSize ? '' : ` · ${bandLabel(sizeBand(state.size))}`}</span></li>`;
 
     const text =
 `${t('cfg.copy.ring')} ${r.name} (${t('nav.drop')} ${dropNr})
-${t('cfg.copy.material')} ${mLabel(c.m)}${c.quote ? ` (${t('cfg.quoted')})` : ''}
+${t('cfg.copy.material')} ${mLabel(c.m)}${c.m.quote ? ` (${t('cfg.quoted')})` : ''}
 ${t('cfg.copy.stone')} ${c.stoneText}
 ${t('cfg.copy.size')} ${state.size} (${state.size + 40} mm)
 ${t('cfg.copy.price')} ${c.priceText}
@@ -735,7 +849,7 @@ ${t('cfg.copy.lead')} ${c.lead}`;
   root.querySelector('#add-to-bag').addEventListener('click', e => {
     const c = config();
     // material/stone are stored as already-translated text, in whichever
-    // language was active at the moment of adding — switching language
+    // language was active at the moment of adding – switching language
     // afterwards won't retranslate items already sitting in the bag.
     bagAdd({
       id: r.id, name: r.name, nr: dropNr, photo: r.photos[0],
@@ -752,19 +866,22 @@ ${t('cfg.copy.lead')} ${c.lead}`;
   renderRelated(r);
 }
 
-/** "You may also like" — three other rings under the configurator. */
+/** "You may also like" – three other rings under the configurator. */
 function renderRelated(r) {
   const el = document.querySelector('#podobne');
   if (!el) return;
-  el.innerHTML = RINGS.filter(x => x.id !== r.id).slice(0, 3).map(tile).join('');
+  // same drop first, then the rest
+  const others = RINGS.filter(x => x.id !== r.id);
+  const sorted = [...others.filter(x => x.drop === r.drop), ...others.filter(x => x.drop !== r.drop)];
+  el.innerHTML = sorted.slice(0, 3).map(tile).join('');
   window.observeReveal?.();
 }
 
 
 /* -----------------------------------------------------------------------------
-   Photo wall (photoshoot.html) — a rotating slice of the shoot.
+   Photo wall (photoshoot.html) – a rotating slice of the shoot.
    Seeded by the date, so it looks the same all day and different tomorrow
-   — no build step, no images that never get seen.
+   – no build step, no images that never get seen.
    ----------------------------------------------------------------------------- */
 const SESJA = [
   'IMG_2165', 'IMG_2231', 'IMG_2233', 'IMG_2238', 'IMG_2239', 'IMG_2262',
@@ -788,16 +905,38 @@ function daySeed() {
   return d.getFullYear() * 1000 + Math.floor((d - new Date(d.getFullYear(), 0, 0)) / 86400000);
 }
 
+/** Newest shoot, from the folder zdjecia/sesja/ (via generated zdjecia.js). */
+const NOWA_SESJA = (typeof ZDJECIA !== 'undefined' && ZDJECIA.sesja) || [];
+
 function renderPhotoWall() {
   const el = document.querySelector('[data-photowall]');
   if (!el) return;
   const rnd = mulberry32(daySeed());
   const order = SESJA.map(name => ({ name, k: rnd() })).sort((a, b) => a.k - b.k);
-  const picks = order.slice(0, PHOTO_WALL_COUNT);
+  // the newest shoot is always on the wall, in its own order; the older
+  // shoot fills the rest with a different slice every day
+  const fill = Math.max(PHOTO_WALL_COUNT - NOWA_SESJA.length, 0);
+  const picks = [...NOWA_SESJA.map(name => ({ name })), ...order.slice(0, fill)];
   el.innerHTML = picks.map(({ name }) =>
     `<figure>${photoTag(name, t('cfg.photowall.alt'), '(max-width:560px) 92vw, (max-width:1024px) 46vw, 31vw', null, SESJA_DIR)}</figure>`
   ).join('');
   window.observeReveal?.();
+}
+
+/** [data-collage-sesja] – the first 5 photos of zdjecia/sesja/: one big
+    tile + four small ones (layout in styles.css, .collage--five). */
+function renderSessionCollage() {
+  document.querySelectorAll('[data-collage-sesja]').forEach(el => {
+    const photos = NOWA_SESJA.slice(0, 5);
+    if (!photos.length) return;
+    el.innerHTML = photos.map((name, i) =>
+      `<figure>${photoTag(name, t('cfg.photowall.alt'), i === 0 ? '(max-width:1024px) 92vw, 50vw' : '(max-width:1024px) 46vw, 25vw')}</figure>`
+    ).join('');
+    el.querySelectorAll('figure').forEach((f, i) => {
+      f.style.cursor = 'zoom-in';
+      f.addEventListener('click', () => openLightbox(photoSrc(photos[i], 1280), t('cfg.photowall.alt')));
+    });
+  });
 }
 
 
@@ -827,6 +966,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderLists();
   renderRing();
   renderPhotoWall();
+  renderSessionCollage();
   initBag();
 
   // photos marked [data-zoom] also open full screen
