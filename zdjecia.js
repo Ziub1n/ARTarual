@@ -7,13 +7,19 @@ const ZDJECIA = {
     "zdj/sklep/amber-teapot-02",
     "zdj/sklep/amber-teapot-03",
     "zdj/sklep/amber-teapot-04",
-    "zdj/sklep/amber-teapot-05"
+    "zdj/sklep/amber-teapot-05",
+    "zdj/sklep/amber-teapot-06",
+    "zdj/sklep/amber-teapot-07",
+    "zdj/sklep/amber-teapot-08"
   ],
   "amethyst": [
     "zdj/sklep/amethyst-01",
     "zdj/sklep/amethyst-02",
     "zdj/sklep/amethyst-03",
-    "zdj/sklep/amethyst-04"
+    "zdj/sklep/amethyst-04",
+    "zdj/sklep/amethyst-05",
+    "zdj/sklep/amethyst-06",
+    "zdj/sklep/amethyst-07"
   ],
   "ashleen": [
     "zdj/sklep/ashleen-01",
@@ -33,7 +39,9 @@ const ZDJECIA = {
     "zdj/sklep/crown-star-04",
     "zdj/sklep/crown-star-05",
     "zdj/sklep/crown-star-06",
-    "zdj/sklep/crown-star-07"
+    "zdj/sklep/crown-star-07",
+    "zdj/sklep/crown-star-08",
+    "zdj/sklep/crown-star-09"
   ],
   "delia": [
     "zdj/sklep/delia-01",
@@ -75,7 +83,10 @@ const ZDJECIA = {
     "zdj/sklep/moonstone-charms-02",
     "zdj/sklep/moonstone-charms-03",
     "zdj/sklep/moonstone-charms-04",
-    "zdj/sklep/moonstone-charms-05"
+    "zdj/sklep/moonstone-charms-05",
+    "zdj/sklep/moonstone-charms-06",
+    "zdj/sklep/moonstone-charms-07",
+    "zdj/sklep/moonstone-charms-08"
   ],
   "odette": [
     "zdj/sklep/odette-01",

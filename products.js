@@ -177,8 +177,8 @@ const RINGS = [
      PHOTOS: taken automatically from the folder zdjecia/<id>/ (see
      zdjecia/JAK-DODAC-ZDJECIA.txt) – the order of the files is the order
      of the photos, so there is no photos list to keep in sync here.
-     No textPl/shortPl on purpose – the descriptions stay in English
-                 also when the site is switched to PL.
+     textPl = Polish description, shown when the site is switched to PL.
+                 No shortPl – short is only used as the photo alt text here.
      ready: true = the piece already exists – shows "ready to ship" instead
                  of a lead time. Only the custom one (no ready) has a lead time
                  (wksMin/wksMax, still a placeholder).
@@ -187,6 +187,7 @@ const RINGS = [
     id: 'amber-teapot', nr: '01', name: 'The One with Amber and the Teapot', drop: 2,
     short: 'chunky silver ring with amber and a teapot charm',
     text: 'Irregular, eye-catching ring that comes with a little orange teapot, because why not? It has amber that goes with it perfectly. This chunky piece will make your whole outfit but also bring some warmth to your day.',
+    textPl: 'Nieregularny, przyciągający wzrok pierścionek z mini pomarańczowym czajniczkiem, który przywiozłam z Tajlandii. Główną rolę gra w nim bursztyn zamieszczony centralnie i okuty w srebrze. Ten chunky pierścionek zrobi twój cały outfit i przyniesie trochę ciepła do twojego dnia.',
     details: 'silver · amber · teapot charm from Bangkok',
     detailsPl: 'srebro · bursztyn · charms-czajniczek z Bangkoku',
     price: 650, ready: true,
@@ -198,6 +199,7 @@ const RINGS = [
     id: 'amethyst', nr: '02', name: 'The One with Amethyst', drop: 2,
     short: 'oval statement ring with an amethyst',
     text: 'This oval shaped ring makes a statement by its weight and insanely gorgeous gemstone. You will love how much sun it catches, thanks to the "see-through" stone setting. It goes with every outfit, but also makes an outfit on its own. If You\'re looking for something classy yet original, this one\'s for You.',
+    textPl: 'Owalny pierścionek, który robi wrażenie swoją masą i przepięknym kamieniem. Pokochasz jak dużo słońca przez niego przechodzi, dzięki specjalnemu osadzeniu kamienia. Ten pierścionek będzie pasował do każdego outfitu, niezależnie czy stawiasz na klasykę, czy na coś nietypowego.',
     details: 'silver · amethyst',
     detailsPl: 'srebro · ametyst',
     price: 820, ready: true,
@@ -209,6 +211,7 @@ const RINGS = [
     id: 'crown-star', nr: '03', name: 'The One with a Crown and a Star', drop: 2,
     short: 'crown-shaped band with a star charm',
     text: 'This crown-shaped ring speaks Modern Princess, as it expresses her (maybe yours?) vibe. It comes with a star charm, because there\'s always a place for extra spark. There\'s no gemstone in this piece, so it\'s great if You\'re looking for something less expressive but also meaningful.',
+    textPl: 'Ten sygnet w kształcie korony jest niezbędnikiem każdej Modern Princess, bo jednak każda księżniczka zasługuje na koronę, niezależnie od jej formy. Do korony została dołączona gwiazdka, bo dodatkowy blask jest zawsze mile widziany, prawda? Ten sygnet to idealny statement ring, który jest mniej ekspresyjny niż reszta kolekcji 02, ale bardzo symboliczny.',
     details: 'silver · star charm from Bangkok',
     detailsPl: 'srebro · charms-gwiazdka z Bangkoku',
     price: 650, ready: true,
@@ -220,6 +223,7 @@ const RINGS = [
     id: 'moonstone-charms', nr: '04', name: 'The One with Moonstone and Charms', drop: 2,
     short: 'chunky ring built around a moonstone, with charms',
     text: 'This huge chunky piece has a lot of light and gives some magical energy. Silver is built around the stone, as the gem plays the main role here. It\'s a really original piece that obviously catches attention, but also will remind You to take a moment for yourself and just admire everything that\'s happening inside this gemstone and inside of You.',
+    textPl: 'To chyba największy pierścionek z kolekcji 02, który odbija masę światła i zaraża magiczną energią. Srebro jest w nim obudowane wokół kamienia, gdyż ten gra tutaj główną rolę. Ten pierścionek to inny poziom oryginalności.',
     details: 'silver · moonstone · charms from Bangkok',
     detailsPl: 'srebro · kamień księżycowy · charmsy z Bangkoku',
     price: 850, ready: true,
@@ -232,6 +236,7 @@ const RINGS = [
     custom: true,
     short: 'your gemstone, your charm, any size',
     text: 'If You have your favourite gemstone that speaks to You, You can customize it with one of the charms from my collection (You can see them all in the gallery). How it works: add this piece to the bag, which sends your order to me by email. In the email let me know which gemstone You chose, which charm and which design (You can send me pics of any of my designs from my website or Instagram). If You have your own design or sketch, just send me the references and we will work with that :)',
+    textPl: 'Ta opcja jest dla Ciebie, jeżeli spodobał Ci się któryś z pierścionków, ale nie jest w twoim rozmiarze, lub jeżeli masz własny pomysł na pierścionek. Jak to działa: dodajesz ten projekt do koszyka, a następnie zostajesz przekierowany na email, w którym podajesz mi swój rozmiar, wybrany model pierścionka, kamień, który chciałbyś zamieścić oraz wypatrzonego charmsa. Możesz wysłać mi w email fotki wybranego pierścionka (również z kolekcji 01) lub własny projekt w postaci rysunku/inspiracji itp.',
     details: 'silver · gemstone and charm of your choice',
     detailsPl: 'srebro · kamień i charms do wyboru',
     detailsNote: 'gemstone, charm and design – tell me in the email',
